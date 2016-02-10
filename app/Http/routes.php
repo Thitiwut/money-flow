@@ -11,9 +11,9 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 /*
 |--------------------------------------------------------------------------
@@ -27,5 +27,8 @@ Route::get('/', function () {
 */
 
 Route::group(['middleware' => ['web']], function () {
-    //
+	Route::Controller('/plan','PlanController');
+	Route::Controller('/expense','ExpenseController');
+	Route::Controller('/progress','ProgressController');
+    Route::Controller('/','HomeController');
 });

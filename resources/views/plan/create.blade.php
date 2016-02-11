@@ -7,6 +7,7 @@
 		border-radius: 5px;
 		border: 1px solid lightgrey;
 	}
+	.no-padding{padding-left: 0;padding-right: 0;}
 </style>
 @endsection
 
@@ -40,7 +41,7 @@
 				<button type="submit" class="btn btn-block btn-default">Save</button>
 			</div>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-6 no-padding">
 			<div class="section col-md-12 plan_select_restrict">
 				<div><h3>Limit and Restriction</h3></div>
 				<div>

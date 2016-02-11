@@ -1,101 +1,111 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
-use Session;
-use Log;
-use Hash;
-use function view;
-use App\Models\User;
 
-class HomeController extends Controller {
-	/*Get Methods*/
-	function getIndex(){
-		return view('home.index');
-	}
-	function getLogin(){
-		return view('home.login');
-	}
-	function getRegister(){
-		return view('home.register');
-	}
-	function getCharts(){
-		return view('home.charts');
-	}
-	function getSetting(){
-		return view('home.setting');
-	}
-	function getLogout(){
-		Session::flush();
-		return redirect('/');
-	}
+class HomeController extends Controller
+{
+    public function __construct()
+    {
+        parent::__construct();
+    }
+    /*Get Methods*/
+    public function getIndex()
+    {
+        return view('home.index');
+    }
+    public function getLogin()
+    {
+        return view('home.login');
+    }
+    public function getRegister()
+    {
+        return view('home.register');
+    }
+    public function getCharts()
+    {
+        return view('home.charts');
+    }
+    public function getSetting()
+    {
+        return view('home.setting');
+    }
+    public function getLogout()
+    {
+        Session::flush();
+        return redirect('/');
+    }
 
-	/*Post*/
-	function postLogin(Request $request){
-		$message = array(
-			'email.exists' => 'Email is not exist!',
-			);
+    /*Post*/
+    public function postLogin(Request $request)
+    {
+        $message = array(
+            'email.exists' => 'Email is not exist!',
+        );
 
-		$validator = Validator::make($request->all(), [
-			'email' => 'required|exists:user,email',
-			'password' => 'required',
-			],$message);
+        $validator = Validator::make($request->all(), [
+            'email'    => 'required|exists:user,email',
+            'password' => 'required',
+        ], $message);
 
-		$user = User::where('email','=',$request->email)->first();
+        $user = User::where('email', '=', $request->email)->first();
 
-		if ($validator->fails()) {
-			return redirect()
-			->back()
-			->withErrors($validator)
-			->withInput();
-		}
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
 
-		if(empty($user)){
-			if ($validator->fails()) {
-				return redirect()
-				->back()
-				->withErrors(["Username or password are mismatch."])
-				->withInput();
-			}
-		}else{
-			$request->session()->put('Auth',$user);
-			return redirect('/progress');
-		}
-	}
+        if (empty($user)) {
+            if ($validator->fails()) {
+                return redirect()
+                    ->back()
+                    ->withErrors(["Username or password are mismatch."])
+                    ->withInput();
+            }
+        } else {
+            $request->session()->put('Auth', $user);
+            return redirect('/progress');
+        }
+    }
 
-	function postRegister(Request $request){
-		$message = array(
-			'email.exists' => 'Email is not exist!',
-			);
+    public function postRegister(Request $request)
+    {
+        $message = array(
+            'email.exists' => 'Email is not exist!',
+        );
 
-		$validator = Validator::make($request->all(), [
-			'username' => 'required|unique:user,username',
-			'email' => 'required|unique:user,email',
-			'password' => 'required|min:6',
-			'repassword' => 'required|min:6',
-			],$message);
+        $validator = Validator::make($request->all(), [
+            'username'   => 'required|unique:user,username',
+            'email'      => 'required|unique:user,email',
+            'password'   => 'required|min:6',
+            'repassword' => 'required|min:6',
+        ], $message);
 
-		if ($validator->fails()) {
-			return redirect()
-			->back()
-			->withErrors($validator)
-			->withInput();
-		}
-		if($request->password != $request->repassword){
-			return redirect()		
-			->back()
-			->withErrors('Password is not match!')
-			->withInput();
-		}
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        if ($request->password != $request->repassword) {
+            return redirect()
+                ->back()
+                ->withErrors('Password is not match!')
+                ->withInput();
+        }
 
-		$user = new User();
-		$user->username = $request->username;
-		$user->password = $request->password;
-		$user->email = $request->email;
-		$user->save();
+        $user           = new User();
+        $user->username = $request->username;
+        $user->password = $request->password;
+        $user->email    = $request->email;
+        $user->save();
 
-		$request->session()->put('Auth',$user);
-		return redirect('/progress');
-	}
+        $request->session()->put('Auth', $user);
+        return redirect('/progress');
+    }
+
 }

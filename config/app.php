@@ -39,7 +39,7 @@ return [
     |
     */
 
-    'url' => 'http://localhost:8080/money-flow/public',
+    'url' => 'http://localhost:8888/testMoney/public',
 
     /*
     |--------------------------------------------------------------------------

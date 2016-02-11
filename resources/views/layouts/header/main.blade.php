@@ -20,7 +20,7 @@
 					<li><a href="progress">Progress</a></li>
 					<li><a href="charts">Charts</a></li>
 				</ul>
-				<ul class="nav navbar-nav navbar-right">
+				<ul class="nav nav-pills navbar-nav navbar-right">
 					<li><a href="feedback">Feedback</a></li>
 					<li><a href="setting">Setting</a></li>
 					<li><a href="logout">Logout</a></li>

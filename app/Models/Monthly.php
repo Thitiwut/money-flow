@@ -10,6 +10,6 @@ class Monthly extends Model
 
 	public function plan()
 	{
-		return $this->belongTo('App\Models\Plan','plan_id');
+		return $this->belongsTo('App\Models\Plan','plan_id');
 	}
 }

@@ -15,9 +15,9 @@ class Controller extends BaseController
     public function __construct()
     {
         if (Session::has('Auth')) {
-            $user = Session::get('Auth');
+            $this->user = Session::get('Auth');
         } else {
-            $user = null;
+            $this->user = null;
         }
     }
 }

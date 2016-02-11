@@ -10,7 +10,7 @@ class Daily extends Model
 
 	public function monthly()
 	{
-		return $this->belongTo('App\Models\Plan','monthly_id');
+		return $this->belongsTo('App\Models\Plan','monthly_id');
 	}
 	public function finances()
 	{

@@ -6,6 +6,8 @@ use App\Models\Plan;
 use App\Models\Restrict;
 use Illuminate\Http\Request;
 use Validator;
+use Session;
+
 
 class PlanController extends Controller
 {
@@ -21,30 +23,36 @@ class PlanController extends Controller
         $attach['user']       = $this->user;
         if (isset($request->id)) {
             $attach['plan'] = $this->user->plans()->where('id', '=', $request->id)->first();
+        } else if (Session::has('Plan')) {
+            $attach['plan'] = $this->user->plans()->where('id', '=', Session::get('Plan'))->first();
         }
 
         return view('plan.create')->with($attach);
     }
 
+    public function getClear(Request $request)
+    {
+        Session::forget('Plan');
+        return redirect()->back();
+    }
     /*Post Method*/
     public function postIndex(Request $request)
     {
         $messages = [
-            "pname.required"         => "Plan name is required",
-            "pdescription.required"  => "Description is required",
-            "pexpected.required"     => "Expected per month is required",
-            "ptarget.required"       => "Target for saving is required",
-            "pbudget.required"       => "Budget is required",
+            "pname.required"        => "Plan name is required",
+            "pdescription.required" => "Description is required",
+            "pexpected.required"    => "Expected per month is required",
+            "ptarget.required"      => "Target for saving is required",
+            "pbudget.required"      => "Budget is required",
 
-            "pname.alpha_num"        => "Plan name must be consist of texts and numbers",
-            "pdescription.alpha_num" => "Description must be consist of texts and numbers",
-            "pexpected.numeric"      => "Expected per month must be consist of and only numbers",
-            "ptarget.numeric"        => "Target for saving must be consist of and only numbers",
-            "pbudget.numeric"        => "Budget must be consist of and only numbers",
+            "pname.alpha_num"       => "Plan name must be consist of texts and numbers",
+            "pexpected.numeric"     => "Expected per month must be consist of and only numbers",
+            "ptarget.numeric"       => "Target for saving must be consist of and only numbers",
+            "pbudget.numeric"       => "Budget must be consist of and only numbers",
         ];
         $validator = Validator::make($request->all(), [
             'pname'        => 'required|alpha_num',
-            'pdescription' => 'required|alpha_num',
+            'pdescription' => 'required',
             'pexpected'    => 'required|numeric',
             'ptarget'      => 'required|numeric',
             'pbudget'      => 'required|numeric',
@@ -81,6 +89,7 @@ class PlanController extends Controller
             $plan->target      = $request->ptarget;
             $plan->expected    = $request->pexpected;
             $plan->save();
+            Session::put("Plan",$plan->id);
         }
         return redirect()->back()->withInput();
     }
@@ -121,8 +130,8 @@ class PlanController extends Controller
             "rcategory.numeric"  => "Illegal category selected.",
             "rlimit.required"    => "Exceed is required.",
             "rlimit.numeric"     => "Exceed should be only numbers.",
-            "rtype.required"    => "Please select what this restriction apply to.",
-            "rtype.boolean"     => "Illegal restriction type selected.",
+            "rtype.required"     => "Please select what this restriction apply to.",
+            "rtype.boolean"      => "Illegal restriction type selected.",
         ];
         $validator = Validator::make($request->all(), [
             'rplan'     => 'required|numeric|exists:plan,id',
@@ -147,6 +156,15 @@ class PlanController extends Controller
             $restrict->exceed      = $request->rlimit;
             $restrict->for         = $request->rtype;
             $restrict->save();
+        }
+        return redirect()->back()->withInput();
+    }
+    public function postDeleteRestrict(Request $request)
+    {
+        if ($request->restrict != null) {
+            foreach ($request->restrict as $key => $value) {
+                Restrict::find($value)->delete();
+            }
         }
         return redirect()->back()->withInput();
     }

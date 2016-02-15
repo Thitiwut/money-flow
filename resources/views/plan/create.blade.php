@@ -11,11 +11,28 @@
 @endsection
 @section('content')
 <div class="container">
+    <div>
+        <label>Plan List</label>
+        <select id="planList">
+            <option></option>
+                @if(Session::get('Auth'))
+                    <?php 
+                        $plans = Session::get('Auth')->plans()->get();
+                        foreach($plans as $plan){ ?>
+                            <option value="{{$plan->id}}" @if(Session::has('Plan')) @if(Session::get('Plan') == $plan->id) selected @endif @endif >{{$plan->name}}</option>
+                        <?php }
+                    ?>
+                @endif
+        </select>
+    </div>
+</div>
+<div class="container">
     <div class="text-center">
         <h1>
             Plan
         </h1>
     </div>
+     <div class="container"><a href="plan/clear"><button class="btn btn-lg btn-success">Create Plan</button></a></div>
     <div class="container">
         <div class="section col-md-6">
             <div>
@@ -23,6 +40,7 @@
                     Detail
                 </h3>
             </div>
+
             <form method="POST" action="plan" >
                 <div class="form-group">
                     <label for="email">
@@ -65,32 +83,36 @@
         </div>
         <div class="col-md-6 no-padding">
             <div class="section col-md-12 plan_select_restrict">
-                <div>
-                    <h3>
-                        Limit and Restriction
-                    </h3>
-                </div>
-                <div>
-                    <ul>
-                        @if(isset($plan))
-                        @foreach($plan->
-                        restricts()->get() as $restrict)
+                <form method="POST" action="plan/delete-restrict">
+                    <div>
+                        <h3>
+                            Limit and Restriction
+                        </h3>
+                    </div>
+                    <div>
 
-                        <li>
-                            {{$restrict->category->name}} - <span class="label label-success">
-                                {{$restrict->
-                                exceed}}
-                            </span>
-                        </li>
-                        @endforeach
-                        @endif
-                    </ul>
-                </div>
-                <div class="text-center">
-                    <button type="submit" class="btn btn-block btn-default">
-                        Delete Limit
-                    </button>
-                </div>
+                            <ul class="list-group">
+                                @if(isset($plan))
+                                @foreach($plan->
+                                restricts()->get() as $restrict)
+                                <li class="list-group-item">
+                                    <input type="checkbox" name="restrict[]" value="{{$restrict->id}}" /> {{$restrict->category->name}} - <span class="label label-success">
+                                        {{$restrict->
+                                        exceed}}
+                                    </span> @if($restrict->for == 0) <span class="badge"> Daily </span> @else <span class="badge"> Monthly </span> @endif
+                                </li>
+                                @endforeach
+                                @endif
+                            </ul>
+
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn btn-block btn-default">
+                            Delete Limit
+                        </button>
+                    </div>
+                    <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                </form>
             </div>
             <div class="section col-md-12 plan_add_restrict">
                 <div>

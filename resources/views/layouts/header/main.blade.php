@@ -35,3 +35,10 @@
 		</div><!-- /.container-fluid -->
 	</nav>
 </div>
+@section('script')
+	<script>
+	$('#planList').on('change',function(){
+		window.location.href = "http://" + window.location.hostname + ":8080" + window.location.pathname + '?id=' + $('#planList').val();
+	});
+	</script>
+@endsection

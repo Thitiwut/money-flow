@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Validator;
+use Session;
 
 class HomeController extends Controller
 {
@@ -14,7 +15,7 @@ class HomeController extends Controller
     /*Get Methods*/
     public function getIndex()
     {
-        return view('home.index');
+        return view('home.login');
     }
     public function getLogin()
     {

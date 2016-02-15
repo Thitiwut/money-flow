@@ -1,89 +1,212 @@
 @extends('layouts.app')
-
 @section('style')
 <style>
-	.section{
-		padding-top: 20px;
-		padding-bottom: 20px;
-		border-radius: 5px;
-		border: 1px solid lightgrey;
-	}
-	.financial{
-		padding-left: 20px;
-	}
-	.badge{float: right;}
-	.expense_today{
-		min-height: 500px;
-	}
-	.expense_add{
-		margin-bottom: 10px;
-	}
+    .section{
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-radius: 5px;
+    border: 1px solid lightgrey;
+    }
+    .financial{
+    padding-left: 20px;
+    }
+    .badge{float: right;}
+    .expense_today{
+    min-height: 500px;
+    }
+    .expense_add{
+    margin-bottom: 10px;
+    }
 </style>
 @endsection
-
 @section('content')
 <div class="container">
-	<div class="text-center"><h1>Expense and Income</h1></div>
-	<div class="container">
-		<div class="col-md-6">
-			<div class="expense_add">
-				<div><h3>Detail</h3></div>
-				<div class="form-group">
-					<label for="email">Date</label>
-					<input type="date" class="form-control" id="eDate" placeholder="Date" name="date">
-				</div>
-				<label for="email">Type</label>
-				<div class="form-group">
-					<div class="text-center col-md-6"> 
-						<button type="submit" class="btn btn-block btn-default">Expense</button>
-					</div>
-					<div class="text-center col-md-6"> 
-						<button type="submit" class="btn btn-block btn-default">Income</button>
-					</div>
-				</div>
-				<div class="form-group">
-					<label for="pDescription">Category</label>
-					<select class="form-control">
-						<option>Food & Drink</option>
-						<option>Shopping</option>
-					</select>
-				</div>
-				<div class="form-group">
-					<label for="pBudget">Amount</label>
-					<input type="text" class="form-control" id="pBudget" placeholder="Budget" name="budget">
-				</div>
-				<div class="text-center"> 
-					<button type="submit" class="btn btn-block btn-default">Add</button>
-				</div>
-			</div>
-			<div class="section col-md-12 plan_add_restrict">
-				<div><h3>Category</h3></div>
-				<div class="form-group">
-					<label for="pBudget">Name</label>
-					<input type="text" class="form-control" id="pBudget" placeholder="Budget" name="budget">
-				</div>	
-				<div class="text-center"> 
-					<button type="submit" class="btn btn-block btn-default">Create</button>
-				</div>
-			</div>
-		</div>
-		<div class="col-md-6">
-			<div class="section col-md-12 expense_today">
-				<div><h3>Today expense and income</h3></div>
-				<div>
-					<p class="bg-danger financial">Food <span class="badge">-40</span></p>
-					<p class="bg-danger financial">drink <span class="badge">-30</span></p>
-					<p class="bg-success financial">Salary <span class="badge">+500</span></p>
-				</div>
-			</div>
-			<div class="section col-md-12 expense_summary">
-				<div>
-					<div class="alert alert-danger" role="alert">Total income <span class="badge">-70</span></div>
-					<div class="alert alert-success" role="alert">Total income <span class="badge">+500</span></div>
-				</div>
-			</div>
-		</div>
-	</div>
+    <div>
+        <label>Plan List</label>
+        <select id="planList">
+            <option></option>
+                @if(Session::get('Auth'))
+                    <?php 
+                        $plans = Session::get('Auth')->plans()->get();
+                        foreach($plans as $plan){ ?>
+                            <option value="{{$plan->id}}" @if(Session::has('Plan')) @if(Session::get('Plan') == $plan->id) selected @endif @endif >{{$plan->name}}</option>
+                        <?php }
+                    ?>
+                @endif
+        </select>
+    </div>
+</div>
+<div class="container">
+    <div class="text-center">
+        <h1>
+            Expense and Income
+        </h1>
+    </div>
+    <div class="container">
+        <div class="col-md-6">
+            <div class="expense_add">
+                <div>
+                    <h3>
+                        Detail
+                    </h3>
+                </div>
+                <form action="expense/finance" method="post">
+                    <div class="form-group">
+                        <label for="fdate">
+                            Date
+                        </label>
+                        <input type="date" class="form-control" id="fdate" placeholder="Date" name="fdate"/>
+                    </div>
+                    <label for="email">
+                        Type
+                    </label>
+                    <div class="form-group">
+                        <div class="radio-inline">
+                            <label for="ftyped">
+                                <input type="radio" id="ftyped" name="ftype" value="0" />
+                                Expense
+                            </label>
+                        </div>
+                        <div class="radio-inline">
+                            <label for="ftypem">
+                                <input type="radio" id="ftypem" name="ftype" value="1" />
+                                Income
+                            </label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="fcategory">
+                            Category
+                        </label>
+                        <select id="fcategory" name="fcategory" class="form-control">
+                            <option>
+                                ---- Please Select Category ----
+                            </option>
+                            @foreach($categories as $category)
+                            <option value="{{$category->id}}">
+                                {{$category->
+                                name}}
+                            </option>
+                            @endforeach
+                            @if($user)
+                            @if($uCategories = $user->
+                            categories()->
+                            get())
+                            @foreach($uCategories as $category)
+                            <option value="{{$category->id}}">
+                                {{$category->
+                                name}}
+                            </option>
+                            @endforeach
+                            @endif
+                            @endif
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="fname">
+                            Name
+                        </label>
+                        <input type="text" class="form-control" id="fname" placeholder="Name" name="fname"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="famount">
+                            Amount
+                        </label>
+                        <input type="text" class="form-control" id="famount" placeholder="Amount" name="famount"/>
+                    </div>
+                    <div class="form-group">
+                        <label for="fdescription">
+                            Description
+                        </label>
+                        <textarea class="form-control" id="fdescription" name="fdescription">
+                        </textarea>
+                    </div>
+                    <div class="text-center">
+                        @if(isset($plan))
+                        <input type="hidden" name="plan_id" value="{{$plan->id}}"/>
+                        @endif
+                        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                        <button type="submit" class="btn btn-block btn-default">
+                            Add
+                        </button>
+                    </div>
+                </form>
+            </div>
+            <div class="section col-md-12 plan_add_restrict">
+                <form method="POST" action="plan/category" >
+                    <div>
+                        <h3>
+                            Add Category
+                        </h3>
+                    </div>
+                    <input type="text" class="form-control" id="cName" placeholder="New Category" name="cname"/>
+                    <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                    <button type="submit" class="btn btn-block btn-default">
+                        Add new category
+                    </button>
+                </form>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="section col-md-12 expense_today">
+                <div>
+                    <h3>
+                        Today expense and income
+                    </h3>
+                </div>
+                <div>
+                    <?php
+                    $totalIncome  = 0;
+                    $totalExpense = 0;
+                    ?>
+                    @if(isset($daily))
+                    @foreach($daily->
+                    finances()->
+                    get() as $finance)
+                    <?php $isType = false;
+                    if ($finance->
+                    type == 1) {
+                    $totalIncome += $finance->
+                    amount;
+                    $isType = true;
+                    } else {
+                    $totalExpense += $finance->
+                    amount;
+                    }
+                    ?>
+                    <p class="bg-<?php if ($isType) {echo 'success';} else {echo 'danger';}?> financial">
+                        Food
+                        <span class="badge">
+                            <?php if ($isType) {
+                            echo '+';} else {
+                            echo '-';
+                            }
+                            ?>
+                            {{$finance->
+                            amount}}
+                        </span>
+                    </p>
+                    @endforeach
+                    @endif
+                </div>
+            </div>
+            <div class="section col-md-12 expense_summary">
+                <div>
+                    <div class="alert alert-danger" role="alert">
+                        Total expense
+                        <span class="badge">
+                            -{{$totalExpense}}
+                        </span>
+                    </div>
+                    <div class="alert alert-success" role="alert">
+                        Total income
+                        <span class="badge">
+                            +{{$totalIncome}}
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 @endsection
-

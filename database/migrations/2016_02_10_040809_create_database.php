@@ -14,8 +14,8 @@ class CreateDatabase extends Migration
     {
         Schema::create('User', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('username');
-            $table->string('email');
+            $table->string('username',255);
+            $table->string('email',255);
             $table->string('password', 255);
             $table->timestamps();
         });
@@ -23,17 +23,22 @@ class CreateDatabase extends Migration
         Schema::create('Plan', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('user_id');
-            $table->string('name');
+            $table->string('name',255);
             $table->text('description');
-            $table->string('capital', 10);
+            $table->integer('budget');
+            $table->integer('target');
+            $table->integer('expected');
+            $table->integer('period');
             $table->timestamps();
         });
 
         Schema::create('Monthly', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('plan_id');
-            $table->string('income', 10);
-            $table->string('status');
+            $table->integer('status');
+            $table->integer('month');
+            $table->integer('limit');
+            $table->integer('progress');
             $table->timestamps();
         });
 
@@ -41,8 +46,8 @@ class CreateDatabase extends Migration
             $table->increments('id');
             $table->integer('monthly_id');
             $table->date('date');
-            $table->string('expense');
-            $table->string('income');
+            $table->integer('expense');
+            $table->integer('income');
             $table->timestamps();
         });
 
@@ -52,7 +57,7 @@ class CreateDatabase extends Migration
             $table->integer('category_id');
             $table->text('description');
             $table->string('name');
-            $table->string('amount');
+            $table->integer('amount');
             $table->integer('type');
             $table->timestamps();
         });
@@ -61,8 +66,8 @@ class CreateDatabase extends Migration
             $table->increments('id');
             $table->integer('plan_id');
             $table->integer('category_id');
-            $table->string('exceed');
-            $table->timestamps();
+            $table->integer('exceed');
+            $table->integer('for');
         });
 
         Schema::create('Category', function (Blueprint $table) {

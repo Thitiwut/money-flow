@@ -175,7 +175,7 @@
                     }
                     ?>
                     <p class="bg-<?php if ($isType) {echo 'success';} else {echo 'danger';}?> financial">
-                        Food
+                        {{$finance->category->name}}
                         <span class="badge">
                             <?php if ($isType) {
                             echo '+';} else {

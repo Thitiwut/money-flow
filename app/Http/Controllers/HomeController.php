@@ -1,10 +1,11 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Validator;
 use Session;
+use Validator;
 
 class HomeController extends Controller
 {
@@ -27,7 +28,42 @@ class HomeController extends Controller
     }
     public function getCharts()
     {
-        return view('home.charts');
+        if ($this->user != null && Session::has('Plan') && Session::get('Plan') != "") {
+            $plan   = Plan::find(Session::get('Plan'));
+            $months = $plan->months()->get();
+            if ($plan) {
+                $attach['Month'] = array();
+                for ($i = 0; $i < $plan->period; $i++) {
+                    $attach['Month'][] = date('F', strtotime('+' . $i . ' month', strtotime($plan->created_at)));
+                    if (isset($months[$i])) {
+                        $attach['Limit'][]    = $months[$i]->limit;
+                        $attach['Progress'][] = $months[$i]->progress;
+                    } else {
+                        $attach['Limit'][]    = "";
+                        $attach['Progress'][] = "";
+                    }
+                }
+                if (isset($months)) {
+                    if (isset($months[count($months) - 1])) {
+                        $month                  = $months[count($months) - 1];
+                        $days                   = $month->days()->get();
+                        $attach["Daily"]['Day'] = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
+                        for ($i = 1; $i <= $attach["Daily"]['Day']; $i++) {
+                            $attach["Daily"]["Expense"][$i-1] = 0;
+                            $attach["Daily"]["Income"][$i-1]  = 0;
+                            foreach ($days as $day) {
+                                if ($i == date('d', strtotime($day->date))) {
+                                    $attach["Daily"]["Expense"][$i-1] = $day->expense;
+                                    $attach["Daily"]["Income"][$i-1]  = $day->income;
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+            return view('home.chart')->with($attach);
+        }
+        return view('home.chart');
     }
     public function getSetting()
     {

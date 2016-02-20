@@ -17,9 +17,6 @@
 			</div>
 			<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 		</form>
-		@if(isset($validator))
-		<?php echo var_dump($validator); ?>
-		@endif
 	</div>
 </div>
 @endsection

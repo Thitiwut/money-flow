@@ -11,22 +11,6 @@
 @endsection
 @section('content')
 <div class="container">
-    <div>
-        <label>Plan List</label>
-        <select id="planList">
-            <option></option>
-                @if(Session::get('Auth'))
-                    <?php 
-                        $plans = Session::get('Auth')->plans()->get();
-                        foreach($plans as $plan){ ?>
-                            <option value="{{$plan->id}}" @if(Session::has('Plan')) @if(Session::get('Plan') == $plan->id) selected @endif @endif >{{$plan->name}}</option>
-                        <?php }
-                    ?>
-                @endif
-        </select>
-    </div>
-</div>
-<div class="container">
     <div class="text-center">
         <h1>
             Plan
@@ -74,10 +58,16 @@
                     <input type="text" class="form-control" id="pBudget" placeholder="Budget" name="pbudget" value="<?php echo isset($plan) ? $plan->budget : old('pbudget'); ?>" />
                 </div>
                 <div class="text-center">
-                    <button type="submit" class="btn btn-block btn-default">
-                        Save
-                    </button>
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-block btn-default">
+                            Save
+                        </button>
+                    </div>
+                    <div class="col-md-6">
+                        <input type="submit" id="deleteForm" name="delete" class="btn btn-block btn-default" value="delete">
+                    </div>
                 </div>
+                <input type="hidden" name="plan_id" value="<?php echo isset($plan) ? $plan->id : ''; ?>"/>
                 <input type="hidden" name="_token" value="{{csrf_token()}}"/>
             </form>
         </div>
@@ -186,4 +176,13 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script type="text/javascript">
+    $(document).ready(function(){
+        $("#deleteForm").submit(function(e){
+          e.preventDefault();
+        });
+    });
+</script>
 @endsection

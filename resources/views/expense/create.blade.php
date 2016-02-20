@@ -21,22 +21,6 @@
 @endsection
 @section('content')
 <div class="container">
-    <div>
-        <label>Plan List</label>
-        <select id="planList">
-            <option></option>
-                @if(Session::get('Auth'))
-                    <?php 
-                        $plans = Session::get('Auth')->plans()->get();
-                        foreach($plans as $plan){ ?>
-                            <option value="{{$plan->id}}" @if(Session::has('Plan')) @if(Session::get('Plan') == $plan->id) selected @endif @endif >{{$plan->name}}</option>
-                        <?php }
-                    ?>
-                @endif
-        </select>
-    </div>
-</div>
-<div class="container">
     <div class="text-center">
         <h1>
             Expense and Income
@@ -55,7 +39,7 @@
                         <label for="fdate">
                             Date
                         </label>
-                        <input type="date" class="form-control" id="fdate" placeholder="Date" name="fdate"/>
+                        <input type="date" class="form-control" id="fdate" placeholder="Date" name="fdate" value="{{old('fdate')}}" />
                     </div>
                     <label for="email">
                         Type
@@ -63,13 +47,13 @@
                     <div class="form-group">
                         <div class="radio-inline">
                             <label for="ftyped">
-                                <input type="radio" id="ftyped" name="ftype" value="0" />
+                                <input type="radio" id="ftyped" name="ftype" value="0" @if(old('ftype') == 0) selected @endif />
                                 Expense
                             </label>
                         </div>
                         <div class="radio-inline">
                             <label for="ftypem">
-                                <input type="radio" id="ftypem" name="ftype" value="1" />
+                                <input type="radio" id="ftypem" name="ftype" value="1"  @if(old('ftype') == 1) selected @endif />
                                 Income
                             </label>
                         </div>
@@ -83,7 +67,7 @@
                                 ---- Please Select Category ----
                             </option>
                             @foreach($categories as $category)
-                            <option value="{{$category->id}}">
+                            <option value="{{$category->id}}"  @if(old('fcategory') == $category->id) selected @endif >
                                 {{$category->
                                 name}}
                             </option>
@@ -93,7 +77,7 @@
                             categories()->
                             get())
                             @foreach($uCategories as $category)
-                            <option value="{{$category->id}}">
+                            <option value="{{$category->id}}" @if(old('fcategory') == $category->id) selected @endif >
                                 {{$category->
                                 name}}
                             </option>
@@ -106,20 +90,19 @@
                         <label for="fname">
                             Name
                         </label>
-                        <input type="text" class="form-control" id="fname" placeholder="Name" name="fname"/>
+                        <input type="text" class="form-control" id="fname" placeholder="Name" name="fname" value="{{old('fname')}}" />
                     </div>
                     <div class="form-group">
                         <label for="famount">
                             Amount
                         </label>
-                        <input type="text" class="form-control" id="famount" placeholder="Amount" name="famount"/>
+                        <input type="text" class="form-control" id="famount" placeholder="Amount" name="famount" value="{{old('famount')}}" />
                     </div>
                     <div class="form-group">
                         <label for="fdescription">
                             Description
                         </label>
-                        <textarea class="form-control" id="fdescription" name="fdescription">
-                        </textarea>
+                        <textarea class="form-control" id="fdescription" name="fdescription">{{old('fdescription')}}</textarea>
                     </div>
                     <div class="text-center">
                         @if(isset($plan))
@@ -148,48 +131,60 @@
             </div>
         </div>
         <div class="col-md-6">
-            <div class="section col-md-12 expense_today">
-                <div>
-                    <h3>
-                        Today expense and income
-                    </h3>
-                </div>
-                <div>
-                    <?php
-                    $totalIncome  = 0;
-                    $totalExpense = 0;
-                    ?>
-                    @if(isset($daily))
-                    @foreach($daily->
-                    finances()->
-                    get() as $finance)
-                    <?php $isType = false;
-                    if ($finance->
-                    type == 1) {
-                    $totalIncome += $finance->
-                    amount;
-                    $isType = true;
-                    } else {
-                    $totalExpense += $finance->
-                    amount;
-                    }
-                    ?>
-                    <p class="bg-<?php if ($isType) {echo 'success';} else {echo 'danger';}?> financial">
-                        {{$finance->category->name}}
-                        <span class="badge">
-                            <?php if ($isType) {
-                            echo '+';} else {
-                            echo '-';
+            <form method="POST" action="expense/delete">
+                <div class="section col-md-12 expense_today">
+                    <div>
+                        <h3>
+                            Today expense and income
+                        </h3>
+                    </div>
+                    
+                        <div>
+                            <?php
+                            $totalIncome  = 0;
+                            $totalExpense = 0;
+                            ?>
+                            @if(isset($daily))
+                            @foreach($daily->
+                            finances()->
+                            get() as $finance)
+                            <?php $isType = false;
+                            if ($finance->
+                            type == 1) {
+                            $totalIncome += $finance->
+                            amount;
+                            $isType = true;
+                            } else {
+                            $totalExpense += $finance->
+                            amount;
                             }
                             ?>
-                            {{$finance->
-                            amount}}
-                        </span>
-                    </p>
-                    @endforeach
-                    @endif
+                            <p class="bg-<?php if ($isType) {echo 'success';} else {echo 'danger';}?> financial">
+                                <input type="checkbox" name="expense[]" value="{{$finance->id}}" />
+                                <span class="label label-info">{{$finance->category->name}}</span> {{$finance->name}}
+                                <span class="badge">
+                                    <?php if ($isType) {
+                                    echo '+';} else {
+                                    echo '-';
+                                    }
+                                    ?>
+                                    {{$finance->
+                                    amount}}
+                                </span>
+                            </p>
+                            @endforeach
+                            @endif
+                        </div>
                 </div>
-            </div>
+                <div class="col-md-12">
+                    <div class="text-center">
+                        <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                        <button type="submit" class="btn btn-block btn-default">
+                            Delete Expense
+                        </button>
+                    </div>
+                </div>
+            </form>
             <div class="section col-md-12 expense_summary">
                 <div>
                     <div class="alert alert-danger" role="alert">

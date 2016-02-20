@@ -4,8 +4,9 @@ namespace App\Http\Controllers;
 use App\Models\Category;
 use App\Models\Daily;
 use App\Models\Finance;
-use App\Models\Plan;
 use App\Models\Monthly;
+use App\Models\Plan;
+use App\Models\Restrict;
 use DateTime;
 use Illuminate\Http\Request;
 use Session;
@@ -78,6 +79,7 @@ class ExpenseController extends Controller
             $validator->errors()->add('User', 'You are not login!');
             return redirect('login')->withErrors($validator);
         } else {
+
             $plan   = Plan::find(Session::get('Plan'));
             $now    = new DateTime(date('Y-m-d'));
             $create = new DateTime($plan->created_at);
@@ -108,6 +110,38 @@ class ExpenseController extends Controller
                 $daily->expense    = 0;
                 $daily->income     = 0;
             }
+
+            $sumExpenseDaily = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                ->where('monthly.id', '=', $month->id)
+                ->where('finance.category_id', '=', $request->fcategory)
+                ->where('type', '=', 0)
+                ->where('daily.id', '=', $daily->id)
+                ->sum('amount');
+            $sumExpenseMonthly = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                ->where('monthly.id', '=', $month->id)
+                ->where('finance.category_id', '=', $request->fcategory)
+                ->where('type', '=', 0)
+                ->sum('amount');
+            $restrictDaily   = Restrict::where('plan_id', '=', $plan->id)->where('category_id', '=', $request->fcategory)->where('for', '=', 0)->first();
+            $restrictMonthly = Restrict::where('plan_id', '=', $plan->id)->where('category_id', '=', $request->fcategory)->where('for', '=', 1)->first();
+            if ($restrictDaily) {
+                $sumExpenseDaily += $request->famount;
+                if ($restrictDaily->exceed < $sumExpenseDaily) {
+                    $validator->errors()->add('User', 'Exceed per day!');
+                    return redirect()->back()->withInput()->withErrors($validator);
+                }
+            }
+            if ($restrictMonthly) {
+                $sumExpenseMonthly += $request->famount;
+                if ($restrictMonthly->exceed < $sumExpenseMonthly) {
+                    $validator->errors()->add('User', 'Exceed per month!');
+                    return redirect()->back()->withInput()->withErrors($validator);
+                }
+            }
             if ($request->ftype == 0) {
                 $daily->expense += $request->famount;
                 $month->progress = $month->progress - $request->famount;
@@ -127,6 +161,15 @@ class ExpenseController extends Controller
 
             $finance->save();
             $month->save();
+        }
+        return redirect()->back()->withInput();
+    }
+    public function postDelete(Request $request)
+    {
+        if ($request->expense != null) {
+            foreach ($request->expense as $key => $value) {
+                Finance::find($value)->delete();
+            }
         }
         return redirect()->back()->withInput();
     }

@@ -5,9 +5,8 @@ use App\Models\Category;
 use App\Models\Plan;
 use App\Models\Restrict;
 use Illuminate\Http\Request;
-use Validator;
 use Session;
-
+use Validator;
 
 class PlanController extends Controller
 {
@@ -34,6 +33,32 @@ class PlanController extends Controller
     {
         Session::forget('Plan');
         return redirect()->back();
+    }
+
+    public function getDelete(Request $request)
+    {
+        if ($this->user != null && Session::has('Plan')) {
+            $plan      = Plan::find(Session::get('Plan'));
+            $monthly   = $plan->months()->get();
+            $restricts = $plan->restricts()->get();
+            foreach ($monthly as $month) {
+                $daily = $month->days()->get();
+                foreach ($daily as $key => $day) {
+                    $finances = $day->finances()->get();
+                    foreach ($finances as $finance) {
+                        $finance->delete();
+                    }
+                    $day->delete();
+                }
+                $month->delete();
+            }
+            foreach ($restricts as $restrict) {
+                $restrict->delete();
+            }
+            $plan->delete();
+        }
+        Session::forget('Plan');
+        return redirect('plan');
     }
     /*Post Method*/
     public function postIndex(Request $request)
@@ -65,6 +90,10 @@ class PlanController extends Controller
                 ->withInput();
         }
 
+        if ($request->delete != null) {
+            return redirect('plan/delete');
+        }
+
         if ($request->pbudget > $request->ptarget) {
             $validator->errors()->add('target', 'Budget is more than target!');
             return redirect()->back()->withErrors($validator)->withInput();
@@ -79,7 +108,10 @@ class PlanController extends Controller
             $validator->errors()->add('user', 'You are not login!');
             return redirect('login')->withErrors($validator);
         } else {
-            $plan              = new Plan();
+            $plan = $this->user->plans()->where("id", "=", $request->plan_id)->first();
+            if (!$plan) {
+                $plan = new Plan();
+            }
             $period            = ceil(($request->ptarget - $request->pbudget) / $request->pexpected);
             $plan->user_id     = $this->user->id;
             $plan->name        = $request->pname;
@@ -89,7 +121,7 @@ class PlanController extends Controller
             $plan->target      = $request->ptarget;
             $plan->expected    = $request->pexpected;
             $plan->save();
-            Session::put("Plan",$plan->id);
+            Session::put("Plan", $plan->id);
         }
         return redirect()->back()->withInput();
     }

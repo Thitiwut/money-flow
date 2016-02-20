@@ -13,22 +13,6 @@ $totalExpense = 0;
 $progressBar  = 0;
 ?> 
 <div class="container">
-    <div>
-        <label>Plan List</label>
-        <select id="planList">
-            <option></option>
-                @if(Session::get('Auth'))
-                    <?php 
-                        $plans = Session::get('Auth')->plans()->get();
-                        foreach($plans as $plan){ ?>
-                            <option value="{{$plan->id}}" @if(Session::has('Plan')) @if(Session::get('Plan') == $plan->id) selected @endif @endif >{{$plan->name}}</option>
-                        <?php }
-                    ?>
-                @endif
-        </select>
-    </div>
-</div>
-<div class="container">
     <div class="text-center">
         <h1>
             Progress

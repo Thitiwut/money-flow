@@ -22,10 +22,10 @@
 			</div>
 			<div class="col-md-12">
 				<div class="col-md-6 text-center"> 
-					<button class="btn btn-block btn-default" onclick="window.history.back()" >Back</button>
+					<button class="btn btn-block btn-warning" onclick="window.history.back()" >Back</button>
 				</div>
 				<div class="col-md-6 text-center"> 
-					<button type="submit" class="btn btn-block btn-default">Submit</button>
+					<button type="submit" class="btn btn-block btn-info">Submit</button>
 				</div>
 			</div>
 			<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

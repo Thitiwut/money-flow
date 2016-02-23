@@ -13,15 +13,20 @@
 <div class="container">
     <div class="text-center">
         <h1>
-            Plan
+            <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+            <em>Plan</em>
         </h1>
     </div>
-     <div class="container"><a href="plan/clear"><button class="btn btn-lg btn-success">Create Plan</button></a></div>
+     <div class="container"><a href="plan/clear"><button class="btn btn-info">
+      <span class="glyphicon glyphicon-inbox" aria-hidden="true"><strong>createmoreplan</strong></span></button></a>
+     <hr/>
+    </div>
     <div class="container">
         <div class="section col-md-6">
             <div>
                 <h3>
-                    Detail
+                    <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    <em>Detail</em>
                 </h3>
             </div>
 
@@ -59,12 +64,12 @@
                 </div>
                 <div class="text-center">
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-block btn-default">
-                            Save
+                        <button type="submit" class="btn btn-block btn-success">
+                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" id="deleteForm" name="delete" class="btn btn-block btn-default" value="delete">
+                        <input type="submit" id="deleteForm" name="delete" class="btn btn-block btn-danger" value="delete">
                     </div>
                 </div>
                 <input type="hidden" name="plan_id" value="<?php echo isset($plan) ? $plan->id : ''; ?>"/>
@@ -75,8 +80,8 @@
             <div class="section col-md-12 plan_select_restrict">
                 <form method="POST" action="plan/delete-restrict">
                     <div>
-                        <h3>
-                            Limit and Restriction
+                        <h3><span class="glyphicon glyphicon-star-empty" aria-hidden="true"></span>
+                            <em>Limit and Restriction</em>
                         </h3>
                     </div>
                     <div>
@@ -97,8 +102,8 @@
 
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-block btn-default">
-                            Delete Limit
+                        <button type="submit" class="btn btn-block btn-danger">
+                            <em>Delete Limit</em>
                         </button>
                     </div>
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
@@ -107,7 +112,8 @@
             <div class="section col-md-12 plan_add_restrict">
                 <div>
                     <h3>
-                        Add restriction and limit
+                        <span class="glyphicon glyphicon-warning-sign" aria-hidden="true"></span>
+                        <em>Add restriction and limit</em>
                     </h3>
                 </div>
                 <form method="POST" action="plan/restrict" >
@@ -151,8 +157,8 @@
                         <input type="text" class="form-control" id="rlimit" placeholder="Limitation amount" name="rlimit"/>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-block btn-default">
-                            Add new limit
+                        <button type="submit" class="btn btn-block btn-success">
+                            <em>Add new limit</em>
                         </button>
                     </div>
                     <input type="hidden" name="rplan" value="@if(isset($plan)){{$plan->id}}@endif"/>
@@ -163,13 +169,14 @@
                 <form method="POST" action="plan/category" >
                     <div>
                         <h3>
-                            Add Category
+                            <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                            <em>Add Category</em>
                         </h3>
                     </div>
                     <input type="text" class="form-control" id="cName" placeholder="New Category" name="cname"/>
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                    <button type="submit" class="btn btn-block btn-default">
-                        Add new category
+                    <button type="submit" class="btn btn-block btn-success">
+                        <em>Add new category</em>
                     </button>
                 </form>
             </div>

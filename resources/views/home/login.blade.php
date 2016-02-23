@@ -13,7 +13,7 @@
 				<input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
 			</div>
 			<div class="col-md-12">
-				<button type="submit" class="btn btn-block btn-default">Login</button>
+				<button type="submit" class="btn btn-block btn-success">Login</button>
 			</div>
 			<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 		</form>

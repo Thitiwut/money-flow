@@ -1,10 +1,12 @@
 @extends('layouts.app')
 @section('content')
 <div class="container text-center">
-	<h1>Plan Progress</h1>
+	<h1 class="text-info"><span class="glyphicon glyphicon-send" aria-hidden="true"><em>Progress</em></span>
+</h1>
 	<canvas id="plan" width="600" height="400"></canvas>
 	<hr/>
-	<h1>Monthly</h1>
+	<h1 class="text-success"><span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"><em>Monthly</em></span>
+</h1>
 	<canvas id="month" width="600" height="400"></canvas>
 </div>
 @endsection

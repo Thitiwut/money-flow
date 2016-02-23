@@ -23,7 +23,8 @@
 <div class="container">
     <div class="text-center">
         <h1>
-            Expense and Income
+            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
+            <em>Expense and Income</em>
         </h1>
     </div>
     <div class="container">
@@ -31,7 +32,8 @@
             <div class="expense_add">
                 <div>
                     <h3>
-                        Detail
+                       <span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
+                    <em>Detail</em>
                     </h3>
                 </div>
                 <form action="expense/finance" method="post">
@@ -109,8 +111,8 @@
                         <input type="hidden" name="plan_id" value="{{$plan->id}}"/>
                         @endif
                         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                        <button type="submit" class="btn btn-block btn-default">
-                            Add
+                        <button type="submit" class="btn btn-block btn-success">
+                            <em>Add Detail</em>
                         </button>
                     </div>
                 </form>
@@ -119,13 +121,13 @@
                 <form method="POST" action="plan/category" >
                     <div>
                         <h3>
-                            Add Category
+                            <em>Add Category</em>
                         </h3>
                     </div>
                     <input type="text" class="form-control" id="cName" placeholder="New Category" name="cname"/>
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                    <button type="submit" class="btn btn-block btn-default">
-                        Add new category
+                    <button type="submit" class="btn btn-block btn-success">
+                        <em>Add new category</em>
                     </button>
                 </form>
             </div>
@@ -135,7 +137,9 @@
                 <div class="section col-md-12 expense_today">
                     <div>
                         <h3>
-                            Today expense and income
+                            <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
+                            <em>Today Expense and Income</em>
+                            <hr/>
                         </h3>
                     </div>
                     
@@ -179,15 +183,16 @@
                 <div class="col-md-12">
                     <div class="text-center">
                         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                        <button type="submit" class="btn btn-block btn-default">
-                            Delete Expense
+                        <button type="submit" class="btn btn-block btn-danger">
+                            <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
                     </div>
                 </div>
             </form>
+            
             <div class="section col-md-12 expense_summary">
                 <div>
-                    <div class="alert alert-danger" role="alert">
+                    <div class="alert alert-warning" role="alert">
                         Total expense
                         <span class="badge">
                             -{{$totalExpense}}

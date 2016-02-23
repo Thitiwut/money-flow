@@ -15,15 +15,16 @@ $progressBar  = 0;
 <div class="container">
     <div class="text-center">
         <h1>
-            Progress
+             <span class="glyphicon glyphicon-time" aria-hidden="true"><em>Progress</em></span>
+
         </h1>
     </div>
     <div class="container">
         <div class="row text-center">
             <div class="col-md-4">
                 <div>
-                    <h4>
-                        Start Date
+                    <h4 class="text-muted">
+                        <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"><em>StartDate</em></span>
                     </h4>
                 </div>
                 <div>
@@ -34,8 +35,8 @@ $progressBar  = 0;
             </div>
             <div class="col-md-4">
                 <div>
-                    <h4>
-                        Current Date
+                    <h4 class="text-info">
+                       <span class="glyphicon glyphicon-hourglass" aria-hidden="true"><em>CurrentDate</em></span>
                     </h4>
                 </div>
                 <div>
@@ -44,8 +45,8 @@ $progressBar  = 0;
             </div>
             <div class="col-md-4">
                 <div>
-                    <h4>
-                        Finish Date
+                    <h4 class="text-warning">
+                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"><em>FinishDate</em></span>
                     </h4>
                 </div>
                 <div>
@@ -57,7 +58,7 @@ $progressBar  = 0;
         </div>
     </div>
     <div class="container" style="margin-top: 20px;">
-        <div class="progress">
+        <div class="progress progress-striped active">
             @if(isset($progress))
             <?php $progressBar = floor($progress);?>
             @endif
@@ -72,10 +73,11 @@ $progressBar  = 0;
         <table class="table table-bordered">
             <tr>
                 <th>
-                    Expense / Income
+                    <span class="glyphicon glyphicon-flash" aria-hidden="true"><em>Expense&Income</em></span>
                 </th>
                 <th width="200">
-                    Amount
+                    
+                    <span class="glyphicon glyphicon-sort" aria-hidden="true"><em>Amount</em></span>
                 </th>
             </tr>
             <tr>
@@ -125,7 +127,7 @@ $progressBar  = 0;
             </tr>
             <tr>
                 <td>
-                    Total Expense
+                    <span class="glyphicon glyphicon-export" aria-hidden="true"><em>Total Expense</em></span>
                 </td>
                 <td width="200">
                     {{$totalExpense}}
@@ -133,7 +135,7 @@ $progressBar  = 0;
             </tr>
             <tr>
                 <td>
-                    Total Income
+                    <span class="glyphicon glyphicon-import" aria-hidden="true"><em>Total Income</em></span>
                 </td>
                 <td width="200">
                     {{$totalIncome}}
@@ -141,7 +143,7 @@ $progressBar  = 0;
             </tr>
             <tr>
                 <td>
-                    Net Worth
+                    <span class="glyphicon glyphicon-saved" aria-hidden="true"><em>Net Worth</em></span>
                 </td>
                 <td width="200">
                     {{$totalIncome - $totalExpense}}

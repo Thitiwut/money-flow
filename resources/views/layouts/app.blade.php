@@ -1,6 +1,7 @@
 <html>
     <head>
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.css" />
+       
         @yield('style')
     </head>
     <body>
@@ -52,7 +53,7 @@
             </script>
             <script>
                 $('#planList').on('change',function(){
-                    window.location.href = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname+'?id=' + $('#planList').val();
+                    window.location.href = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname+'?id=' + $('#planList').val();
                 });
             </script>
             @yield('script')

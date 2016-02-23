@@ -14,7 +14,7 @@
                     </span>
                 </button>
                 <a class="navbar-brand" href="#">
-                    Money Flow
+                   <p class="text-info"><em>MoneyFlow</em></p>
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
@@ -23,7 +23,7 @@
                 <ul class="nav nav-pills navbar-nav navbar-left">
                     <li>
                         <a href="plan">
-                            Plan
+                            <span class="glyphicon glyphicon-flag" aria-hidden="true">Plan</span>
                         </a>
                     </li>
                     <li>
@@ -43,23 +43,28 @@
                         </div>
                     </li>
                     <li>
+                        
                         <a href="expense">
-                            Expense/Income
+                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true">Expense&Income</span>
                         </a>
                     </li>
                     <li>
+                       
                         <a href="progress">
-                            Progress
+                           <span class="glyphicon glyphicon-tasks" aria-hidden="true">Progress</span>
                         </a>
                     </li>
                     <li>
+                        
                         <a href="charts">
-                            Charts
+                          <span class="glyphicon glyphicon-stats" aria-hidden="true">Charts</span>
                         </a>
                     </li>
                     <li>
+                       
                         <a href="report">
-                            Report
+                           <span class="glyphicon glyphicon-copy" aria-hidden="true">Report</span>
+
                         </a>
                     </li>
                 </li>
@@ -75,17 +80,17 @@
             <ul class="nav nav-pills navbar-nav navbar-right">
                 <li>
                     <a href="feedback">
-                        Feedback
+                        <span class="glyphicon glyphicon-bullhorn" aria-hidden="true">Feedback</span>
                     </a>
                 </li>
                 <li>
                     <a href="setting">
-                        Setting
+                         <span class="glyphicon glyphicon-cog" aria-hidden="true">Setting</span>
                     </a>
                 </li>
                 <li>
                     <a href="logout">
-                        Logout
+                         <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
                     </a>
                 </li>
             </ul>

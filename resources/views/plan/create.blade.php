@@ -45,11 +45,11 @@
                     </textarea>
                 </div>
                 <div class="form-group">
-                    <label for="pExpected">
-                        Expected saving per month
+                    <label for="pMonth">
+                        Duration
                     </label>
-                    <input type="text" class="form-control" id="pExpected" placeholder="Expected" name="pexpected" value="<?php echo isset($plan) ? $plan->expected : old('pexpected'); ?>" />
-                </div>
+                    <input type="text" class="form-control" id="pMonth" placeholder="Per Month" name="pmonth" value="<?php echo isset($plan) ? $plan->period : old('pmonth'); ?>" />
+                </div>  
                 <div class="form-group">
                     <label for="pTarget">
                         Target Money
@@ -61,6 +61,12 @@
                         Budget
                     </label>
                     <input type="text" class="form-control" id="pBudget" placeholder="Budget" name="pbudget" value="<?php echo isset($plan) ? $plan->budget : old('pbudget'); ?>" />
+                </div>
+                                <div class="form-group">
+                    <label for="pExpected">
+                        Expected saving per month
+                    </label>
+                    <input type="number" class="form-control" id="pExpected" placeholder="Expected" name="pexpected" value="<?php echo isset($plan) ? $plan->expected : old('pexpected'); ?>" />
                 </div>
                 <div class="text-center">
                     <div class="col-md-6">
@@ -190,6 +196,17 @@
         $("#deleteForm").submit(function(e){
           e.preventDefault();
         });
+        $("#pMonth").change(calculateExpected);
+        $("#pTarget").change(calculateExpected);
+        $("#pBudget").change(calculateExpected);
+        function calculateExpected(){
+            var period = $('#pMonth').val();
+            var target = $('#pTarget').val();
+            var budget = $('#pBudget').val();
+            var min = (target-budget)/period;
+            $('#pExpected').attr("min",min);
+            $('#pExpected').val(min);
+        }
     });
 </script>
 @endsection

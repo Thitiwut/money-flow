@@ -69,11 +69,13 @@ class PlanController extends Controller
             "pexpected.required"    => "Expected per month is required",
             "ptarget.required"      => "Target for saving is required",
             "pbudget.required"      => "Budget is required",
+            "pmonth.required"      => "Period is required",
 
             "pname.alpha_num"       => "Plan name must be consist of texts and numbers",
-            "pexpected.numeric"     => "Expected per month must be consist of and only numbers",
-            "ptarget.numeric"       => "Target for saving must be consist of and only numbers",
-            "pbudget.numeric"       => "Budget must be consist of and only numbers",
+            "pexpected.numeric"     => "Expected per month must be consist of only numbers",
+            "ptarget.numeric"       => "Target for saving must be consist of only numbers",
+            "pbudget.numeric"       => "Budget must be consist of only numbers",
+            "pmonth.numeric"       => "Period must be consist of only numbers",
         ];
         $validator = Validator::make($request->all(), [
             'pname'        => 'required|alpha_num',
@@ -81,6 +83,7 @@ class PlanController extends Controller
             'pexpected'    => 'required|numeric',
             'ptarget'      => 'required|numeric',
             'pbudget'      => 'required|numeric',
+            'pmonth'        => 'required|numeric|min:1',
         ], $messages);
 
         if ($validator->fails()) {
@@ -112,11 +115,11 @@ class PlanController extends Controller
             if (!$plan) {
                 $plan = new Plan();
             }
-            $period            = ceil(($request->ptarget - $request->pbudget) / $request->pexpected);
+            //$period            = ceil(($request->ptarget - $request->pbudget) / $request->pexpected);
             $plan->user_id     = $this->user->id;
             $plan->name        = $request->pname;
             $plan->description = $request->pdescription;
-            $plan->period      = $period;
+            $plan->period      = $request->pmonth;
             $plan->budget      = $request->pbudget;
             $plan->target      = $request->ptarget;
             $plan->expected    = $request->pexpected;

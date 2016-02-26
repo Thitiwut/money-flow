@@ -53,7 +53,7 @@
             </script>
             <script>
                 $('#planList').on('change',function(){
-                    window.location.href = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname+'?id=' + $('#planList').val();
+                    window.location.href = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname+'?id=' + $('#planList').val();
                 });
             </script>
             @yield('script')

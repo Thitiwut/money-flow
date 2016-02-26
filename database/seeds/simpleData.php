@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Admin;
 use App\Models\Category;
 use Illuminate\Database\Seeder;
 
@@ -37,5 +38,11 @@ class simpleData extends Seeder
         $category->user_id = 0;
         $category->name    = "Tax";
         $category->save();
+
+        $admin           = new Admin();
+        $admin->username = "admin";
+        $admin->password = "123456";
+        $admin->secret   = "123456";
+        $admin->save();
     }
 }

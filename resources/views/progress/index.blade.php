@@ -57,7 +57,7 @@ $progressBar  = 0;
             </div>
         </div>
     </div>
-    <div class="text-center"><h3><span>Max:</span> @if(isset($plan)) {{$plan->expected}} @endif </h3></div>
+    <div class="text-center"><h3><span>Max:</span> @if(isset($month)) {{$month->limit}} @endif </h3></div>
     <div class="container" style="margin-top: 20px;">
         <div class="progress progress-striped active">
             @if(isset($progress))

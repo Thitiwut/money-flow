@@ -26,7 +26,7 @@ class ExpenseController extends Controller
         }
 
         if (isset($attach['plan'])) {
-            if ($month = $attach['plan']->months()->first()) {
+            if ($month = $attach['plan']->months()->orderBy('id', 'desc')->first()) {
                 $attach['daily'] = $month->days()
                     ->where('date', '>=', date('Y-m-d'))
                     ->where('date', '<=', date('Y-m-d', strtotime('+1 day', strtotime(date('Y-m-d')))))
@@ -92,8 +92,14 @@ class ExpenseController extends Controller
                 $month->plan_id  = Session::get('Plan');
                 $month->status   = 0;
                 $month->month    = sizeof($plan->months());
-                $month->limit    = ($plan->target - $plan->budget) / $plan->period;
+                $month->limit    = $plan->expected;
                 $month->progress = 0;
+                $lastMonth       = $plan->months()->orderBy('id', 'desc')->first();
+                if ($lastMonth) {
+                    if ($lastMonth->progress != $lastMonth->limit) {
+                        $month->limit += $lastMonth->progress;
+                    }
+                }
                 $month->save();
             } else {
                 $month = $plan->months()->orderBy('id', 'desc')->first();
@@ -132,14 +138,14 @@ class ExpenseController extends Controller
                 $sumExpenseDaily += $request->famount;
                 if ($restrictDaily->exceed < $sumExpenseDaily) {
                     $validator->errors()->add('User', 'Exceed per day!');
-                    return redirect()->back()->withInput()->withErrors($validator);
+                    //return redirect()->back()->withInput()->withErrors($validator);
                 }
             }
             if ($restrictMonthly) {
                 $sumExpenseMonthly += $request->famount;
                 if ($restrictMonthly->exceed < $sumExpenseMonthly) {
                     $validator->errors()->add('User', 'Exceed per month!');
-                    return redirect()->back()->withInput()->withErrors($validator);
+                    //return redirect()->back()->withInput()->withErrors($validator);
                 }
             }
             if ($request->ftype == 0) {
@@ -162,7 +168,7 @@ class ExpenseController extends Controller
             $finance->save();
             $month->save();
         }
-        return redirect()->back()->withInput();
+        return redirect()->back()->withInput()->withErrors($validator);
     }
     public function postDelete(Request $request)
     {

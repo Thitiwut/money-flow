@@ -29,8 +29,14 @@ class ProgressController extends Controller
                 $month->plan_id  = $plan->id;
                 $month->status   = 0;
                 $month->month    = sizeof($plan->months());
-                $month->limit    = ($plan->target - $plan->budget) / $plan->period;
+                $month->limit    = $plan->expected;
                 $month->progress = 0;
+                $lastMonth       = $plan->months()->orderBy('id', 'desc')->first();
+                if ($lastMonth) {
+                    if ($lastMonth->progress != $lastMonth->limit) {
+                        $month->limit += $lastMonth->progress;
+                    }
+                }
                 $month->save();
             } else {
                 $month = $plan->months()->orderBy('id', 'desc')->first();
@@ -40,6 +46,7 @@ class ProgressController extends Controller
 
             }
             $attach['plan']     = $plan;
+            $attach['month']    = $month;
             $attach['category'] = [];
             $categories         = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
             $start              = date('Y-m-d', strtotime('+' . $month->month - 1 . ' month', strtotime($plan->created_at)));

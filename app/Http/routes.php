@@ -30,5 +30,6 @@ Route::group(['middleware' => ['web']], function () {
 	Route::Controller('/plan','PlanController');
 	Route::Controller('/expense','ExpenseController');
 	Route::Controller('/progress','ProgressController');
+	Route::Controller('/admin','AdminController');
     Route::Controller('/','HomeController');
 });

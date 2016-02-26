@@ -1,6 +1,8 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Category;
+use App\Models\Finance;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -49,12 +51,12 @@ class HomeController extends Controller
                         $days                   = $month->days()->get();
                         $attach["Daily"]['Day'] = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
                         for ($i = 1; $i <= $attach["Daily"]['Day']; $i++) {
-                            $attach["Daily"]["Expense"][$i-1] = 0;
-                            $attach["Daily"]["Income"][$i-1]  = 0;
+                            $attach["Daily"]["Expense"][$i - 1] = 0;
+                            $attach["Daily"]["Income"][$i - 1]  = 0;
                             foreach ($days as $day) {
                                 if ($i == date('d', strtotime($day->date))) {
-                                    $attach["Daily"]["Expense"][$i-1] = $day->expense;
-                                    $attach["Daily"]["Income"][$i-1]  = $day->income;
+                                    $attach["Daily"]["Expense"][$i - 1] = $day->expense;
+                                    $attach["Daily"]["Income"][$i - 1]  = $day->income;
                                 }
                             }
                         }
@@ -73,6 +75,36 @@ class HomeController extends Controller
     {
         Session::flush();
         return redirect('/');
+    }
+    public function getSearch(Request $request)
+    {
+        $attach['categories'] = Category::where("user_id", "=", "0")->get();
+        $attach['user']       = $this->user;
+        if (isset($request->keyword)) {
+            $attach['keyword'] = $request->keyword;
+            $cat               = '';
+            if (isset($request->cat)) {
+                $cat                = $request->cat;
+                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type')
+                    ->join('category', 'category.id', '=', 'finance.category_id')
+                    ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                    ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                    ->join('plan', 'plan.id', '=', 'monthly.plan_id')
+                    ->where('finance.name', 'like', "%$request->keyword%")
+                    ->where('category.id', '=', $cat)
+                    ->paginate(20);
+            } else {
+                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type')
+                    ->join('category', 'category.id', '=', 'finance.category_id')
+                    ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                    ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                    ->join('plan', 'plan.id', '=', 'monthly.plan_id')
+                    ->where('finance.name', 'like', "%$request->keyword%")
+                    ->paginate(20);
+            }
+            return view('home.search', $attach);
+        }
+        return view('home.search');
     }
 
     /*Post*/

@@ -44,25 +44,27 @@
                     <textarea  type="text" class="form-control" id="pDescription" placeholder="Description" name="pdescription" ><?php echo isset($plan) ? $plan->description : old('pdescription'); ?>
                     </textarea>
                 </div>
+                   <div class="form-group">
+                    <label for="pTarget">
+                        Target Money
+                    </label>
+                    <input type="text" class="form-control" id="pTarget" placeholder="Target" name="ptarget" value="<?php echo isset($plan) ? $plan->target : old('ptarget'); ?>" />
+                </div>
+                 <div class="form-group">
+                    <label for="pBudget">
+                        Budget
+                    </label>
+                    <input type="text" class="form-control" id="pBudget" placeholder="Budget" name="pbudget" value="<?php echo isset($plan) ? $plan->budget : old('pbudget'); ?>" />
+                </div>
                 <div class="form-group">
                     <label for="pMonth">
                         Duration
                     </label>
                     <input type="text" class="form-control" id="pMonth" placeholder="Per Month" name="pmonth" value="<?php echo isset($plan) ? $plan->period : old('pmonth'); ?>" />
                 </div>  
-                <div class="form-group">
-                    <label for="pTarget">
-                        Target Money
-                    </label>
-                    <input type="text" class="form-control" id="pTarget" placeholder="Target" name="ptarget" value="<?php echo isset($plan) ? $plan->target : old('ptarget'); ?>" />
-                </div>
-                <div class="form-group">
-                    <label for="pBudget">
-                        Budget
-                    </label>
-                    <input type="text" class="form-control" id="pBudget" placeholder="Budget" name="pbudget" value="<?php echo isset($plan) ? $plan->budget : old('pbudget'); ?>" />
-                </div>
-                                <div class="form-group">
+             
+               
+                   <div class="form-group has-warning">
                     <label for="pExpected">
                         Expected saving per month
                     </label>

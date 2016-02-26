@@ -29,13 +29,14 @@
                     @if (Session::has('successes'))
                     <div class="alert alert-success">
                         <ul>
-                            @foreach ($successes->all() as $success)
+                            @foreach (Session::get('successes') as $success)
                             <li>
                                 {{ $success }}
                             </li>
                             @endforeach
                         </ul>
                     </div>
+                    <?php Session::forget('successes'); ?>
                     @endif
                 </div>
             </div>

@@ -14,5 +14,6 @@
         </div>
     @endforeach
 </div>
+
 {!! $feedbacks->links() !!}
 @endsection

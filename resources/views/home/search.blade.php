@@ -30,17 +30,19 @@
         </div>
     </div>
     <div style="overflow: hidden;">
-        <div class="col-md-2">#</div>
+
         <div class="col-md-2">Name</div>
+        <div class="col-md-2">Amount</div>
         <div class="col-md-2">Type</div>
         <div class="col-md-2">Category</div>
         <div class="col-md-2">Date</div>
         <div class="col-md-2">Plan</div>
+
     </div>
     @foreach ($finances as $key => $finance)
     <div style="overflow: hidden;">
-        <div class="col-md-2">{{$key+1}}</div>
         <div class="col-md-2">{{ $finance->name}}</div>
+        <div class="col-md-2">{{ $finance->amount}}</div>
         <div class="col-md-2"><?php echo ($finance->type == 0) ? "Expense" : "Income"; ?></div>
         <div class="col-md-2">{{ $finance->category }}</div>
         <div class="col-md-2">{{ $finance->created_at }}</div>

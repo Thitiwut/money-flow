@@ -151,9 +151,11 @@ class ExpenseController extends Controller
             if ($request->ftype == 0) {
                 $daily->expense += $request->famount;
                 $month->progress = $month->progress - $request->famount;
+                $plan->budget -= $request->famount;
             } else {
                 $daily->income += $request->famount;
                 $month->progress = $month->progress + $request->famount;
+                $plan->budget += $request->famount;
             }
             $daily->save();
 
@@ -165,6 +167,12 @@ class ExpenseController extends Controller
             $finance->amount      = $request->famount;
             $finance->type        = $request->ftype;
 
+            
+            $plan->save();
+            if($plan->budget >= $plan->target){
+                $successes = ["Congraduation! You have reach your goal!!!"];
+                Session::put('successes',$successes);
+            }
             $finance->save();
             $month->save();
         }

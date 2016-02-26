@@ -86,7 +86,7 @@ class HomeController extends Controller
             $cat               = '';
             if (isset($request->cat)) {
                 $cat                = $request->cat;
-                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type')
+                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type','finance.amount')
                     ->join('category', 'category.id', '=', 'finance.category_id')
                     ->join('daily', 'daily.id', '=', 'finance.daily_id')
                     ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
@@ -95,7 +95,7 @@ class HomeController extends Controller
                     ->where('category.id', '=', $cat)
                     ->paginate(20);
             } else {
-                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type')
+                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type','finance.amount')
                     ->join('category', 'category.id', '=', 'finance.category_id')
                     ->join('daily', 'daily.id', '=', 'finance.daily_id')
                     ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
@@ -118,7 +118,8 @@ class HomeController extends Controller
         $feedback->feedback = $request->feedback;
         $feedback->user_id = $this->user->id;
         $feedback->save();
-        return view('home.feedback')->with(['successes' => ["Feedback is send to admin. Thanks for helping us!"]]);
+        Session::put('successes',["Feedback is send to admin. Thanks for helping us!"]);
+        return view('home.feedback');
     }
     public function postLogin(Request $request)
     {

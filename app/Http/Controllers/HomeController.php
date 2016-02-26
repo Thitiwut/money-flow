@@ -5,6 +5,7 @@ use App\Models\Category;
 use App\Models\Finance;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -106,8 +107,19 @@ class HomeController extends Controller
         }
         return view('home.search');
     }
-
+    public function getFeedback()
+    {
+        return view('home.feedback');
+    }
     /*Post*/
+    public function postFeedback(Request $request)
+    {   
+        $feedback = new Feedback();
+        $feedback->feedback = $request->feedback;
+        $feedback->user_id = $this->user->id;
+        $feedback->save();
+        return view('home.feedback')->with(['successes' => ["Feedback is send to admin. Thanks for helping us!"]]);
+    }
     public function postLogin(Request $request)
     {
         $message = array(

@@ -8,7 +8,7 @@
         </div>
     @foreach ($feedbacks as $feedback)
         <div>
-        	<div class="col-md-4">{{ $feedback->user()->username }}</div>
+        	<div class="col-md-4">{{ $feedback->user->username }}</div>
         	<div class="col-md-4">{{ $feedback->feedback }}</div>
         	<div class="col-md-4">{{ $feedback->created_at }}</div>
         </div>

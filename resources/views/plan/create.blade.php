@@ -71,12 +71,12 @@
                 </div>
                 <div class="text-center">
                     <div class="col-md-6">
-                        <button type="submit" name="Save" class="btn btn-block btn-success">
+                        <button type="submit" name="pSave" class="btn btn-block btn-success">
                             Save
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" id="deleteForm" name="delete" class="btn btn-block btn-danger" value="Delete">
+                        <input type="submit" id="deleteForm" name="pdelete" class="btn btn-block btn-danger" value="Delete">
                     </div>
                 </div>
                 <input type="hidden" name="plan_id" value="<?php echo isset($plan) ? $plan->id : ''; ?>"/>

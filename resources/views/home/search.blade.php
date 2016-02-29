@@ -62,7 +62,7 @@
 <script>
     $(document).ready(function(){
         $('#fcategory').change(function(){
-            window.location.href = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname+'?keyword={{$keyword}}&cat=' + $('#fcategory').val();
+            window.location.href = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname+'?keyword={{$keyword}}&cat=' + $('#fcategory').val();
         });
     });
 </script>

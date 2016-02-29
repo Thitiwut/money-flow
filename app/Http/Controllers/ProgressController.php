@@ -11,10 +11,14 @@ use Validator;
 
 class ProgressController extends Controller
 {
+    public function __construct()
+    {
+        parent::__construct();
+    }
     public function getIndex(Request $request)
     {
-		$successes = array();
-		$validator = Validator::make($request->all(),[]);
+        $successes = array();
+        $validator = Validator::make($request->all(), []);
         if (isset($request->id)) {
             $plan = $this->user->plans()->where('id', '=', $request->id)->first();
         } else if (Session::has('Plan')) {
@@ -34,27 +38,37 @@ class ProgressController extends Controller
                 $month->month    = sizeof($plan->months());
                 $month->limit    = $plan->expected;
                 $month->progress = 0;
-                $lastMonth       = $plan->months()->orderBy('id', 'desc')->first();
+
+                $monthLeft = $plan->period - $diff;
+                if ($monthLeft > 0) {
+                    $newExpected = ceil(($plan->target - $plan->budget) / $monthLeft);
+                }else{
+                    $newExpected = 1;
+                }
+
+                $lastMonth = $plan->months()->orderBy('id', 'desc')->first();
                 if ($lastMonth) {
                     if ($lastMonth->progress != $lastMonth->limit) {
-						if ($lastMonth->progress > $lastMonth->limit) {
-							$month->progress = $month->progress + ($lastMonth->progress - $lastMonth->limit);
-							$successes[] = '<img src="https://pbs.twimg.com/media/CcBq-RpUkAEdOPm.jpg:large" height="65px" width="65px"/>'."Very good! You have succeed. Previous month you have save money over the expected = ".($lastMonth->progress - $lastMonth->limit);
-							//$successes[] = ;
-						}else if($lastMonth->progress < $lastMonth->limit){
-							$month->limit += $lastMonth->progress;
-							$validator->errors()->add('User', '<img src="https://pbs.twimg.com/media/CcBq-RpUkAEdOPm.jpg:large" height="65px" width="65px"/>'.'Too bad. Previous month you can not save money as expected. This month you have to save money more than prevoius month ='.$lastMonth->progress);
-						}
+                        $month->limit = $newExpected;
+                        if ($lastMonth->progress > $lastMonth->limit) {
+                            $successes[] = "Very good! you have succeed " . ($lastMonth->progress - $lastMonth->limit) . " more than limit!";
+                        } else if ($lastMonth->progress < $lastMonth->limit && $lastMonth->progress >= 0) {
+                            $validator->errors()->add('User', 'Too bad cannot reach you goal last month! anyway, keep doing!');
+                        } else if ($lastMonth->progress < $lastMonth->limit && $lastMonth->progress < 0) {
+                            $validator->errors()->add('User', 'Too bad you use ' . $lastMonth->progress . ' more than limit last month!!');
+                        }
                     }
-					
+
                 }
                 $month->save();
-				$attach['progress'] = ($month->progress / $month->limit) * 100;
+                $attach['progress'] = ($month->progress / $month->limit) * 100;
             } else {
                 $month = $plan->months()->orderBy('id', 'desc')->first();
                 if ($month) {
-					if($month->limit == 0)
-						$month->limit = 1;
+                    if ($month->limit == 0) {
+                        $month->limit = 1;
+                    }
+
                     $attach['progress'] = ($month->progress / $month->limit) * 100;
                 }
 
@@ -92,8 +106,13 @@ class ProgressController extends Controller
                         , "expense" => $sumExpense];
                 }
             }
-			Session::forget('successes');
-			Session::put('successes',$successes);
+            if ($plan->budget >= $plan->target) {
+                $successes[] = "Congratuation! You have reach your goal!!!";
+            } else if ($diff >= $plan->period && $plan->budget < $plan->target) {
+                $validator->errors()->add('User', 'This plan has been fail!! Please try again with more discipline!');
+            }
+            Session::forget('successes');
+            Session::put('successes', $successes);
             return view('progress.index')->with($attach)->withErrors($validator);
         } else {
             return view('progress.index');

@@ -25,7 +25,7 @@
 					<button class="btn btn-block btn-warning" onclick="window.history.back()" >Back</button>
 				</div>
 				<div class="col-md-6 text-center"> 
-					<button type="submit" class="btn btn-block btn-info">Submit</button>
+					<button type="submit" name="Submit" class="btn btn-block btn-info">Submit</button>
 				</div>
 			</div>
 			<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">

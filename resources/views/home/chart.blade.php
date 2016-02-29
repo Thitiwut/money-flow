@@ -1,13 +1,24 @@
 @extends('layouts.app')
 @section('content')
 <div class="container text-center">
-	<h1 class="text-info"><span class="glyphicon glyphicon-send" aria-hidden="true"><em>Progress</em></span>
-</h1>
+	<h1 class="text-info"><span class="glyphicon glyphicon-send" aria-hidden="true"><em>Progress</em></span></h1>
+	  <div class="row text-center">
+	   	<div><small><cite title="Source Title">Networth vs Saving money per month.</cite></small></div>
+	   	
+	   	  </div>
 	<canvas id="plan" width="600" height="400"></canvas>
+		<div><span class="label label-success">target</span>
+		<span class="label label-warning">budget</span></div>
 	<hr/>
 	<h1 class="text-success"><span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"><em>Monthly</em></span>
 </h1>
+     <div class="row text-center">
+	   	<div><small><cite title="Source Title">Income vs Expenses</cite></small></div>
+		 </div>
 	<canvas id="month" width="600" height="400"></canvas>
+		<div><span class="label label-success">income</span>
+		<span class="label label-danger">expense</span></div>
+		<hr/>
 </div>
 @endsection
 @section('script')
@@ -24,22 +35,22 @@
 		    datasets: [
 		        {
 		            label: "My First dataset",
-		            fillColor: "rgba(220,220,220,0.2)",
-		            strokeColor: "rgba(220,220,220,1)",
-		            pointColor: "rgba(220,220,220,1)",
+		            fillColor: "rgba(38, 217, 172,0.2)",
+		            strokeColor: "rgba(38, 217, 172,0.3)",
+		            pointColor: "rgba(38, 217, 172,0.3)",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
-		            pointHighlightStroke: "rgba(220,220,220,1)",
+		            pointHighlightStroke: "rgba(38, 217, 172,0.3)",
 		            data: limit
 		        },
 		        {
 		            label: "My Second dataset",
-		            fillColor: "rgba(151,187,205,0.2)",
-		            strokeColor: "rgba(151,187,205,1)",
-		            pointColor: "rgba(151,187,205,1)",
+		            fillColor: "rgba(217,83,38,0.2)",
+		            strokeColor: "rgba(217,83,38,0.3)",
+		            pointColor: "rgba(217,83,38,0.3)",
 		            pointStrokeColor: "#fff",
 		            pointHighlightFill: "#fff",
-		            pointHighlightStroke: "rgba(151,187,205,1)",
+		            pointHighlightStroke: "rgba(217,83,38,0.3)",
 		            data: progress
 		        }
 		    ]

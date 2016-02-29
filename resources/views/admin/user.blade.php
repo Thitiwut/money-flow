@@ -16,7 +16,7 @@
 	        	<form action="delete-user" method="post">
 	        		<input type="hidden" name="id" value="{{$user->id}}" />
 	        		<input type="hidden" name="_token" value="{{csrf_token()}}">
-	        		<input type="submit" />
+	        		<input type="submit" name="Delete"/>
 	        	</form>
         	</div>
         </div>

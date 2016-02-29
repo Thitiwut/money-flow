@@ -39,6 +39,7 @@ class ExpenseController extends Controller
     /*Post Methods*/
     public function postFinance(Request $request)
     {
+		$successes = array();
         $messages = [
             "plan_id.required"   => "Plan is not selected.",
             "fcategory.required" => "Please select category.",
@@ -97,22 +98,30 @@ class ExpenseController extends Controller
                 $lastMonth       = $plan->months()->orderBy('id', 'desc')->first();
                 if ($lastMonth) {
                     if ($lastMonth->progress != $lastMonth->limit) {
-                        $month->limit += $lastMonth->progress;
+						if ($lastMonth->progress > $lastMonth->limit) {
+							$month->progress = $month->progress + ($lastMonth->progress - $lastMonth->limit);
+							$successes[] = "Very good! you have succeed ".($lastMonth->progress - $lastMonth->limit)." more than limit!";
+						}else if($lastMonth->progress < $lastMonth->limit){
+							$month->limit += $lastMonth->progress;
+							$validator->errors()->add('User', 'Too bad you use '.$lastMonth->progress.' more than limit last month!!');
+						}
                     }
+					
                 }
                 $month->save();
             } else {
                 $month = $plan->months()->orderBy('id', 'desc')->first();
             }
-
-            $daily = $month->days()->where('date', '>=', date('Y-m-d', strtotime($request->fdate)))
-                ->where('date', '<=', date('Y-m-d', strtotime('+1 day', strtotime($request->fdate))))
+			$date = str_replace('/', '-', $request->fdate);
+            $daily = $month->days()->where('date', '>=', date('Y-m-d', strtotime($date)))
+                ->where('date', '<=', date('Y-m-d', strtotime('+1 day', strtotime($date))))
                 ->first();
 
             if ($daily == null) {
+				
                 $daily             = new Daily();
                 $daily->monthly_id = $month->id;
-                $daily->date       = date('Y-m-d', strtotime($request->fdate));
+                $daily->date       = date('Y-m-d', strtotime($date));
                 $daily->expense    = 0;
                 $daily->income     = 0;
             }
@@ -170,21 +179,54 @@ class ExpenseController extends Controller
             
             $plan->save();
             if($plan->budget >= $plan->target){
-                $successes = ["Congraduation! You have reach your goal!!!"];
-                Session::put('successes',$successes);
+                $successes[] = "Congratuation! You have reach your goal!!!";
             }
+			Session::forget('successes');
+			Session::put('successes',$successes);
             $finance->save();
             $month->save();
         }
-        return redirect()->back()->withInput()->withErrors($validator);
+         return redirect()->back()->withInput()->withErrors($validator);
     }
     public function postDelete(Request $request)
     {
         if ($request->expense != null) {
             foreach ($request->expense as $key => $value) {
-                Finance::find($value)->delete();
+                $finance = Finance::find($value);
+				if($finance->type == 0){
+					
+					$day = Daily::find($finance->daily_id);
+					$day->expense -= $finance->amount;
+					$day->save();
+					
+					$month = Monthly::find($day->monthly_id);
+					$month->progress += $finance->amount;
+					$month->save();
+					
+					$plan = Plan::find($month->plan_id);
+					$plan->budget += $finance->amount;
+					$plan->save();
+				}else{
+					$day = Daily::find($finance->daily_id);
+					$day->income -= $finance->amount;
+					$day->save();
+					
+					$month = Monthly::find($day->monthly_id);
+					$month->progress -= $finance->amount;
+					$month->save();
+					
+					$plan = Plan::find($month->plan_id);
+					$plan->budget -= $finance->amount;
+					$plan->save();
+				}
+				$finance->delete();
+				Session::forget("successes");
+				Session::put("successes",["Delete expense successes fully."]);
             }
-        }
+        }else{
+			Session::forget("successes");
+			Session::put("successes",["No item selected!"]);
+		}
         return redirect()->back()->withInput();
     }
 }

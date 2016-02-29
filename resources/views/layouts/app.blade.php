@@ -1,7 +1,7 @@
 <html>
     <head>
         <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.css" />
-       
+		<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/css/datepicker.css" />
         @yield('style')
     </head>
     <body>
@@ -16,7 +16,7 @@
                         <ul>
                             @foreach ($errors->all() as $error)
                             <li>
-                                {{ $error }}
+                                {!! $error !!}
                             </li>
                             @endforeach
                         </ul>
@@ -25,20 +25,36 @@
                 </div>
             </div>
             <div class="container">
-                <div class="col-md-offset-3 col-md-6">
-                    @if (Session::has('successes'))
-                    <div class="alert alert-success">
-                        <ul>
-                            @foreach (Session::get('successes') as $success)
-                            <li>
-                                {{ $success }}
-                            </li>
-                            @endforeach
-                        </ul>
-                    </div>
-                    <?php Session::forget('successes'); ?>
-                    @endif
-                </div>
+				<div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+				  <div class="modal-dialog">
+					<div class="modal-content">
+					  <div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+						<h4 class="modal-title">Success</h4>
+					  </div>
+					  <div class="modal-body" style="overflow: hidden;">
+						<div class="">
+							@if (Session::has('successes'))
+								@if(sizeOf(Session::get('successes')) > 0)
+							<div class="alert alert-success">
+								<ul>
+									@foreach (Session::get('successes') as $success)
+									<li>
+										{!! $success !!}
+									</li>
+									@endforeach
+								</ul>
+							</div>
+								@endif
+							@endif
+						</div>
+					  </div>
+					  <div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					  </div>
+					</div><!-- /.modal-content -->
+				  </div><!-- /.modal-dialog -->
+				</div><!-- /.modal -->
             </div>
             <div>
                 @yield('content')
@@ -52,12 +68,28 @@
             </script>
             <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha256-KXn5puMvxCw+dAYznun+drMdG1IFl3agK0p/pqT9KAo= sha512-2e8qq0ETcfWRI4HJBzQiA3UoyFk6tbNyG+qSaIBZLyW9Xf3sWZHN/lxe9fTh1U45DpPf07yj94KsUHHWe4Yk1A==" crossorigin="anonymous">
             </script>
+			<script src="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/js/bootstrap-datepicker.js"></script>
             <script>
                 $('#planList').on('change',function(){
-                    window.location.href = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname+'?id=' + $('#planList').val();
+                    window.location.href = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname+'?id=' + $('#planList').val();
                 });
             </script>
+
+            <script >
+                    $('.datepicker').datepicker({
+                     format: 'mm/dd/yyyy',
+                    startDate: '-3d'
+                        });
+            </script>
+			<script>
+			<?php if (Session::has('successes')){
+				if(sizeOf(Session::get('successes')) > 0){?>
+					 $('#myModal').modal('toggle');
+				<?php }
+			}?>
+			</script>
             @yield('script')
+			<?php Session::forget("successes"); ?>
         </div>
     </body>
 </html>

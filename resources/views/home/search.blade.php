@@ -30,25 +30,31 @@
         </div>
     </div>
     <div style="overflow: hidden;">
-
-        <div class="col-md-2">Name</div>
-        <div class="col-md-2">Amount</div>
-        <div class="col-md-2">Type</div>
-        <div class="col-md-2">Category</div>
-        <div class="col-md-2">Date</div>
-        <div class="col-md-2">Plan</div>
-
-    </div>
-    @foreach ($finances as $key => $finance)
-    <div style="overflow: hidden;">
-        <div class="col-md-2">{{ $finance->name}}</div>
-        <div class="col-md-2">{{ $finance->amount}}</div>
-        <div class="col-md-2"><?php echo ($finance->type == 0) ? "Expense" : "Income"; ?></div>
-        <div class="col-md-2">{{ $finance->category }}</div>
-        <div class="col-md-2">{{ $finance->created_at }}</div>
-        <div class="col-md-2">{{ $finance->plan }}</div>
-    </div>
-    @endforeach
+         <table class="table table-striped table-hover ">
+  <thead>
+    <tr class="success">
+        <th>Name</th>
+        <th>Amount</th>
+        <th>Type</th>
+        <th class="text-warning">Category</th>
+        <th>Date</th>
+        <th>Plan</th>
+        </tr >
+  </thead>
+        <tbody> 
+            @foreach ($finances as $key => $finance)
+        <tr class="info">
+        <td>{{ $finance->name}}</td>
+       <td>{{ $finance->amount}}</td>
+        <td><?php echo ($finance->type == 0) ? "Expense" : "Income"; ?></td>
+        <td class="text-warning">{{ $finance->category }}</td>
+        <td>{{ $finance->created_at }}</td>
+        <td>{{ $finance->plan }}</td>
+    
+     </tr>
+      @endforeach
+  </tbody>
+  </table> 
 </div>
 {!! $finances->links() !!}
 @endsection
@@ -56,7 +62,7 @@
 <script>
     $(document).ready(function(){
         $('#fcategory').change(function(){
-            window.location.href = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname+'?keyword={{$keyword}}&cat=' + $('#fcategory').val();
+            window.location.href = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname+'?keyword={{$keyword}}&cat=' + $('#fcategory').val();
         });
     });
 </script>

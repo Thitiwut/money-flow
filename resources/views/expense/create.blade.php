@@ -41,7 +41,7 @@
                         <label for="fdate">
                             Date
                         </label>
-                        <input type="date" class="form-control" id="fdate" placeholder="Date" name="fdate" value="{{old('fdate')}}" />
+                        <input type="text" class="form-control" id="fdate" placeholder="Date" name="fdate" value="{{old('fdate')}}" />
                     </div>
                     <label for="email">
                         Type
@@ -209,4 +209,10 @@
         </div>
     </div>
 </div>
+@endsection
+@section('script')
+<script>
+	$.fn.datepicker.defaults.format = "dd/mm/yyyy";
+	$('#fdate').datepicker();
+</script>
 @endsection

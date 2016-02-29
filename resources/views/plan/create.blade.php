@@ -41,8 +41,7 @@
                     <label for="pDescription">
                         Description
                     </label>
-                    <textarea  type="text" class="form-control" id="pDescription" placeholder="Description" name="pdescription" ><?php echo isset($plan) ? $plan->description : old('pdescription'); ?>
-                    </textarea>
+                    <textarea  type="text" class="form-control" id="pDescription" placeholder="Description" name="pdescription" ><?php echo isset($plan) ? $plan->description : old('pdescription'); ?></textarea>
                 </div>
                    <div class="form-group">
                     <label for="pTarget">
@@ -72,12 +71,12 @@
                 </div>
                 <div class="text-center">
                     <div class="col-md-6">
-                        <button type="submit" class="btn btn-block btn-success">
-                             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span>
+                        <button type="submit" name="Save" class="btn btn-block btn-success">
+                            Save
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" id="deleteForm" name="delete" class="btn btn-block btn-danger" value="delete">
+                        <input type="submit" id="deleteForm" name="delete" class="btn btn-block btn-danger" value="Delete">
                     </div>
                 </div>
                 <input type="hidden" name="plan_id" value="<?php echo isset($plan) ? $plan->id : ''; ?>"/>

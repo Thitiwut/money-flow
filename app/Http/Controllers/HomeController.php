@@ -118,6 +118,7 @@ class HomeController extends Controller
         $feedback->feedback = $request->feedback;
         $feedback->user_id = $this->user->id;
         $feedback->save();
+		Session::forget("successes");
         Session::put('successes',["Feedback is send to admin. Thanks for helping us!"]);
         return view('home.feedback');
     }

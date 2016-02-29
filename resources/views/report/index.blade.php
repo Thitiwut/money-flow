@@ -15,75 +15,61 @@ $progressBar  = 0;
 <div class="container">
     <div class="text-center">
         <h1>
-             <span class="glyphicon glyphicon-time" aria-hidden="true"><em>Progress</em></span>
-
+             <span class="glyphicon glyphicon-file" aria-hidden="true"><em>Report</em></span>
+              
         </h1>
     </div>
         <div class="text-center">
             <blockquote>
-          <p>@if(isset($plan)) {{$plan->name}} @endif </p>
+          <p>Your plan is @if(isset($plan)) {{$plan->name}} @endif </p>
           <small><cite title="Source Title">@if(isset($plan)) {{$plan->description}} @endif</cite></small>
         </blockquote>
         </div>
     <div class="container">
         <div class="row text-center">
-            <div class="col-md-4">
-                <div>
-                    <h4 class="text-muted">
-                        <span class="glyphicon glyphicon-piggy-bank" aria-hidden="true"><em>StartDate</em></span>
-                    </h4>
-                </div>
-                <div>
-                    <?php //var_dump($plan); ?>
+            <div class="col-md-6">
+                <div class="well well-sm">
+                     <span><em>-StartDate</em>: </span>
+                          <?php //var_dump($plan); ?>
                     @if(isset($plan)) {{date('D d F Y', strtotime($plan->
                     created_at))}} @endif
                 </div>
             </div>
-            <div class="col-md-4">
-                <div>
-                    <h4 class="text-info">
-                       <span class="glyphicon glyphicon-hourglass" aria-hidden="true"><em>CurrentDate</em></span>
-                    </h4>
-                </div>
-                <div>
-                    @if(isset($plan)) {{date('D d F Y')}} @endif
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div>
-                    <h4 class="text-warning">
-                        <span class="glyphicon glyphicon-star-empty" aria-hidden="true"><em>FinishDate</em></span>
-                    </h4>
-                </div>
-                <div>
+            <div class="col-md-6">
+                <div class="well well-sm">
+                <span><em>-FinishDate:</em></span>   
                     @if(isset($plan)) {{date('D d F Y', strtotime('+'.$plan->
                     period.' month', strtotime($plan->
                     created_at)))}} @endif
                 </div>
             </div>
         </div>
+         <div class="row text-center">
+                <div class="col-md-4"></div>
+                <div class="col-md-4"> <div class="well well-sm">
+                <span><em>Today :</em></span>   
+                    @if(isset($plan)) {{date('D d F Y')}} @endif
+                </div></div>
+                <div class="col-md-4"></div>
+         </div>
     </div>
     <div class="container-fluid">
          <div class="row text-center">
-            <div class="col-xs-6 col-md-4"><h3><span>Target:</span> @if(isset($plan)) {{$plan->target}} @endif </h3></div>
-            <div class="col-xs-6 col-md-4"><h3><span><cite title="Source Title">Target per month:</cite></span> @if(isset($month)) {{$month->limit}} @endif </h3></div>
-	       <div class="col-xs-6 col-md-4"><h3><span>Current Budget:</span> @if(isset($plan)) {{$plan->budget}} @endif </h3></div>
+            <div class="col-xs-6 col-md-4"><div class="panel panel-default">
+                <div class="panel-heading">Goal</div><div class="panel-body">
+                 @if(isset($plan)) {{$plan->target}} @endif ฿
+            </div></div></div>
+            <div class="col-xs-6 col-md-4"><div class="panel panel-default">
+                <div class="panel-heading">Max</div><div class="panel-body">
+                 @if(isset($month)) {{$month->limit}} @endif ฿</div></div></div>
+	       <div class="col-xs-6 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">CurrentBudget</div><div class="panel-body">
+             @if(isset($plan)) {{$plan->budget}} @endif ฿</div></div></div>
         </div>
 
     </div>
-    <div class="container" style="margin-top: 20px;">
-        <div class="progress ">
-            @if(isset($progress))
-            <?php 
-				$progressBar = floor($progress);
-				if($progressBar > 100){ $progressBar = 100;}
-			?>
-            @endif
-            <div class="progress-bar progress-bar-success progress-bar-striped active" role="progressbar" aria-valuenow="{{$progressBar}}" aria-valuemin="0" aria-valuemax="100" style="width: {{$progressBar}}%;">
-                    {{$progressBar}}% 
-            </div>
-        </div>
-    </div>
+
     <div class="container" style="margin-top: 20px;">
         <table class="table table-bordered">
             <tr>
@@ -165,6 +151,13 @@ $progressBar  = 0;
                 </td>
             </tr>
         </table>
+    </div>
+      <div class="text-center">
+     
+             <div><a href="http://pdfcrowd.com/" class="btn btn-success">
+                <span class="glyphicon glyphicon-download-alt" aria-hidden="true"><em>Getreport.</em></span>
+              </a></div>
+ 
     </div>
 </div>
 @endsection

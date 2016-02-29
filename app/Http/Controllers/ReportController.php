@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 use Session;
 use Validator;
 
-class ProgressController extends Controller
+class ReportController extends Controller
 {
     public function getIndex(Request $request)
     {
@@ -39,11 +39,11 @@ class ProgressController extends Controller
                     if ($lastMonth->progress != $lastMonth->limit) {
 						if ($lastMonth->progress > $lastMonth->limit) {
 							$month->progress = $month->progress + ($lastMonth->progress - $lastMonth->limit);
-							$successes[] = '<img src="https://pbs.twimg.com/media/CcBq-RpUkAEdOPm.jpg:large" height="65px" width="65px"/>'."Very good! You have succeed. Previous month you have save money over the expected = ".($lastMonth->progress - $lastMonth->limit);
+							$successes[] = '<img src="https://pbs.twimg.com/media/CcBq-RpUkAEdOPm.jpg:large" height="50px" width="50px"/>'."Very good! you have succeed ".($lastMonth->progress - $lastMonth->limit)." more than limit!";
 							//$successes[] = ;
 						}else if($lastMonth->progress < $lastMonth->limit){
 							$month->limit += $lastMonth->progress;
-							$validator->errors()->add('User', '<img src="https://pbs.twimg.com/media/CcBq-RpUkAEdOPm.jpg:large" height="65px" width="65px"/>'.'Too bad. Previous month you can not save money as expected. This month you have to save money more than prevoius month ='.$lastMonth->progress);
+							$validator->errors()->add('User', '<img src="https://pbs.twimg.com/media/CcBq-RpUkAEdOPm.jpg:large" height="50px" width="50px"/>'.'Too bad you use '.$lastMonth->progress.' more than limit last month!!');
 						}
                     }
 					
@@ -94,9 +94,9 @@ class ProgressController extends Controller
             }
 			Session::forget('successes');
 			Session::put('successes',$successes);
-            return view('progress.index')->with($attach)->withErrors($validator);
+            return view('report.index')->with($attach)->withErrors($validator);
         } else {
-            return view('progress.index');
+            return view('report.index');
         }
     }
 }

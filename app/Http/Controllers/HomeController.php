@@ -2,10 +2,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Feedback;
 use App\Models\Finance;
+use App\Models\Monthly;
 use App\Models\Plan;
 use App\Models\User;
-use App\Models\Feedback;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -29,11 +30,12 @@ class HomeController extends Controller
     {
         return view('home.register');
     }
-    public function getCharts()
+    public function getCharts(Request $request)
     {
         if ($this->user != null && Session::has('Plan') && Session::get('Plan') != "") {
             $plan   = Plan::find(Session::get('Plan'));
             $months = $plan->months()->get();
+            $attach["MonthList"] = $months;
             if ($plan) {
                 $attach['Month'] = array();
                 for ($i = 0; $i < $plan->period; $i++) {
@@ -46,10 +48,12 @@ class HomeController extends Controller
                         $attach['Progress'][] = "";
                     }
                 }
+                $attach["Daily"] = array();
                 if (isset($months)) {
                     if (isset($months[count($months) - 1])) {
-                        $month                  = $months[count($months) - 1];
-                        $days                   = $month->days()->get();
+                        $month = $months[count($months) - 1];
+                        $days  = $month->days()->get();
+
                         $attach["Daily"]['Day'] = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
                         for ($i = 1; $i <= $attach["Daily"]['Day']; $i++) {
                             $attach["Daily"]["Expense"][$i - 1] = 0;
@@ -61,6 +65,30 @@ class HomeController extends Controller
                                 }
                             }
                         }
+                    }
+                }
+                $attach["Category"] = array();
+                if ($request->month != null) {
+                    $month      = Monthly::find($request->month);
+                    $categories = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
+                    $start      = date('Y-m-d', strtotime('+' . $month->month - 1 . ' month', strtotime($plan->created_at)));
+                    $end        = date('Y-m-d', strtotime('+' . $month->month . ' month', strtotime($plan->created_at)));
+                    foreach ($categories as $key => $value) {
+                        $amount = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                            ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                            ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                            ->where('monthly.id', '=', $month->id)
+                            ->where('finance.category_id', '=', $value->id)
+                            ->where('type', '=', 0)
+                            ->where('daily.date', '>=', $start)
+                            ->where('daily.date', '<=', $end)
+                            ->sum('amount');
+                        $rand = dechex(rand(0x000000, 0xFFFFFF));
+                        if (intval($amount) > 0) {
+                            $attach["Category"][$value->name]["amount"] = $amount;
+                            $attach["Category"][$value->name]["color"] = $rand;
+                        }
+
                     }
                 }
             }
@@ -86,7 +114,7 @@ class HomeController extends Controller
             $cat               = '';
             if (isset($request->cat)) {
                 $cat                = $request->cat;
-                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type','finance.amount')
+                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type', 'finance.amount')
                     ->join('category', 'category.id', '=', 'finance.category_id')
                     ->join('daily', 'daily.id', '=', 'finance.daily_id')
                     ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
@@ -95,7 +123,7 @@ class HomeController extends Controller
                     ->where('category.id', '=', $cat)
                     ->paginate(20);
             } else {
-                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type','finance.amount')
+                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type', 'finance.amount')
                     ->join('category', 'category.id', '=', 'finance.category_id')
                     ->join('daily', 'daily.id', '=', 'finance.daily_id')
                     ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
@@ -113,13 +141,13 @@ class HomeController extends Controller
     }
     /*Post*/
     public function postFeedback(Request $request)
-    {   
-        $feedback = new Feedback();
+    {
+        $feedback           = new Feedback();
         $feedback->feedback = $request->feedback;
-        $feedback->user_id = $this->user->id;
+        $feedback->user_id  = $this->user->id;
         $feedback->save();
-		Session::forget("successes");
-        Session::put('successes',["Feedback is send to admin. Thanks for helping us!"]);
+        Session::forget("successes");
+        Session::put('successes', ["Feedback is send to admin. Thanks for helping us!"]);
         return view('home.feedback');
     }
     public function postLogin(Request $request)

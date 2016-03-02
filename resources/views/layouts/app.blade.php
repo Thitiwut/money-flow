@@ -70,8 +70,9 @@
             </script>
 			<script src="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/js/bootstrap-datepicker.js"></script>
             <script>
+                var BASEURL = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname;
                 $('#planList').on('change',function(){
-                    window.location.href = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname+'?id=' + $('#planList').val();
+                    window.location.href = BASEURL+'?id=' + $('#planList').val();
                 });
             </script>
 

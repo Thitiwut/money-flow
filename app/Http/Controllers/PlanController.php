@@ -56,6 +56,7 @@ class PlanController extends Controller
                 $restrict->delete();
             }
             $plan->delete();
+            Session::put('successes',["Plan is deleted!"]);
         }
         Session::forget('Plan');
         return redirect('plan');
@@ -93,7 +94,7 @@ class PlanController extends Controller
                 ->withInput();
         }
 
-        if ($request->delete != null) {
+        if ($request->pdelete != null) {
             return redirect('plan/delete');
         }
 

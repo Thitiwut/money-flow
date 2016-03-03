@@ -33,8 +33,9 @@ class HomeController extends Controller
     public function getCharts(Request $request)
     {
         if ($this->user != null && Session::has('Plan') && Session::get('Plan') != "") {
-            $plan   = Plan::find(Session::get('Plan'));
-            $months = $plan->months()->get();
+            $plan                = Plan::find(Session::get('Plan'));
+            $months              = $plan->months()->get();
+            $attach["Plan"]      = $plan;
             $attach["MonthList"] = $months;
             if ($plan) {
                 $attach['Month'] = array();
@@ -74,7 +75,7 @@ class HomeController extends Controller
                     $start      = date('Y-m-d', strtotime('+' . $month->month - 1 . ' month', strtotime($plan->created_at)));
                     $end        = date('Y-m-d', strtotime('+' . $month->month . ' month', strtotime($plan->created_at)));
                     foreach ($categories as $key => $value) {
-                        $amount = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                        $expense = Finance::join('category', 'category.id', '=', 'finance.category_id')
                             ->join('daily', 'daily.id', '=', 'finance.daily_id')
                             ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
                             ->where('monthly.id', '=', $month->id)
@@ -83,10 +84,20 @@ class HomeController extends Controller
                             ->where('daily.date', '>=', $start)
                             ->where('daily.date', '<=', $end)
                             ->sum('amount');
+                        $income = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                            ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                            ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                            ->where('monthly.id', '=', $month->id)
+                            ->where('finance.category_id', '=', $value->id)
+                            ->where('type', '=', 1)
+                            ->where('daily.date', '>=', $start)
+                            ->where('daily.date', '<=', $end)
+                            ->sum('amount');
                         $rand = dechex(rand(0x000000, 0xFFFFFF));
-                        if (intval($amount) > 0) {
-                            $attach["Category"][$value->name]["amount"] = $amount;
-                            $attach["Category"][$value->name]["color"] = $rand;
+                        if (intval($expense) > 0 || intval($income) > 0) {
+                            $attach["Category"][$value->name]["expense"] = $expense;
+                            $attach["Category"][$value->name]["income"]  = $income;
+                            $attach["Category"][$value->name]["color"]   = $rand;
                         }
 
                     }
@@ -98,7 +109,8 @@ class HomeController extends Controller
     }
     public function getSetting()
     {
-        return view('home.setting');
+        $attach['user'] = $this->user;
+        return view('home.setting', $attach);
     }
     public function getLogout()
     {
@@ -107,7 +119,7 @@ class HomeController extends Controller
     }
     public function getSearch(Request $request)
     {
-        $attach['categories'] = Category::where("user_id", "=", "0")->get();
+        $attach['categories'] = Category::where("user_id", "=", "0")->orWhere("user_id", "=", $this->user->id)->get();
         $attach['user']       = $this->user;
         if (isset($request->keyword)) {
             $attach['keyword'] = $request->keyword;
@@ -138,6 +150,30 @@ class HomeController extends Controller
     public function getFeedback()
     {
         return view('home.feedback');
+    }
+    public function getReport(Request $request)
+    {
+        if ($this->user != null && Session::has('Plan') && Session::get('Plan') != "") {
+            $plan               = Plan::find(Session::get('Plan'));
+            $attach["Month"]    = $plan->months()->get();
+            $attach["Category"] = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
+            if (isset($request->category) && isset($request->month)) {
+                $cat                = $request->category;
+                $month              = $request->month;
+                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type', 'finance.amount')
+                    ->join('category', 'category.id', '=', 'finance.category_id')
+                    ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                    ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                    ->join('plan', 'plan.id', '=', 'monthly.plan_id')
+                    ->where('category.id', '=', $cat)
+                    ->where('monthly.id', '=', $month)
+                    ->where('plan.id', '=', $plan->id)
+                    ->paginate(20);
+            }
+            return view('home.report', $attach);
+        } else {
+            return view('home.report');
+        }
     }
     /*Post*/
     public function postFeedback(Request $request)
@@ -218,5 +254,41 @@ class HomeController extends Controller
         $request->session()->put('Auth', $user);
         return redirect('/progress');
     }
+    public function postUpdate(Request $request)
+    {
+        $message = array(
+        );
 
+        $validator = Validator::make($request->all(), [
+            'password'   => 'min:6',
+            'repassword' => 'min:6',
+        ], $message);
+
+        if ($validator->fails()) {
+            return redirect()
+                ->back()
+                ->withErrors($validator)
+                ->withInput();
+        }
+        if ($request->password != $request->repassword) {
+            return redirect()
+                ->back()
+                ->withErrors('Password is not match!')
+                ->withInput();
+        }
+
+        $user = User::find($this->user->id);
+        if ($request->username != null && $request->username != $user->username) {
+            $user->username = $request->username;
+        }
+        if ($request->password != null && $request->password != $user->password) {
+            $user->password = $request->password;
+        }
+        if ($request->email != null && $request->email != $user->email) {
+            $user->email = $request->email;
+        }
+        $user->save();
+        $request->session()->put('Auth', $user);
+        return redirect('/setting');
+    }
 }

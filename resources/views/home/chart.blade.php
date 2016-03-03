@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<div class="text-center"><h1>@if($Plan != null) {{$Plan->name}} @endif</h1></div>
 <div class="container text-center">
 	<h1 class="text-info"><span class="glyphicon glyphicon-send" aria-hidden="true"><em>Progress</em></span></h1>
 	<div class="row text-center">
@@ -47,7 +48,17 @@
 			@endif
 		</select>
 	</div>
-	<canvas id="category" width="600" height="400"></canvas>
+	<div>
+		<div class="col-md-6 text-center">
+		<h3>Income</h3>
+		<canvas id="incomePie" width="300" height="300"></canvas>
+		</div>
+		<div class="col-md-6 text-center">
+		<h3>Expense</h3>
+		<canvas id="expensePie" width="300" height="300"></canvas>
+		</div>
+	</div>
+	
 	<div style="padding-top: 20px;">
 		@if(isset($Category))
 		<?php foreach($Category as $key => $cat){ ?>
@@ -55,6 +66,7 @@
 		<?php } ?>	
 		@endif
 	</div>
+	
 	<hr/>
 </div>
 @endsection
@@ -156,18 +168,31 @@
 			var monthChart = new Chart(monthElement).Bar(dataDaily);
 			/*Category*/
 			<?php if(isset($Category)){ ?>
-			var categoryElement = $("#category").get(0).getContext("2d");
-			var category = [
+			var incomeElement = $("#incomePie").get(0).getContext("2d");
+			var incomePie = [
 			<?php foreach($Category as $key => $cat){ ?>
-			{
-				value: <?php echo $cat["amount"]; ?>,
+			{                                                               
+				value: <?php echo $cat["income"]; ?>,
 				color:"#<?php echo $cat["color"]; ?>",
 				highlight: "#FF5A5E",
 				label: <?php echo "'".$key."'"; ?>
 			},
 			<?php } ?>
 			];
-			var myPieChart = new Chart(categoryElement).Pie(category);
+			var incomeChart = new Chart(incomeElement).Pie(incomePie);
+
+			var expenseElement = $("#expensePie").get(0).getContext("2d");
+			var expensePie = [
+			<?php foreach($Category as $key => $cat){ ?>
+			{
+				value: <?php echo $cat["expense"]; ?>,
+				color:"#<?php echo $cat["color"]; ?>",
+				highlight: "#FF5A5E",
+				label: <?php echo "'".$key."'"; ?>
+			},
+			<?php } ?>
+			];
+			var expenseChart = new Chart(expenseElement).Pie(expensePie);
 			<?php } ?>
 		});
 <?php } ?>

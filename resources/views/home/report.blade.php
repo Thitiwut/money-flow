@@ -4,6 +4,7 @@
 @section('content')
 <div class="container">
     <div>
+
         <form class="form-inline text-center">
             <div class="form-group">
                 <label for="month">
@@ -42,16 +43,16 @@
                 </select>
             </div>
             <button type="submit" class="btn btn-default">
-                Search
+                Getlist
             </button>
         </form>
     </div>
     <hr/>
     <div>
         <div style="overflow: hidden;">
-            <table class="table table-striped table-hover ">
+            <table id="myTable" class="table table-striped table-hover ">
                 <thead>
-                    <tr class="success">
+                    <tr >
                         <th>
                             Name
                         </th>
@@ -61,27 +62,27 @@
                         <th>
                             Type
                         </th>
-                        <th class="text-warning">
+                        <th >
                             Category
                         </th>
                         <th>
                             Date
                         </th>
-                        <th>
+                      <!--   <th>
                             Plan
-                        </th>
+                        </th>-->
                     </tr >
                 </thead>
                 <tbody>
                     @if(isset($finances))
                     @foreach ($finances as $key =>
                     $finance)
-                    <tr class="info">
+                    <tr >
                         <td>
                             {{ $finance->
                             name}}
                         </td>
-                        <td>
+                        <td class="text-info">
                             {{ $finance->
                             amount}}
                         </td>
@@ -97,10 +98,10 @@
                             {{ $finance->
                             created_at }}
                         </td>
-                        <td>
+                       <!-- <td>
                             {{ $finance->
                             plan }}
-                        </td>
+                        </td>-->
                     </tr>
                     @endforeach
                     {!! $finances->
@@ -112,3 +113,4 @@
     </div>
 </div>
 @endsection
+

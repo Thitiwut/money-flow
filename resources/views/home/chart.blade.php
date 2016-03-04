@@ -1,20 +1,35 @@
 @extends('layouts.app')
 @section('content')
-<div class="text-center"><h1>@if(isset($Plan) && $Plan != null) {{$Plan->name}} @endif</h1></div>
+<div class="text-center"><h1><em>@if($Plan != null) {{$Plan->name}} @endif</em></h1></div>
 <div class="container text-center">
 	<h1 class="text-info"><span class="glyphicon glyphicon-send" aria-hidden="true"><em>Progress</em></span></h1>
 	<div class="row text-center">
 		<div><small><cite title="Source Title">Networth vs Saving money per month.</cite></small></div>
 
 	</div>
+	<div class="row">
+	<div class="col-md-5"> 
 	<canvas id="plan" width="600" height="400"></canvas>
-	<div>
-		<span class="label label-success">target</span>
-		<span class="label label-warning">budget</span>
+</div>
+	<div class="col-md-6"> 
+			<div class="row"> 
+
+		<div class="col-md-12">
+		<a href="#" class="btn btn-success btn-xs"></a>Your expected saving money per month.
 	</div>
+	    <div class="col-md-12">
+	    	<p></p>
+	    </div>
+	<div class="col-md-12">
+		<a href="#" class="btn btn-warning btn-xs"></a>Your budget that you saving each month.</em></p>
+		</div>
+	</div>
+</div>
+</div>
 	<hr/>
-	<h1 class="text-success"><span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"><em>Monthly</em></span>
-	</h1>
+	<div class="row">
+	<em><h1 class="text-success" id="demo">
+	</h1></em>
 	<div class="row text-center">
 		<div>
 			<small>
@@ -22,21 +37,37 @@
 			</small>
 		</div>
 	</div>
+	<div class="col-md-5"> 
 	<canvas id="month" width="600" height="400"></canvas>
-	<div>
-		<span class="label label-success">income</span>
-		<span class="label label-danger">expense</span>
+</div>
+<div class="col-md-6">
+	<div class="row"> 
+
+		<div class="col-md-12">
+		<a href="#" class="btn btn-success btn-xs"></a>your total income in each day.
 	</div>
+	    <div class="col-md-12">
+	    	<p></p>
+	    </div>
+	<div class="col-md-12">
+		<a href="#" class="btn btn-danger btn-xs"></a>your total expense in each day.
+		</div>
+	</div>
+</div>
+</div>
 	<hr/>
-	<h1 class="text-success"><span class="glyphicon glyphicon-object-align-bottom" aria-hidden="true"><em>Category Expense</em></span>
-	</h1>
+	<h2 class="text-success"><span class="glyphicon glyphicon-cd" aria-hidden="true"><em>Expense&Income</em></span>
+	</h2>
+	<p></p>
+	<h4 class="text-success">Based on Categories</h4>
 	<div class="row text-center">
 		<div>
 			<small>
-				<cite title="Source Title">Each category expense</cite>
+				<cite title="Source Title">Each category expense and income</cite>
 			</small>
 		</div>
 	</div>
+  <p></p>
 	<div>
 		Please Select Month
 		<select id="monthSelector">
@@ -50,11 +81,11 @@
 	</div>
 	<div>
 		<div class="col-md-6 text-center">
-		<h3>Income</h3>
+		<h3 class="text-success">Income</h3>
 		<canvas id="incomePie" width="300" height="300"></canvas>
 		</div>
 		<div class="col-md-6 text-center">
-		<h3>Expense</h3>
+		<h3 class="text-danger">Expense</h3>
 		<canvas id="expensePie" width="300" height="300"></canvas>
 		</div>
 	</div>
@@ -102,32 +133,32 @@
 				labels: month,
 				datasets: [
 				{
-					label: "Limit",
-					fillColor: "rgba(0, 255, 0,0)",
-					strokeColor: "rgba(0, 255, 0,1)",
-					pointColor: "rgba(0, 255, 0,1)",
+					label: "My First dataset",
+					fillColor: "rgba(38, 217, 172,0.2)",
+					strokeColor: "rgba(38, 217, 172,0.3)",
+					pointColor: "rgba(38, 217, 172,0.3)",
 					pointStrokeColor: "#fff",
 					pointHighlightFill: "#fff",
-					pointHighlightStroke: "rgba(0, 255, 0,0.3)",
+					pointHighlightStroke: "rgba(38, 217, 172,0.3)",
 					data: limit
 				},
 				{
-					label: "Progress",
-					fillColor: "rgba(255,0,0,0)",
-					strokeColor: "rgba(255,100,0,1)",
-					pointColor: "rgba(255,100,0,1)",
+					label: "My Second dataset",
+					fillColor: "rgba(217,83,38,0.2)",
+					strokeColor: "rgba(217,83,38,0.3)",
+					pointColor: "rgba(217,83,38,0.3)",
 					pointStrokeColor: "#fff",
 					pointHighlightFill: "#fff",
-					pointHighlightStroke: "rgba(255,100,0,0.3)",
+					pointHighlightStroke: "rgba(217,83,38,0.3)",
 					data: progress
 				}
 				]
 			};
-			var planChart = new Chart(plan).Line(data,{bezierCurve: false});
+			var planChart = new Chart(plan).Line(data);
 			/*Daily*/
 			var monthElement = $("#month").get(0).getContext("2d");
 			var days = [<?php for ($i = 1; $i <= $Daily['Day']; $i++) {
-				echo "'" . $i . "'";if ($i < $Daily['Day']) {
+				echo "'day" . $i . "'";if ($i < $Daily['Day']) {
 					echo ',';
 				}
 			}
@@ -197,4 +228,26 @@
 		});
 <?php } ?>
 	</script>
+	<script>
+
+    var month = new Array();
+    month[0] = "January";
+    month[1] = "February";
+    month[2] = "March";
+    month[3] = "April";
+    month[4] = "May";
+    month[5] = "June";
+    month[6] = "July";
+    month[7] = "August";
+    month[8] = "September";
+    month[9] = "October";
+    month[10] = "November";
+    month[11] = "December";
+
+    var d = new Date();
+    var n = month[d.getMonth()];
+    document.getElementById("demo").innerHTML = n;
+
+</script>
+
 	@endsection

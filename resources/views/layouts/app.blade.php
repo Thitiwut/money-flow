@@ -2,6 +2,10 @@
     <head>
         <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.css" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/css/datepicker.css" />
+        <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
+       
+
+
         @yield('style')
     </head>
     <body>
@@ -70,7 +74,7 @@
             </script>
 			<script src="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/js/bootstrap-datepicker.js"></script>
             <script>
-                var BASEURL = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname;
+                var BASEURL = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname;
                 $('#planList').on('change',function(){
                     window.location.href = BASEURL+'?id=' + $('#planList').val();
                 });

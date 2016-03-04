@@ -2,6 +2,7 @@
 @section('content')
 <div class="container">
     <div style="overflow: hidden;">
+
         <div class="col-md-4">
             <select id="fcategory" name="fcategory" class="form-control">
                 <option>
@@ -30,10 +31,11 @@
             </select>
         </div>
     </div>
+
     <div style="overflow: hidden;">
         <table class="table table-striped table-hover ">
             <thead>
-                <tr class="success">
+                <tr >
                     <th>
                         Name
                     </th>
@@ -43,13 +45,13 @@
                     <th>
                         Type
                     </th>
-                    <th class="text-warning">
+                    <th >
                         Category
                     </th>
                     <th>
                         Date
                     </th>
-                    <th>
+                 <th>
                         Plan
                     </th>
                 </tr >
@@ -57,7 +59,7 @@
             <tbody>
                 @foreach ($finances as $key =>
                 $finance)
-                <tr class="info">
+                <tr >
                     <td>
                         {{ $finance->
                         name}}
@@ -78,7 +80,7 @@
                         {{ $finance->
                         created_at }}
                     </td>
-                    <td>
+                   <td>
                         {{ $finance->
                         plan }}
                     </td>
@@ -94,7 +96,7 @@
     <script>
         $(document).ready(function(){
         $('#fcategory').change(function(){
-        window.location.href = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname+'?keyword={{$keyword}}&cat=' + $('#fcategory').val();
+        window.location.href = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname+'?keyword={{$keyword}}&cat=' + $('#fcategory').val();
         });
         });
     </script>

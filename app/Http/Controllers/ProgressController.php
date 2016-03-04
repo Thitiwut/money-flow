@@ -35,7 +35,7 @@ class ProgressController extends Controller
                 $month           = new Monthly();
                 $month->plan_id  = $plan->id;
                 $month->status   = 0;
-                $month->month    = sizeof($plan->months()) + 1;
+                $month->month    = sizeof($plan->months) + 1;
                 $month->limit    = $plan->expected;
                 $month->progress = 0;
 

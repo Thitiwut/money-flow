@@ -33,85 +33,87 @@ class HomeController extends Controller
     public function getCharts(Request $request)
     {
         if ($this->user != null && Session::has('Plan') && Session::get('Plan') != "") {
-            $plan                = Plan::find(Session::get('Plan'));
-            $months              = $plan->months()->get();
-            $attach["Plan"]      = $plan;
-            $attach["MonthList"] = $months;
+            $plan = Plan::find(Session::get('Plan'));
             if ($plan) {
-                $attach['Month'] = array();
-                for ($i = 0; $i < $plan->period; $i++) {
-                    $attach['Month'][] = date('F', strtotime('+' . $i . ' month', strtotime($plan->created_at)));
-                    if (isset($months[$i])) {
-                        $attach['Limit'][]    = $months[$i]->limit;
-                        $attach['Progress'][] = $months[$i]->progress;
-                    } else {
-                        $attach['Limit'][]    = "";
-                        $attach['Progress'][] = "";
+                $months              = $plan->months()->get();
+                $attach["Plan"]      = $plan;
+                $attach["MonthList"] = $months;
+                if ($plan) {
+                    $attach['Month'] = array();
+                    for ($i = 0; $i < $plan->period; $i++) {
+                        $attach['Month'][] = date('F', strtotime('+' . $i . ' month', strtotime($plan->created_at)));
+                        if (isset($months[$i])) {
+                            $attach['Limit'][]    = $months[$i]->limit;
+                            $attach['Progress'][] = $months[$i]->progress;
+                        } else {
+                            $attach['Limit'][]    = "";
+                            $attach['Progress'][] = "";
+                        }
                     }
-                }
-                $attach["Daily"] = array();
-                if (isset($months)) {
-                    if (isset($months[count($months) - 1])) {
-                        $month = $months[count($months) - 1];
-                        $days  = $month->days()->get();
+                    $attach["Daily"] = array();
+                    if (isset($months)) {
+                        if (isset($months[count($months) - 1])) {
+                            $month = $months[count($months) - 1];
+                            $days  = $month->days()->get();
 
-                        $attach["Daily"]['Day'] = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
-                        for ($i = 1; $i <= $attach["Daily"]['Day']; $i++) {
-                            $attach["Daily"]["Expense"][$i - 1] = 0;
-                            $attach["Daily"]["Income"][$i - 1]  = 0;
-                            foreach ($days as $day) {
-                                if ($i == date('d', strtotime($day->date))) {
-                                    $attach["Daily"]["Expense"][$i - 1] = $day->expense;
-                                    $attach["Daily"]["Income"][$i - 1]  = $day->income;
+                            $attach["Daily"]['Day'] = cal_days_in_month(CAL_GREGORIAN, date('m'), date('Y'));
+                            for ($i = 1; $i <= $attach["Daily"]['Day']; $i++) {
+                                $attach["Daily"]["Expense"][$i - 1] = 0;
+                                $attach["Daily"]["Income"][$i - 1]  = 0;
+                                foreach ($days as $day) {
+                                    if ($i == date('d', strtotime($day->date))) {
+                                        $attach["Daily"]["Expense"][$i - 1] = $day->expense;
+                                        $attach["Daily"]["Income"][$i - 1]  = $day->income;
+                                    }
                                 }
                             }
                         }
                     }
-                }
-                $attach["Category"] = array();
-                if ($request->month != null) {
-                    $month                = Monthly::find($request->month);
-                    $categories           = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
-                    $start                = date('Y-m-d', strtotime('+' . $month->month - 1 . ' month', strtotime($plan->created_at)));
-                    $end                  = date('Y-m-d', strtotime('+' . $month->month . ' month', strtotime($plan->created_at)));
-                    $attach["SumIncome"]  = 0;
-                    $attach["SumExpense"] = 0;
-                    foreach ($categories as $key => $value) {
-                        $expense = Finance::join('category', 'category.id', '=', 'finance.category_id')
-                            ->join('daily', 'daily.id', '=', 'finance.daily_id')
-                            ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
-                            ->where('monthly.id', '=', $request->month)
-                            ->where('finance.category_id', '=', $value->id)
-                            ->where('type', '=', 0)
-                            ->where('daily.date', '>=', $start)
-                            ->where('daily.date', '<=', $end)
-                            ->sum('amount');
-                        $attach["SumExpense"] += $expense;
+                    $attach["Category"] = array();
+                    if ($request->month != null) {
+                        $month                = Monthly::find($request->month);
+                        $categories           = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
+                        $start                = date('Y-m-d', strtotime('+' . $month->month - 1 . ' month', strtotime($plan->created_at)));
+                        $end                  = date('Y-m-d', strtotime('+' . $month->month . ' month', strtotime($plan->created_at)));
+                        $attach["SumIncome"]  = 0;
+                        $attach["SumExpense"] = 0;
+                        foreach ($categories as $key => $value) {
+                            $expense = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                                ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                                ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                                ->where('monthly.id', '=', $month->id)
+                                ->where('finance.category_id', '=', $value->id)
+                                ->where('type', '=', 0)
+                                ->where('daily.date', '>=', $start)
+                                ->where('daily.date', '<=', $end)
+                                ->sum('amount');
+                            $attach["SumExpense"] += $expense;
 
-                        $income = Finance::join('category', 'category.id', '=', 'finance.category_id')
-                            ->join('daily', 'daily.id', '=', 'finance.daily_id')
-                            ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
-                            ->where('monthly.id', '=', $request->month)
-                            ->where('finance.category_id', '=', $value->id)
-                            ->where('type', '=', 1)
-                            ->where('daily.date', '>=', $start)
-                            ->where('daily.date', '<=', $end)
-                            ->sum('amount');
-                        $attach["SumIncome"] += $income;
+                            $income = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                                ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                                ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                                ->where('monthly.id', '=', $month->id)
+                                ->where('finance.category_id', '=', $value->id)
+                                ->where('type', '=', 1)
+                                ->where('daily.date', '>=', $start)
+                                ->where('daily.date', '<=', $end)
+                                ->sum('amount');
+                            $attach["SumIncome"] += $income;
 
-                        $rand = dechex(rand(0x000000, 0xFFFFFF));
-                        if (intval($expense) > 0 || intval($income) > 0) {
-                            $attach["Category"][$value->name]["expense"] = $expense;
-                            $attach["Category"][$value->name]["income"]  = $income;
-                            $attach["Category"][$value->name]["color"]   = $rand;
+                            $rand = dechex(rand(0x000000, 0xFFFFFF));
+                            if (intval($expense) > 0 || intval($income) > 0) {
+                                $attach["Category"][$value->name]["expense"] = $expense;
+                                $attach["Category"][$value->name]["income"]  = $income;
+                                $attach["Category"][$value->name]["color"]   = $rand;
+                            }
+
                         }
-
                     }
                 }
+                return view('home.chart')->with($attach);
             }
-            return view('home.chart')->with($attach);
         }
-        return view('home.chart');
+        return redirect('/progress');
     }
     public function getSetting()
     {

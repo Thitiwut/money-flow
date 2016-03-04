@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="text-center"><h1>@if($Plan != null) {{$Plan->name}} @endif</h1></div>
+<div class="text-center"><h1>@if(isset($Plan) && $Plan != null) {{$Plan->name}} @endif</h1></div>
 <div class="container text-center">
 	<h1 class="text-info"><span class="glyphicon glyphicon-send" aria-hidden="true"><em>Progress</em></span></h1>
 	<div class="row text-center">
@@ -102,28 +102,28 @@
 				labels: month,
 				datasets: [
 				{
-					label: "My First dataset",
-					fillColor: "rgba(38, 217, 172,0.2)",
-					strokeColor: "rgba(38, 217, 172,0.3)",
-					pointColor: "rgba(38, 217, 172,0.3)",
+					label: "Limit",
+					fillColor: "rgba(0, 255, 0,0)",
+					strokeColor: "rgba(0, 255, 0,1)",
+					pointColor: "rgba(0, 255, 0,1)",
 					pointStrokeColor: "#fff",
 					pointHighlightFill: "#fff",
-					pointHighlightStroke: "rgba(38, 217, 172,0.3)",
+					pointHighlightStroke: "rgba(0, 255, 0,0.3)",
 					data: limit
 				},
 				{
-					label: "My Second dataset",
-					fillColor: "rgba(217,83,38,0.2)",
-					strokeColor: "rgba(217,83,38,0.3)",
-					pointColor: "rgba(217,83,38,0.3)",
+					label: "Progress",
+					fillColor: "rgba(255,0,0,0)",
+					strokeColor: "rgba(255,100,0,1)",
+					pointColor: "rgba(255,100,0,1)",
 					pointStrokeColor: "#fff",
 					pointHighlightFill: "#fff",
-					pointHighlightStroke: "rgba(217,83,38,0.3)",
+					pointHighlightStroke: "rgba(255,100,0,0.3)",
 					data: progress
 				}
 				]
 			};
-			var planChart = new Chart(plan).Line(data);
+			var planChart = new Chart(plan).Line(data,{bezierCurve: false});
 			/*Daily*/
 			var monthElement = $("#month").get(0).getContext("2d");
 			var days = [<?php for ($i = 1; $i <= $Daily['Day']; $i++) {

@@ -45,7 +45,7 @@
                 <ul class="nav nav-pills navbar-nav navbar-left">
                     <li>
                         <a href="plan">
-                            <span class="glyphicon glyphicon-flag" aria-hidden="true"> Plan</span>
+                            <span class="glyphicon glyphicon-flag" aria-hidden="true"><em>Plan</em></span>
                         </a>
                     </li>
                     <li>
@@ -67,25 +67,25 @@
                     <li>
                         
                         <a href="expense">
-                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"> Expense&Income</span>
+                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"><em>Expense&Income</em></span>
                         </a>
                     </li>
                     <li>
                        
                         <a href="progress">
-                           <span class="glyphicon glyphicon-tasks" aria-hidden="true"> Progress</span>
+                           <span class="glyphicon glyphicon-tasks" aria-hidden="true"><em>Progress</em></span>
                         </a>
                     </li>
                     <li>
                         
                         <a href="charts">
-                          <span class="glyphicon glyphicon-stats" aria-hidden="true"> Charts</span>
+                          <span class="glyphicon glyphicon-stats" aria-hidden="true"><em>Charts</em></span>
                         </a>
                     </li>
                     <li>
                        
                         <a href="report">
-                           <span class="glyphicon glyphicon-copy" aria-hidden="true"> Report</span>
+                           <span class="glyphicon glyphicon-copy" aria-hidden="true"><em>Report</em></span>
 
                         </a>
                     </li>
@@ -101,12 +101,12 @@
                 <ul class="nav nav-pills navbar-nav navbar-right">
                     <li>
                         <a href="feedback">
-                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"> Feedback</span>
+                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"><em/>Feedback</em></span>
                         </a>
                     </li>
                     <li>
                         <a href="setting">
-                             <span class="glyphicon glyphicon-cog" aria-hidden="true"> Setting</span>
+                             <span class="glyphicon glyphicon-cog" aria-hidden="true"><em>Setting</em></span>
                         </a>
                     </li>
                     <li>

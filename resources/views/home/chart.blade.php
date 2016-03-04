@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('content')
-<div class="text-center"><h1><em>@if($Plan != null) {{$Plan->name}} @endif</em></h1></div>
+<div class="text-center"><h1><em>@if(isset($Plan) && $Plan != null) {{$Plan->name}} @endif</em></h1></div>
 <div class="container text-center">
 	<h1 class="text-info"><span class="glyphicon glyphicon-send" aria-hidden="true"><em>Progress</em></span></h1>
 	<div class="row text-center">
@@ -81,11 +81,11 @@
 	</div>
 	<div>
 		<div class="col-md-6 text-center">
-		<h3 class="text-success">Income</h3>
+		<h3 class="text-success">Income: @if(isset($SumIncome)) {{$SumIncome}} @endif</h3>
 		<canvas id="incomePie" width="300" height="300"></canvas>
 		</div>
 		<div class="col-md-6 text-center">
-		<h3 class="text-danger">Expense</h3>
+		<h3 class="text-danger">Expense: @if(isset($SumExpense)) {{$SumExpense}} @endif</h3>
 		<canvas id="expensePie" width="300" height="300"></canvas>
 		</div>
 	</div>
@@ -104,9 +104,20 @@
 @section('script')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>
 <script type="text/javascript">
+	function parseQueryString(val) {
+		var result = "Not found",
+		tmp = [];
+		var items = location.search.substr(1).split("&");
+		for (var index = 0; index < items.length; index++) {
+			tmp = items[index].split("=");
+			if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+		}
+		return result;
+	}
 	<?php if (Session::has('Auth') && Session::has('Plan') && Session::get('Plan') != "" && $Daily != null) {
 		?>
 		$(document).ready(function(){
+			$('#monthSelector').val(parseQueryString('month'));
 			$('#monthSelector').change(function(){
 				window.location.href = BASEURL+'?month=' + $('#monthSelector').val();
 			});
@@ -133,20 +144,20 @@
 				labels: month,
 				datasets: [
 				{
-					label: "My First dataset",
-					fillColor: "rgba(38, 217, 172,0.2)",
-					strokeColor: "rgba(38, 217, 172,0.3)",
-					pointColor: "rgba(38, 217, 172,0.3)",
+					label: "Limit",
+					fillColor: "rgba(0, 255, 0,0)",
+					strokeColor: "rgba(0, 255, 2,1)",
+					pointColor: "rgba(2, 255, 2,1)",
 					pointStrokeColor: "#fff",
 					pointHighlightFill: "#fff",
-					pointHighlightStroke: "rgba(38, 217, 172,0.3)",
+					pointHighlightStroke: "rgba(0, 255, 0,1)",
 					data: limit
 				},
 				{
-					label: "My Second dataset",
-					fillColor: "rgba(217,83,38,0.2)",
-					strokeColor: "rgba(217,83,38,0.3)",
-					pointColor: "rgba(217,83,38,0.3)",
+					label: "Budget",
+					fillColor: "rgba(255,100,0,0)",
+					strokeColor: "rgba(255,100,0,1)",
+					pointColor: "rgba(255,100,2,1)",
 					pointStrokeColor: "#fff",
 					pointHighlightFill: "#fff",
 					pointHighlightStroke: "rgba(217,83,38,0.3)",
@@ -154,7 +165,7 @@
 				}
 				]
 			};
-			var planChart = new Chart(plan).Line(data);
+			var planChart = new Chart(plan).Line(data,{bezierCurve : false,});
 			/*Daily*/
 			var monthElement = $("#month").get(0).getContext("2d");
 			var days = [<?php for ($i = 1; $i <= $Daily['Day']; $i++) {
@@ -230,24 +241,23 @@
 	</script>
 	<script>
 
-    var month = new Array();
-    month[0] = "January";
-    month[1] = "February";
-    month[2] = "March";
-    month[3] = "April";
-    month[4] = "May";
-    month[5] = "June";
-    month[6] = "July";
-    month[7] = "August";
-    month[8] = "September";
-    month[9] = "October";
-    month[10] = "November";
-    month[11] = "December";
+		var month = new Array();
+		month[0] = "January";
+		month[1] = "February";
+		month[2] = "March";
+		month[3] = "April";
+		month[4] = "May";
+		month[5] = "June";
+		month[6] = "July";
+		month[7] = "August";
+		month[8] = "September";
+		month[9] = "October";
+		month[10] = "November";
+		month[11] = "December";
 
-    var d = new Date();
-    var n = month[d.getMonth()];
-    document.getElementById("demo").innerHTML = n;
+		var d = new Date();
+		var n = month[d.getMonth()];
+		document.getElementById("demo").innerHTML = n;
 
-</script>
-
-	@endsection
+	</script>
+@endsection

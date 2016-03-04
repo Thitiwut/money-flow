@@ -15,8 +15,8 @@ class PlanSelect
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if(isset($request->id)){
-            $request->session()->put('Plan', $request->id);
+        if(isset($request->plan_id)){
+            $request->session()->put('Plan', $request->plan_id);
         }
 
         return $next($request);

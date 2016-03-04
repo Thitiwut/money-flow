@@ -8,6 +8,7 @@
                 <option>
                     ---- Please Select Category ----
                 </option>
+                @if(isset($categories))
                 @foreach($categories as $category)
                 <option value="{{$category->id}}"  @if(old('fcategory') == $category->
                     id) selected @endif >
@@ -26,6 +27,7 @@
                     name}}
                 </option>
                 @endforeach
+                @endif
                 @endif
                 @endif
             </select>
@@ -57,6 +59,7 @@
                 </tr >
             </thead>
             <tbody>
+            @if(isset($finances))
                 @foreach ($finances as $key =>
                 $finance)
                 <tr >
@@ -70,7 +73,7 @@
                     </td>
                     <td>
                         <?php echo ($finance->
-                        type == 0) ? "Expense" : "Income"; ?>
+        type == 0) ? "Expense" : "Income"; ?>
                     </td>
                     <td class="text-warning">
                         {{ $finance->
@@ -86,18 +89,34 @@
                     </td>
                 </tr>
                 @endforeach
+            @endif
             </tbody>
         </table>
     </div>
+    @if(isset($finances))
     {!! $finances->
     links() !!}
+    @endif
     @endsection
     @section('script')
+    @if(isset($keyword))
     <script>
+        function parseQueryString(val) {
+            var result = "Not found",
+            tmp = [];
+            var items = location.search.substr(1).split("&");
+            for (var index = 0; index < items.length; index++) {
+                tmp = items[index].split("=");
+                if (tmp[0] === val) result = decodeURIComponent(tmp[1]);
+            }
+            return result;
+        }
         $(document).ready(function(){
-        $('#fcategory').change(function(){
-        window.location.href = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname+'?keyword={{$keyword}}&cat=' + $('#fcategory').val();
-        });
+            $('#fcategory').val(parseQueryString('cat'));
+            $('#fcategory').change(function(){
+                window.location.href = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname+'?keyword={{$keyword}}&cat=' + $('#fcategory').val();
+            });
         });
     </script>
+    @endif
     @endsection

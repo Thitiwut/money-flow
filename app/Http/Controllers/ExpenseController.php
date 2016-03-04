@@ -92,7 +92,7 @@ class ExpenseController extends Controller
                 $month           = new Monthly();
                 $month->plan_id  = Session::get('Plan');
                 $month->status   = 0;
-                $month->month    = sizeof($plan->months());
+                $month->month    = sizeof($plan->months()) + 1;
                 $month->limit    = $plan->expected;
                 $month->progress = 0;
 

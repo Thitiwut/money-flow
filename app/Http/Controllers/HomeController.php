@@ -70,29 +70,35 @@ class HomeController extends Controller
                 }
                 $attach["Category"] = array();
                 if ($request->month != null) {
-                    $month      = Monthly::find($request->month);
-                    $categories = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
-                    $start      = date('Y-m-d', strtotime('+' . $month->month - 1 . ' month', strtotime($plan->created_at)));
-                    $end        = date('Y-m-d', strtotime('+' . $month->month . ' month', strtotime($plan->created_at)));
+                    $month                = Monthly::find($request->month);
+                    $categories           = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
+                    $start                = date('Y-m-d', strtotime('+' . $month->month - 1 . ' month', strtotime($plan->created_at)));
+                    $end                  = date('Y-m-d', strtotime('+' . $month->month . ' month', strtotime($plan->created_at)));
+                    $attach["SumIncome"]  = 0;
+                    $attach["SumExpense"] = 0;
                     foreach ($categories as $key => $value) {
                         $expense = Finance::join('category', 'category.id', '=', 'finance.category_id')
                             ->join('daily', 'daily.id', '=', 'finance.daily_id')
                             ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
-                            ->where('monthly.id', '=', $month->id)
+                            ->where('monthly.id', '=', $request->month)
                             ->where('finance.category_id', '=', $value->id)
                             ->where('type', '=', 0)
                             ->where('daily.date', '>=', $start)
                             ->where('daily.date', '<=', $end)
                             ->sum('amount');
+                        $attach["SumExpense"] += $expense;
+
                         $income = Finance::join('category', 'category.id', '=', 'finance.category_id')
                             ->join('daily', 'daily.id', '=', 'finance.daily_id')
                             ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
-                            ->where('monthly.id', '=', $month->id)
+                            ->where('monthly.id', '=', $request->month)
                             ->where('finance.category_id', '=', $value->id)
                             ->where('type', '=', 1)
                             ->where('daily.date', '>=', $start)
                             ->where('daily.date', '<=', $end)
                             ->sum('amount');
+                        $attach["SumIncome"] += $income;
+
                         $rand = dechex(rand(0x000000, 0xFFFFFF));
                         if (intval($expense) > 0 || intval($income) > 0) {
                             $attach["Category"][$value->name]["expense"] = $expense;

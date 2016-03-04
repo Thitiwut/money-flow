@@ -35,14 +35,14 @@ class ProgressController extends Controller
                 $month           = new Monthly();
                 $month->plan_id  = $plan->id;
                 $month->status   = 0;
-                $month->month    = sizeof($plan->months());
+                $month->month    = sizeof($plan->months()) + 1;
                 $month->limit    = $plan->expected;
                 $month->progress = 0;
 
                 $monthLeft = $plan->period - $diff;
                 if ($monthLeft > 0) {
                     $newExpected = ceil(($plan->target - $plan->budget) / $monthLeft);
-                }else{
+                } else {
                     $newExpected = 1;
                 }
 

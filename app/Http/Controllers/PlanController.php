@@ -115,15 +115,16 @@ class PlanController extends Controller
             $plan = $this->user->plans()->where("id", "=", $request->plan_id)->first();
             if (!$plan) {
                 $plan = new Plan();
+                $plan->budget      = $request->pbudget;
             }
             //$period            = ceil(($request->ptarget - $request->pbudget) / $request->pexpected);
             $plan->user_id     = $this->user->id;
             $plan->name        = $request->pname;
             $plan->description = $request->pdescription;
             $plan->period      = $request->pmonth;
-            $plan->budget      = $request->pbudget;
             $plan->target      = $request->ptarget;
             $plan->expected    = $request->pexpected;
+            $plan->original    = $request->pbudget;
             $plan->save();
             Session::put("Plan", $plan->id);
         }

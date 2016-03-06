@@ -24,7 +24,7 @@ $progressBar  = 0;
           <p>@if(isset($plan)) {{$plan->name}} @endif </p>
           <small><cite title="Source Title">@if(isset($plan)) {{$plan->description}} @endif</cite></small>
         </blockquote>
-        </div>
+    </div>
     <div class="container">
         <div class="row text-center">
             <div class="col-md-4">
@@ -65,11 +65,11 @@ $progressBar  = 0;
     </div>
     <div class="container-fluid">
          <div class="row text-center">
-            <div class="col-xs-6 col-md-4"><h3><span>Target:</span> @if(isset($plan)) {{$plan->target}} @endif </h3></div>
-            <div class="col-xs-6 col-md-4"><h3><span><cite title="Source Title">Target per month:</cite></span> @if(isset($month)) {{$month->limit}} @endif </h3></div>
-	       <div class="col-xs-6 col-md-4"><h3><span>Current Budget:</span> @if(isset($plan)) {{$plan->budget}} @endif </h3></div>
+            <div class="col-xs-6 col-md-6"><h3><span>Original:</span> @if(isset($plan)) {{$plan->original}} @endif </h3></div>
+            <div class="col-xs-6 col-md-6"><h3><span>Target:</span> @if(isset($plan)) {{$plan->target}} @endif </h3></div>
+            <div class="col-xs-6 col-md-6"><h3><span><cite title="Source Title">Target per month:</cite></span> @if(isset($month)) {{$month->limit}} @endif </h3></div>
+	       <div class="col-xs-6 col-md-6"><h3><span>Current Budget:</span> @if(isset($plan)) {{$plan->budget}} @endif </h3></div>
         </div>
-
     </div>
     <div class="container" style="margin-top: 20px;">
         <div class="progress ">

@@ -98,7 +98,6 @@ class ProgressController extends Controller
                     ->where('daily.date', '>=', $start)
                     ->where('daily.date', '<=', $end)
                     ->sum('amount');
-
                 if ($sumIncome > 0 || $sumExpense > 0) {
                     $attach['category'][] = [
                         "name" => $category->name

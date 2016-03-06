@@ -53,7 +53,7 @@
                     <label for="pBudget">
                         Budget
                     </label>
-                    <input type="text" class="form-control" id="pBudget" placeholder="Budget" name="pbudget" value="<?php echo isset($plan) ? $plan->budget : old('pbudget'); ?>" />
+                    <input type="text" class="form-control" id="pBudget" placeholder="Budget" name="pbudget" value="<?php echo isset($plan) ? $plan->original : old('pbudget'); ?>" />
                 </div>
                 <div class="form-group">
                     <label for="pMonth">

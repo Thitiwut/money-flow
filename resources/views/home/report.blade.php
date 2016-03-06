@@ -3,6 +3,9 @@
 @endsection
 @section('content')
 <div class="container">
+     <div class="text-center">
+          <h3>Report</h3>
+     </div>
     <div>
 
         <form class="form-inline text-center">
@@ -104,8 +107,7 @@
                         </td>-->
                     </tr>
                     @endforeach
-                    {!! $finances->
-                    links() !!}
+                       
                     @endif
                 </tbody>
             </table>
@@ -114,6 +116,8 @@
 </div>
 @endsection
 @section('script')
+<script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js">
+            </script>
 <script>
 	function parseQueryString(val) {
 		var result = "Not found",
@@ -129,6 +133,11 @@
 		$('#month').val(parseQueryString('month'));
 		$('#category').val(parseQueryString('category'));
 	});
+</script>
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
 </script>
 @endsection
 

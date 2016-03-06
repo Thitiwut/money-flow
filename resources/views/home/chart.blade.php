@@ -25,7 +25,7 @@
 		</div>
 	</div>
 </div>
-</div>
+<!-- </div>
 	<hr/>
 	<div class="row">
 	<em><h1 class="text-success" id="demo">
@@ -53,7 +53,7 @@
 		<a href="#" class="btn btn-danger btn-xs"></a>your total expense in each day.
 		</div>
 	</div>
-</div>
+</div> -->
 </div>
 	<hr/>
 	<h2 class="text-success"><span class="glyphicon glyphicon-cd" aria-hidden="true"><em>Expense&Income</em></span>

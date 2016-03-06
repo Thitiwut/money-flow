@@ -162,21 +162,50 @@ class HomeController extends Controller
     public function getReport(Request $request)
     {
         if ($this->user != null && Session::has('Plan') && Session::get('Plan') != "") {
-            $plan               = Plan::find(Session::get('Plan'));
-            $attach["Month"]    = $plan->months()->get();
-            $attach["Category"] = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
+            $plan                = Plan::find(Session::get('Plan'));
+            $attach["plan"]      = $plan;
+            $attach["Month"]     = $plan->months()->get();
+            $attach["Category"]  = Category::where('user_id', '=', $this->user->id)->orWhere('user_id', '=', 0)->get();
+            $attach['sumIncome'] = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                ->join('plan', 'plan.id', '=', 'monthly.plan_id')
+                ->where('plan.id', '=', $plan->id)
+                ->where('type', '=', 1)
+                ->sum('amount');
+            $attach['sumExpense'] = Finance::join('category', 'category.id', '=', 'finance.category_id')
+                ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                ->join('plan', 'plan.id', '=', 'monthly.plan_id')
+                ->where('plan.id', '=', $plan->id)
+                ->where('type', '=', 0)
+                ->sum('amount');
             if (isset($request->category) && isset($request->month)) {
-                $cat                = $request->category;
-                $month              = $request->month;
-                $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type', 'finance.amount')
+                $cat   = $request->category;
+                $month = $request->month;
+                $query = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type', 'finance.amount')
                     ->join('category', 'category.id', '=', 'finance.category_id')
                     ->join('daily', 'daily.id', '=', 'finance.daily_id')
                     ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
-                    ->join('plan', 'plan.id', '=', 'monthly.plan_id')
-                    ->where('category.id', '=', $cat)
-                    ->where('monthly.id', '=', $month)
-                    ->where('plan.id', '=', $plan->id)
-                    ->paginate(20);
+                    ->join('plan', 'plan.id', '=', 'monthly.plan_id');
+
+                if ($cat != 0) {
+                    $query->where('category.id', '=', $cat);
+                }
+                if ($month != 0) {
+                    $query->where('monthly.id', '=', $month);
+                }
+                $query->where('plan.id', '=', $plan->id);
+                $attach['finances'] = $query->paginate(20);
+                // $attach['finances'] = Finance::select('finance.name', 'category.name AS category', 'finance.created_at', 'plan.name AS plan', 'finance.type', 'finance.amount')
+                //     ->join('category', 'category.id', '=', 'finance.category_id')
+                //     ->join('daily', 'daily.id', '=', 'finance.daily_id')
+                //     ->join('monthly', 'monthly.id', '=', 'daily.monthly_id')
+                //     ->join('plan', 'plan.id', '=', 'monthly.plan_id')
+                //     ->where('category.id', '=', $cat)
+                //     ->where('monthly.id', '=', $month)
+                //     ->where('plan.i', '=', $plan->id)
+                //     ->paginate(20);
             }
             return view('home.report', $attach);
         } else {

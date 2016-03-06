@@ -167,7 +167,7 @@
 			};
 			var planChart = new Chart(plan).Line(data,{bezierCurve : false,});
 			/*Daily*/
-			var monthElement = $("#month").get(0).getContext("2d");
+			// var monthElement = $("#month").get(0).getContext("2d");
 			var days = [<?php for ($i = 1; $i <= $Daily['Day']; $i++) {
 				echo "'day" . $i . "'";if ($i < $Daily['Day']) {
 					echo ',';
@@ -207,7 +207,7 @@
 				}
 				]
 			};
-			var monthChart = new Chart(monthElement).Bar(dataDaily);
+			// var monthChart = new Chart(monthElement).Bar(dataDaily);
 			/*Category*/
 			<?php if(isset($Category)){ ?>
 			var incomeElement = $("#incomePie").get(0).getContext("2d");
@@ -255,9 +255,9 @@
 		month[10] = "November";
 		month[11] = "December";
 
-		var d = new Date();
-		var n = month[d.getMonth()];
-		document.getElementById("demo").innerHTML = n;
+		// var d = new Date();
+		// var n = month[d.getMonth()];
+		// document.getElementById("demo").innerHTML = n;
 
 	</script>
 @endsection

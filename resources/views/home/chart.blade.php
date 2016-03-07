@@ -1,19 +1,23 @@
 @extends('layouts.app')
 @section('content')
 <div class="text-center"><h1><em>@if(isset($Plan) && $Plan != null) {{$Plan->name}} @endif</em></h1></div>
-<div class="container text-center">
-	<h1 class="text-info"><span class="glyphicon glyphicon-send" aria-hidden="true"><em>Progress</em></span></h1>
-	<div class="row text-center">
-		<div><small><cite title="Source Title">Networth vs Saving money per month.</cite></small></div>
+<div class="container">
+	<div class="row">
+	<h1 class="text-info"><span><i class="fa fa-line-chart"></i><em> linechart</em></span></h1>
+
+		<div class="col-md-3"><small><cite title="Source Title">saving money  vs Target <hr/></cite></small></div>
 
 	</div>
 	<div class="row">
-	<div class="col-md-5"> 
+	<div class="col-md-8">
 	<canvas id="plan" width="600" height="400"></canvas>
 </div>
-	<div class="col-md-6"> 
-			<div class="row"> 
-
+	<div class="col-md-4">
+			<div class="row">
+	<div class="col-md-12">
+	</div>
+		<div class="col-md-12">
+		</div>
 		<div class="col-md-12">
 		<a href="#" class="btn btn-success btn-xs"></a>Your expected saving money per month.
 	</div>
@@ -21,7 +25,7 @@
 	    	<p></p>
 	    </div>
 	<div class="col-md-12">
-		<a href="#" class="btn btn-warning btn-xs"></a>Your budget that you saving each month.</em></p>
+		<a href="#" class="btn btn-warning btn-xs"></a>Your balance that you can collect in each month.</em></p>
 		</div>
 	</div>
 </div>
@@ -37,11 +41,11 @@
 			</small>
 		</div>
 	</div>
-	<div class="col-md-5"> 
+	<div class="col-md-5">
 	<canvas id="month" width="600" height="400"></canvas>
 </div>
 <div class="col-md-6">
-	<div class="row"> 
+	<div class="row">
 
 		<div class="col-md-12">
 		<a href="#" class="btn btn-success btn-xs"></a>your total income in each day.
@@ -56,48 +60,55 @@
 </div> -->
 </div>
 	<hr/>
-	<h2 class="text-success"><span class="glyphicon glyphicon-cd" aria-hidden="true"><em>Expense&Income</em></span>
-	</h2>
-	<p></p>
-	<h4 class="text-success">Based on Categories</h4>
-	<div class="row text-center">
-		<div>
-			<small>
-				<cite title="Source Title">Each category expense and income</cite>
-			</small>
-		</div>
-	</div>
-  <p></p>
-	<div>
-		Please Select Month
-		<select id="monthSelector">
-			<option value="">--Month--</option>
-			@if(isset($MonthList))
-			@foreach($MonthList as $month)
-			<option value="{{$month->id}}"><?php echo date('F', strtotime($month->created_at)); ?></option>
-			@endforeach
-			@endif
-		</select>
-	</div>
-	<div>
+	<div class="row">
+		<div class="col-md-4 text-center">
+			<h2 class="text-success"><span><i class="fa fa-pie-chart"></i>
+		<em> Expense&Income</em></span>
+			</h2>
+			<p></p>
+			<h4 class="text-success">Based on Categories</h4></div>
+		<div class="col-md-4 text-center"></div>
+				<div class="col-md-4 text-center"></div>
+
+</div>
+ <div class="row">
+	 <div class="col-md-4 text-center">
+
+	 Please Select Month
+			<select id="monthSelector">
+				<option value="">--Month--</option>
+				@if(isset($MonthList))
+				@foreach($MonthList as $month)
+				<option value="{{$month->id}}" class="text-info"><?php echo date('F', strtotime($month->created_at)); ?></option>
+				@endforeach
+				@endif
+			</select>
+			</div>
+			<div class="col-md-4 text-center"></div>
+
+			<div class="col-md-4 text-center"></div>
+
+ </div>
+
+<div>
 		<div class="col-md-6 text-center">
-		<h3 class="text-success">Income: @if(isset($SumIncome)) {{$SumIncome}} @endif</h3>
+		<h3 class="text-success">Total Income: @if(isset($SumIncome)) {{$SumIncome}} @endif</h3>
 		<canvas id="incomePie" width="300" height="300"></canvas>
 		</div>
 		<div class="col-md-6 text-center">
-		<h3 class="text-danger">Expense: @if(isset($SumExpense)) {{$SumExpense}} @endif</h3>
+		<h3 class="text-danger">Total Expense: @if(isset($SumExpense)) {{$SumExpense}} @endif</h3>
 		<canvas id="expensePie" width="300" height="300"></canvas>
 		</div>
 	</div>
-	
-	<div style="padding-top: 20px;">
+
+	<div style="padding-top: 20px;" class="text-center">
 		@if(isset($Category))
 		<?php foreach($Category as $key => $cat){ ?>
 		<span class="label label-success" style="background-color: #{{$cat["color"]}}">{{$key}}</span>
-		<?php } ?>	
+		<?php } ?>
 		@endif
 	</div>
-	
+
 	<hr/>
 </div>
 @endsection
@@ -213,7 +224,7 @@
 			var incomeElement = $("#incomePie").get(0).getContext("2d");
 			var incomePie = [
 			<?php foreach($Category as $key => $cat){ ?>
-			{                                                               
+			{
 				value: <?php echo $cat["income"]; ?>,
 				color:"#<?php echo $cat["color"]; ?>",
 				highlight: "#FF5A5E",

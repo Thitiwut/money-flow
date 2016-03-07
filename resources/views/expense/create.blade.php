@@ -139,6 +139,7 @@
                         <h3>
                             <span class="glyphicon glyphicon-calendar" aria-hidden="true"></span>
                             <em>Today Expense and Income</em>
+                            <em>(<small id="demo"></small>)</em>
                             <hr/>
                         </h3>
                     </div>
@@ -215,4 +216,10 @@
 	$.fn.datepicker.defaults.format = "dd/mm/yyyy";
 	$('#fdate').datepicker();
 </script>
+<script>
+var d = new Date();
+document.getElementById("demo").innerHTML = d.toDateString();
+</script>
+
+
 @endsection

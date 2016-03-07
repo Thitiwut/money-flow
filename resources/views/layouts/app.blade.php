@@ -1,9 +1,11 @@
 <html>
     <head>
-        <link rel="stylesheet" href="https://bootswatch.com/flatly/bootstrap.css" />
+        <link rel="stylesheet" href="https://bootswatch.com/slate/bootstrap.css" />
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/css/datepicker.css" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
-       
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+
+
 
 
         @yield('style')
@@ -74,7 +76,7 @@
             </script>
 			<script src="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/js/bootstrap-datepicker.js"></script>
             <script>
-                var BASEURL = window.location.protocol + '//' + window.location.hostname + ':8080' + window.location.pathname;
+                var BASEURL = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname;
                 $('#planList').on('change',function(){
                     window.location.href = BASEURL+'?plan_id=' + $('#planList').val();
                 });

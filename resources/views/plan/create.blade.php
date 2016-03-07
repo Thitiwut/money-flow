@@ -18,7 +18,7 @@
         </h1>
     </div>
      <div class="container"><a href="plan/clear"><button class="btn btn-info">
-      <span class="glyphicon glyphicon-inbox" aria-hidden="true"><strong>createmoreplan</strong></span></button></a>
+      <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"><strong> Plan</strong></span></button></a>
      <hr/>
     </div>
     <div class="container">
@@ -60,9 +60,9 @@
                         Duration
                     </label>
                     <input type="text" class="form-control" id="pMonth" placeholder="Per Month" name="pmonth" value="<?php echo isset($plan) ? $plan->period : old('pmonth'); ?>" />
-                </div>  
-             
-               
+                </div>
+
+
                    <div class="form-group has-warning">
                     <label for="pExpected">
                         Expected saving per month
@@ -81,6 +81,21 @@
                 </div>
                 <input type="hidden" name="plan_id" value="<?php echo isset($plan) ? $plan->id : ''; ?>"/>
                 <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+            </form>
+        </div>
+        <div class="section col-md-6 plan_add_restrict">
+            <form method="POST" action="plan/category" >
+                <div>
+                    <h3>
+                        <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
+                        <em>Add new Category</em>
+                    </h3>
+                </div>
+                <input type="text" class="form-control" id="cName" placeholder="New Category" name="cname"/>
+                <input type="hidden" name="_token" value="{{csrf_token()}}"/>
+                <button type="submit" class="btn btn-block btn-success">
+                    <em>Add new category</em>
+                </button>
             </form>
         </div>
         <div class="col-md-6 no-padding">
@@ -172,21 +187,7 @@
                     <input type="hidden" name="_token" value="{{csrf_token()}}"/>
                 </form>
             </div>
-            <div class="section col-md-12 plan_add_restrict">
-                <form method="POST" action="plan/category" >
-                    <div>
-                        <h3>
-                            <span class="glyphicon glyphicon-tags" aria-hidden="true"></span>
-                            <em>Add Category</em>
-                        </h3>
-                    </div>
-                    <input type="text" class="form-control" id="cName" placeholder="New Category" name="cname"/>
-                    <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                    <button type="submit" class="btn btn-block btn-success">
-                        <em>Add new category</em>
-                    </button>
-                </form>
-            </div>
+
         </div>
     </div>
 </div>

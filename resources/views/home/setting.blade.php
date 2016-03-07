@@ -18,7 +18,7 @@
     <div role="tabpanel" class="tab-pane active" id="profile">
         <div class="container text-center">
             <h4>Username: {{$user->username}}</h4>
-            <h4>Password: {{$user->email}}</h4>
+            <h4>Email: {{$user->email}}</h4>
             <a href="#settings" aria-controls="home" role="tab" data-toggle="tab">
                <button class="btn btn-warning">
                    Edit
@@ -60,10 +60,10 @@
                     <input type="password" class="form-control" id="repassword" placeholder="Re-Password" name="repassword" value="{{$user->password}}" pattern=".{6,}" title="6 characters minimum" required>
                 </div>
                 <div class="col-md-12">
-                    <div class="col-md-6 text-center"> 
+                    <div class="col-md-6 text-center">
                         <button class="btn btn-block btn-warning" onclick="window.history.back()" >Back</button>
                     </div>
-                    <div class="col-md-6 text-center"> 
+                    <div class="col-md-6 text-center">
                         <button type="submit" name="Submit" class="btn btn-block btn-info">Submit</button>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
         if(pass1!=pass2)
             document.getElementById("repassword").setCustomValidity("Passwords Don't Match");
         else
-            document.getElementById("repassword").setCustomValidity('');     
+            document.getElementById("repassword").setCustomValidity('');
 //empty string means no validation error
 }
 </script>

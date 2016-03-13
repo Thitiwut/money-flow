@@ -17,7 +17,7 @@
             <em>Plan</em>
         </h1>
     </div>
-     <div class="container"><a href="plan/clear"><button class="btn btn-info">
+     <div class="container"><a href="plan/clear" onclick="return confirm('Do you want to create a new plan ?')? true: false;"  ><button class="btn btn-info">
       <span class="glyphicon glyphicon-plus-sign" aria-hidden="true"><strong> Plan</strong></span></button></a>
      <hr/>
     </div>
@@ -71,12 +71,12 @@
                 </div>
                 <div class="text-center">
                     <div class="col-md-6">
-                        <button type="submit" name="pSave" class="btn btn-block btn-success">
+                        <button type="submit" onclick="return confirm('Are you want to save?')? true: false;" name="pSave" class="btn btn-block btn-success">
                             Save
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" id="deleteForm" name="pdelete" class="btn btn-block btn-danger" value="Delete">
+                        <input type="submit" onclick="return confirm('Are you sure?')? true: false;" id="deleteForm" name="pdelete" class="btn btn-block btn-danger" value="Delete">
                     </div>
                 </div>
                 <input type="hidden" name="plan_id" value="<?php echo isset($plan) ? $plan->id : ''; ?>"/>
@@ -93,7 +93,7 @@
                 </div>
                 <input type="text" class="form-control" id="cName" placeholder="New Category" name="cname"/>
                 <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                <button type="submit" class="btn btn-block btn-success">
+                <button type="submit" onclick="return confirm('Add new category?')? true: false;" class="btn btn-block btn-success">
                     <em>Add new category</em>
                 </button>
             </form>
@@ -124,7 +124,7 @@
 
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-block btn-danger">
+                        <button type="submit" onclick="return confirm('Delete?')? true: false;"class="btn btn-block btn-danger">
                             <em>Delete Limit</em>
                         </button>
                     </div>
@@ -179,7 +179,7 @@
                         <input type="text" class="form-control" id="rlimit" placeholder="Limitation amount" name="rlimit"/>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-block btn-success">
+                        <button type="submit" onclick="return confirm('Add new limit ?')? true: false;" class="btn btn-block btn-success">
                             <em>Add new limit</em>
                         </button>
                     </div>

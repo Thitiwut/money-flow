@@ -50,19 +50,19 @@
               </div>
           </div>
       </div>
-      <div class="container-fluid">
+      <div class="container">
         <div class="row text-center">
-            <div class="col-xs-4 col-md-4">
+            <div class="col-md-4">
               <div class="panel panel-success">
   <div class="panel-heading"><em>Budget</em> </div>
     <div class="panel-body">
     @if(isset($plan)) {{$plan->original}} @endif </div> </div></div>
-            <div class="col-xs-4 col-md-4">
+            <div class="col-md-4">
               <div class="panel panel-warning">
   <div class="panel-heading"><em>Target</em>  </div>
     <div class="panel-body">
     @if(isset($plan)) {{$plan->target}} @endif </div></div></div>
-            <div class="col-xs-4 col-md-4"><div class="panel panel-success">
+            <div class="col-md-4"><div class="panel panel-success">
 <div class="panel-heading"><em>Current Balance</em>
 </div>
   <div class="panel-body">
@@ -145,8 +145,8 @@
                 @endif
             </select>
         </div>
-        <button type="submit" class="btn btn-default">
-            Getlist
+        <button type="submit"   class="btn btn-default">
+            Get List
         </button>
     </form>
 </div>
@@ -186,15 +186,15 @@
                     @foreach ($finances as $key =>
                     $finance)
                     <tr >
-                        <td>
+                        <td class="text-info">
                             {{ $finance->
                             plan}}
                         </td>
-                        <td>
+                        <td class="text-info">
                             {{ $finance->
                             name}}
                         </td>
-                        <td >
+                        <td class="text-info">
                             {{ $finance->
                             amount}}
                         </td>
@@ -215,7 +215,7 @@
                         </td>
                         @endif
 
-                        <td>
+                        <td class="text-info">
                             {{ $finance->
                             created_at }}
                         </td>

@@ -2,47 +2,65 @@
 @section('content')
 <div class="container">
     <div class="row">
+
+      <div class="text-center">
+           <h3 class="text-info"><i class="fa fa-cog fa-spin"></i><em>Setting</em></h3>
+           <hr/>
+      </div>
+      <div class="col-md-2">
+
         <div class="btn-group btn-group-justified">
+          <div class="col-md-12">
             <a href="#profile" aria-controls="home" role="tab" data-toggle="tab" class="btn btn-info">
-                <span class="glyphicon glyphicon-user" aria-hidden="true">
-                </span>
+                <span class="glyphicon glyphicon-user" aria-hidden="true"> User-info </span>
             </a>
+          <hr/>
+          </div>
+          <div class="col-md-12">
             <a href="#notification" aria-controls="home" role="tab" data-toggle="tab"  class="btn btn-warning">
                 <span class="glyphicon glyphicon-bell" aria-hidden="true">
-                </span>
+                </span> Notification
             </a>
+          </div>
         </div>
-    </div>
-</div>
+   </div>
+   <div class="cold-md-8">
 <div class="tab-content">
+
     <div role="tabpanel" class="tab-pane active" id="profile">
-        <div class="container text-center">
-            <h4>Username: {{$user->username}}</h4>
-            <h4>Email: {{$user->email}}</h4>
+        <div>
+            <h4><em>Username</em> :<span class="text-info"> {{$user->username}}</span></h4>
+            <h4><em>Email</em> : <span class="text-warning">{{$user->email}}</span></h4>
             <a href="#settings" aria-controls="home" role="tab" data-toggle="tab">
-               <button class="btn btn-warning">
-                   Edit
-               </button>
+               <button class="btn btn-warning">Edit</button>
            </a>
        </div>
    </div>
+
    <div role="tabpanel" class="tab-pane" id="notification">
-        <div class="container text-center">
+        <div>
             <form>
                 <div class="checkbox">
                     <label>
-                      <input type="checkbox"> Notice on Email
+                      <input type="checkbox"> Notification Email
+                    </label>
+                    <label>
+                      <input type="date">Date
+                    </label>
+                    <label>
+                      <input type="time">Time
                     </label>
                 </div>
                 <button type="submit" class="btn btn-default">Save</button>
             </form>
         </div>
-   </div>
+   </div><!-- -->
+
    <div role="tabpanel" class="tab-pane" id="settings">
     <div class="row">
         <div class="container">
-            <div class="text-center"><h1>User Setting</h1></div>
-            <form class="col-md-offset-3 col-md-6" method="post" action="update">
+            <div><h1><em>User Setting</em></h1></div>
+            <form class="col-md-5" method="post" action="update">
                 <div class="form-group">
                     <label for="username">Usename</label>
                     <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{$user->username}}" required>
@@ -71,7 +89,10 @@
             </form>
         </div>
     </div>
+  </div>
 </div>
+</div>
+
 </div>
 
 @endsection

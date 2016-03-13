@@ -111,13 +111,13 @@
                         <input type="hidden" name="plan_id" value="{{$plan->id}}"/>
                         @endif
                         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                        <button type="submit" class="btn btn-block btn-success">
+                        <button type="submit" onclick="return confirm('Add detail?')? true: false;" class="btn btn-block btn-success">
                             <em>Add Detail</em>
                         </button>
                     </div>
                 </form>
             </div>
-            <div class="section col-md-12 plan_add_restrict">
+      <!--  <div class="section col-md-12 plan_add_restrict">
                 <form method="POST" action="plan/category" >
                     <div>
                         <h3>
@@ -130,7 +130,7 @@
                         <em>Add new category</em>
                     </button>
                 </form>
-            </div>
+            </div>-->
         </div>
         <div class="col-md-6">
             <form method="POST" action="expense/delete">
@@ -143,7 +143,7 @@
                             <hr/>
                         </h3>
                     </div>
-                    
+
                         <div>
                             <?php
                             $totalIncome  = 0;
@@ -184,13 +184,13 @@
                 <div class="col-md-12">
                     <div class="text-center">
                         <input type="hidden" name="_token" value="{{csrf_token()}}"/>
-                        <button type="submit" class="btn btn-block btn-danger">
+                        <button type="submit" onclick="return confirm('delete?')? true: false;" class="btn btn-block btn-danger">
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"></span>
                         </button>
                     </div>
                 </div>
             </form>
-            
+
             <div class="section col-md-12 expense_summary">
                 <div>
                     <div class="alert alert-warning" role="alert">

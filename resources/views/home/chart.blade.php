@@ -1,5 +1,10 @@
 @extends('layouts.app')
 @section('content')
+<div class="text-center">
+<h1 class="text-info">
+	<i class="fa fa-area-chart"></i><em>Chart</em></span>
+	 </h1>
+ </div>
 <div class="text-center"><h1><em>@if(isset($Plan) && $Plan != null) {{$Plan->name}} @endif</em></h1></div>
 <div class="container">
 	<div class="row">

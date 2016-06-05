@@ -68,21 +68,21 @@
   <div class="panel-body">
    @if(isset($plan)) {{$plan->budget}} @endif </div></div></div>
         <div class="row text-center">
-            <div class="col-xs-6 col-md-4">
+            <div class="col-md-4">
               <div class="panel panel-primary">
   <div class="panel-heading"><em>Total Income</em>  </div>
     <div class="panel-body">
        @if(isset($sumIncome)) {{$sumIncome}} @endif </div></div></div>
-            <div class="col-xs-6 col-md-4">
+            <div class="col-md-4">
               <div class="panel panel-primary">
   <div class="panel-heading"><em>
     Total Expense</em>
   </div>
     <div class="panel-body">@if(isset($sumExpense)) {{$sumExpense}} @endif </div></div></div>
-            <div class="col-xs-6 col-md-4">
+            <div class="col-md-4">
               <div class="panel panel-primary">
   <div class="panel-heading"><em>
-    Net worth.</em>
+    Networth</em>
   </div>
     <div class="panel-body"> @if(isset($sumIncome) && isset ($sumExpense)) {{$sumIncome - $sumExpense}} @endif </div></div></div>
 

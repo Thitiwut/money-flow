@@ -43,7 +43,7 @@
                         </label>
                         <input type="text" class="form-control" id="fdate" placeholder="Date" name="fdate" value="{{old('fdate')}}" />
                     </div>
-                    <label for="email">
+                    <label for="ftype">
                         Type
                     </label>
                     <div class="form-group">

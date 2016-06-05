@@ -35,31 +35,31 @@
                     <label for="email">
                         Name
                     </label>
-                    <input type="text" class="form-control" id="pName" placeholder="Name" name="pname" value="<?php echo isset($plan) ? $plan->name : old('pname'); ?>" />
+                    <input type="text" class="form-control" id="pName" placeholder="Name" name="pname" value="<?php echo isset($plan) ? $plan->name : old('pname'); ?>" required/>
                 </div>
                 <div class="form-group">
                     <label for="pDescription">
                         Description
                     </label>
-                    <textarea  type="text" class="form-control" id="pDescription" placeholder="Description" name="pdescription" ><?php echo isset($plan) ? $plan->description : old('pdescription'); ?></textarea>
+                    <textarea  type="text" class="form-control" id="pDescription" placeholder="Description" name="pdescription" required><?php echo isset($plan) ? $plan->description : old('pdescription'); ?></textarea>
                 </div>
                    <div class="form-group">
                     <label for="pTarget">
                         Target Money
                     </label>
-                    <input type="text" class="form-control" id="pTarget" placeholder="Target" name="ptarget" value="<?php echo isset($plan) ? $plan->target : old('ptarget'); ?>" />
+                    <input type="text" class="form-control" id="pTarget" placeholder="Target" name="ptarget" value="<?php echo isset($plan) ? $plan->target : old('ptarget'); ?>" required/>
                 </div>
                  <div class="form-group">
                     <label for="pBudget">
                         Budget
                     </label>
-                    <input type="text" class="form-control" id="pBudget" placeholder="Budget" name="pbudget" value="<?php echo isset($plan) ? $plan->original : old('pbudget'); ?>" />
+                    <input type="text" class="form-control" id="pBudget" placeholder="Budget" name="pbudget" value="<?php echo isset($plan) ? $plan->original : old('pbudget'); ?>" required/>
                 </div>
                 <div class="form-group">
                     <label for="pMonth">
                         Duration
                     </label>
-                    <input type="text" class="form-control" id="pMonth" placeholder="Per Month" name="pmonth" value="<?php echo isset($plan) ? $plan->period : old('pmonth'); ?>" />
+                    <input type="text" class="form-control" id="pMonth" placeholder="Per Month" name="pmonth" value="<?php echo isset($plan) ? $plan->period : old('pmonth'); ?>" required/>
                 </div>
 
 
@@ -67,7 +67,7 @@
                     <label for="pExpected">
                         Expected saving per month
                     </label>
-                    <input type="number" class="form-control" id="pExpected" placeholder="Expected" name="pexpected" value="<?php echo isset($plan) ? $plan->expected : old('pexpected'); ?>" />
+                    <input type="number" class="form-control" id="pExpected" placeholder="Expected" name="pexpected" value="<?php echo isset($plan) ? $plan->expected : old('pexpected'); ?>" required/>
                 </div>
                 <div class="text-center">
                     <div class="col-md-6">
@@ -76,7 +76,7 @@
                         </button>
                     </div>
                     <div class="col-md-6">
-                        <input type="submit" onclick="return confirm('Are you sure?')? true: false;" id="deleteForm" name="pdelete" class="btn btn-block btn-danger" value="Delete">
+                        <input type="submit" onclick="return confirm('Are you sure to delete?')? true: false;" id="deleteForm" name="pdelete" class="btn btn-block btn-danger" value="Delete">
                     </div>
                 </div>
                 <input type="hidden" name="plan_id" value="<?php echo isset($plan) ? $plan->id : ''; ?>"/>

@@ -45,7 +45,7 @@
                       <input type="checkbox"> Notification Email
                     </label>
                     <label>
-                      <input type="date">Date
+                      <input type="text" class="form-control" id="fdate" placeholder="Date" name="fdate" value="{{old('fdate')}}" />
                     </label>
                     <label>
                       <input type="time">Time
@@ -111,5 +111,13 @@
             document.getElementById("repassword").setCustomValidity('');
 //empty string means no validation error
 }
+</script>
+<script>
+  $.fn.datepicker.defaults.format = "dd/mm/yyyy";
+  $('#fdate').datepicker();
+</script>
+<script>
+var d = new Date();
+document.getElementById("demo").innerHTML = d.toDateString();
 </script>
 @endsection

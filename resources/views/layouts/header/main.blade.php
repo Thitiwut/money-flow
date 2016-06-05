@@ -28,7 +28,7 @@
                     </li>
                     <li>
                        
-                        <a href="feedbacks">
+                        <a  href="feedbacks">
                            <span class="glyphicon glyphicon-envelope" aria-hidden="true"> Feedbacks</span>
                         </a>
                     </li>
@@ -44,8 +44,8 @@
                 @if(Session::get('Auth'))
                 <ul class="nav nav-pills navbar-nav navbar-left">
                     <li>
-                        <a href="plan">
-                            <span class="glyphicon glyphicon-flag" aria-hidden="true"><em>Plan</em></span>
+                        <a href="plan" >
+                            <span class="glyphicon glyphicon-flag" aria-hidden="true"><em class="text-success">Plan</em></span>
                         </a>
                     </li>
                     <li>
@@ -67,25 +67,25 @@
                     <li>
                         
                         <a href="expense">
-                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"><em>Expense&Income</em></span>
+                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"><em class="text-success">Expense&Income</em></span>
                         </a>
                     </li>
                     <li>
                        
                         <a href="progress">
-                           <span class="glyphicon glyphicon-tasks" aria-hidden="true"><em>Progress</em></span>
+                           <span class="glyphicon glyphicon-tasks" aria-hidden="true"><em class="text-success">Progress</em></span>
                         </a>
                     </li>
                     <li>
                         
                         <a href="charts">
-                          <span class="glyphicon glyphicon-stats" aria-hidden="true"><em>Charts</em></span>
+                          <span class="glyphicon glyphicon-stats" aria-hidden="true"><em class="text-success">Charts</em></span>
                         </a>
                     </li>
                     <li>
                        
                         <a href="report">
-                           <span class="glyphicon glyphicon-copy" aria-hidden="true"><em>Report</em></span>
+                           <span class="glyphicon glyphicon-copy" aria-hidden="true"><em class="text-success">Report</em></span>
 
                         </a>
                     </li>
@@ -94,19 +94,19 @@
                     <div class="form-group">
                         <input type="text" class="form-control" placeholder="Search" name="keyword" />
                     </div>
-                    <button type="submit" class="btn btn-default">
+                    <button type="submit" class="btn btn-success">
                         Submit
                     </button>
                 </form>
                 <ul class="nav nav-pills navbar-nav navbar-right">
                     <li>
                         <a href="feedback">
-                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"><em/>Feedback</em></span>
+                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"><em class="text-success">Feedback</em></span>
                         </a>
                     </li>
                     <li>
                         <a href="setting">
-                             <span class="glyphicon glyphicon-cog" aria-hidden="true"><em>Setting</em></span>
+                             <span class="glyphicon glyphicon-cog" aria-hidden="true"><em class="text-success">Setting</em></span>
                         </a>
                     </li>
                     <li>

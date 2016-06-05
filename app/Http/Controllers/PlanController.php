@@ -165,10 +165,10 @@ class PlanController extends Controller
             "rcategory.required" => "Category is not selected.",
             "rcategory.exists"   => "Category is not exists.",
             "rcategory.numeric"  => "Illegal category selected.",
-            "rlimit.required"    => "Exceed is required.",
-            "rlimit.numeric"     => "Exceed should be only numbers.",
+            "rlimit.required"    => "Limitation amount is required.",
+            "rlimit.numeric"     => "Limit exceed per month should be only numbers.",
             "rtype.required"     => "Please select what this restriction apply to.",
-            "rtype.boolean"      => "Illegal restriction type selected.",
+            "rtype.boolean"      => "Wrong restriction type selected.",
         ];
         $validator = Validator::make($request->all(), [
             'rplan'     => 'required|numeric|exists:plan,id',

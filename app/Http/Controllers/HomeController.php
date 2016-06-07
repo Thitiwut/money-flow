@@ -348,12 +348,14 @@ class HomeController extends Controller
     public function getTestMail()
     {
         $user = User::find($this->user->id);
-        Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
-            $m->from('hello@app.com', 'Your Application');
-            $m->to('mark2396cg@gmail.com', $user->name)->subject('Your Reminder!');
-        });
-        // $result = mail("mark2396cg@gmail.com","My subject","Hi");
-        // echo $result;
-        return "success";
+        try {
+            Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
+                $m->from('admin@moneyflow.mrrkh.com', 'Money Flow Notification');
+                $m->to($user->email, $user->username)->subject('Your plan is going on, Go update it!');
+            });
+            return "Success";
+        } catch (Exception $e) {
+            return "Failed";
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http;
 
+use App\Models\User;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 
 class Kernel extends HttpKernel
@@ -54,10 +55,16 @@ class Kernel extends HttpKernel
     protected function schedule(Schedule $schedule)
     {
         $schedule->call(function () {
-            Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
-                $m->from('hello@app.com', 'Your Application');
-                $m->to($user->email, $user->name)->subject('Your Reminder!');
-            });
+            $users = User::all();
+            if ($users) {
+                foreach ($users as $key => $user) {
+                    Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
+                        $m->from('admin@moneyflow.mrrkh.com', 'Money Flow Notification');
+                        $m->to($user->email, $user->username)->subject('Your plan is going on, Go update it!');
+                    });
+                }
+            }
+            // $result = mail("mark2396cg@gmail.com","My subject","Hi");
         })->daily();
     }
 }

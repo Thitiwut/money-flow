@@ -32,7 +32,7 @@ class PlanController extends Controller
     public function getClear(Request $request)
     {
         Session::forget('Plan');
-        return redirect()->back();
+        return redirect('plan');
     }
 
     public function getDelete(Request $request)

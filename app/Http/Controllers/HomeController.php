@@ -10,6 +10,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
+use Mail;
 
 class HomeController extends Controller
 {
@@ -327,5 +328,32 @@ class HomeController extends Controller
         $user->save();
         $request->session()->put('Auth', $user);
         return redirect('/setting');
+    }
+    public function postNotification(Request $request)
+    {
+        $user = User::find($this->user->id);
+        if ($user) {
+            if ($request->notification) {
+                $user->notification = 1;
+                $user->save();
+            } else {
+                $user->notification = 0;
+                $user->save();
+            }
+            $request->session()->put('Auth', $user);
+        }
+        return redirect('/setting');
+    }
+
+    public function getTestMail()
+    {
+        $user = User::find($this->user->id);
+        Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
+            $m->from('hello@app.com', 'Your Application');
+            $m->to('mark2396cg@gmail.com', $user->name)->subject('Your Reminder!');
+        });
+        // $result = mail("mark2396cg@gmail.com","My subject","Hi");
+        // echo $result;
+        return "success";
     }
 }

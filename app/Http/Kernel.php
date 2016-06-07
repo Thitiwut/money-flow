@@ -45,9 +45,19 @@ class Kernel extends HttpKernel
      * @var array
      */
     protected $routeMiddleware = [
-        'auth' => \App\Http\Middleware\Authenticate::class,
+        'auth'       => \App\Http\Middleware\Authenticate::class,
         'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
-        'guest' => \App\Http\Middleware\RedirectIfAuthenticated::class,
-        'throttle' => \Illuminate\Routing\Middleware\ThrottleRequests::class,
+        'guest'      => \App\Http\Middleware\RedirectIfAuthenticated::class,
+        'throttle'   => \Illuminate\Routing\Middleware\ThrottleRequests::class,
     ];
+
+    protected function schedule(Schedule $schedule)
+    {
+        $schedule->call(function () {
+            Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
+                $m->from('hello@app.com', 'Your Application');
+                $m->to($user->email, $user->name)->subject('Your Reminder!');
+            });
+        })->daily();
+    }
 }

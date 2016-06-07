@@ -39,10 +39,10 @@
 
    <div role="tabpanel" class="tab-pane" id="notification">
         <div>
-            <form>
+            <form method="post" action="notification">
                 <div class="checkbox">
                     <label>
-                      <input type="checkbox"> Notification Email
+                      <input type="checkbox" name="notification" <?php if ($user->notification == 1) {echo "checked";}?>> Notification Email
                     </label>
                     <label>
                       <input type="text" class="form-control" id="fdate" placeholder="Date" name="fdate" value="{{old('fdate')}}" />
@@ -51,6 +51,7 @@
                       <input type="time">Time
                     </label>
                 </div>
+                <input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
                 <button type="submit" class="btn btn-default">Save</button>
             </form>
         </div>

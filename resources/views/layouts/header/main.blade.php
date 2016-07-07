@@ -13,8 +13,8 @@
                     <span class="icon-bar">
                     </span>
                 </button>
-                <a class="navbar-brand" href="#">
-                   <p class="text-info"><em>MoneyFlow</em></p>
+                <a class="navbar-brand" href="index">
+                   <p class="text-info"><em>SMA</em></p>
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->

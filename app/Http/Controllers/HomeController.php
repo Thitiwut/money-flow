@@ -8,7 +8,6 @@ use App\Models\Monthly;
 use App\Models\Plan;
 use App\Models\User;
 use Illuminate\Http\Request;
-use Mail;
 use Session;
 use Validator;
 
@@ -21,7 +20,7 @@ class HomeController extends Controller
     /*Get Methods*/
     public function getIndex()
     {
-        return view('home.login');
+        return view('home.index');
     }
     public function getLogin()
     {
@@ -328,36 +327,5 @@ class HomeController extends Controller
         $user->save();
         $request->session()->put('Auth', $user);
         return redirect('/setting');
-    }
-    public function postNotification(Request $request)
-    {
-        $user = User::find($this->user->id);
-        if ($user) {
-            if ($request->notification) {
-                $user->notification = 1;
-                $user->save();
-            } else {
-                $user->notification = 0;
-                $user->save();
-            }
-            $request->session()->put('Auth', $user);
-        }
-        return redirect('/setting');
-    }
-
-    public function getTestMail()
-    {
-        $user = User::find($this->user->id);
-        try {
-            if ($user) {
-                Mail::send('emails.reminder', ['user' => $user], function ($m) use ($user) {
-                    $m->from('admin@moneyflow.mrrkh.com', 'Money Flow Notification');
-                    $m->to($user->email, $user->username)->subject('Your plan is going on, Go update it!');
-                });
-            }
-            return "Success";
-        } catch (Exception $e) {
-            return "Failed";
-        }
     }
 }

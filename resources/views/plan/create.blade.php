@@ -207,7 +207,7 @@
             var budget = $('#pBudget').val();
             var min = (target-budget)/period;
             $('#pExpected').attr("min",min.toFixed(2));
-            $('#pExpected').val(min.toFixed(2));
+            $('#pExpected').val(min);
         }
     });
 </script>

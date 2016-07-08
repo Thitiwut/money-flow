@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<section class="success" id="about">
 <div class="row">
 	<div class="container">
 		<div class="text-center"><h1>Register</h1></div>
@@ -32,6 +33,7 @@
 		</form>
 	</div>
 </div>
+</section>
 @endsection
 
 @section('script')

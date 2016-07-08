@@ -10,6 +10,7 @@
 </style>
 @endsection
 @section('content')
+<section id="portfolio">
 <div class="container">
     <div class="text-center">
         <h1>
@@ -191,6 +192,7 @@
         </div>
     </div>
 </div>
+</section>
 @endsection
 @section('script')
 <script type="text/javascript">
@@ -207,7 +209,7 @@
             var budget = $('#pBudget').val();
             var min = (target-budget)/period;
             $('#pExpected').attr("min",min.toFixed(2));
-            $('#pExpected').val(min);
+            $('#pExpected').val(min.toFixed(2));
         }
     });
 </script>

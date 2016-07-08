@@ -4,16 +4,24 @@
 		<link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/css/datepicker.css" />
         <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+        <link href="http://blackrockdigital.github.io/startbootstrap-freelancer/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
+    <link href="http://blackrockdigital.github.io/startbootstrap-freelancer/css/freelancer.min.css" rel="stylesheet">
 
 
 
 
         @yield('style')
     </head>
-    <body>
+    
+<body id="page-top" class="index">
+      <div class="container">
         <header>
             @include('layouts.header.main')
         </header>
+       </div>
+        <section id="portfolio">
         <div class="main_body">
             <div class="container">
                 <div class="col-md-offset-3 col-md-6">
@@ -66,6 +74,7 @@
                 @yield('content')
             </div>
         </div>
+    </section>
         <footer>
             @yield('footer')
         </footer>
@@ -97,6 +106,15 @@
 			</script>
             @yield('script')
 			<?php Session::forget("successes"); ?>
+
         </div>
+         <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="http://blackrockdigital.github.io/startbootstrap-freelancer/js/jqBootstrapValidation.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="http://blackrockdigital.github.io/startbootstrap-freelancer/js/freelancer.min.js"></script>
     </body>
 </html>

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+  <section id="contact">
+        <div class="container">
 <div class="text-center">
 <h1 class="text-info">
 	<i class="fa fa-area-chart"></i><em>Chart</em></span>
@@ -64,7 +66,10 @@
 	</div>
 </div> -->
 </div>
-	<hr/>
+
+</section>
+	<section id="contact">
+	<div class="container">
 	<div class="row">
 		<div class="col-md-4 text-center">
 			<h2 class="text-success"><span><i class="fa fa-pie-chart"></i>
@@ -116,6 +121,9 @@
 
 	<hr/>
 </div>
+</div>
+</div>
+</section>
 @endsection
 @section('script')
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/1.0.2/Chart.min.js"></script>

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<section id="portfolio">
 <div class="container">
     <div style="overflow: hidden;">
 
@@ -93,6 +94,7 @@
             </tbody>
         </table>
     </div>
+</section>
     @if(isset($finances))
     {!! $finances->
     links() !!}

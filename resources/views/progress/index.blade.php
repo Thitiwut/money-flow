@@ -12,10 +12,11 @@ $totalIncome  = 0;
 $totalExpense = 0;
 $progressBar  = 0;
 ?>
+<section id="portfolio">
 <div class="container">
     <div class="text-center">
         <h1 class="text-info">
-          <i class="fa fa-refresh fa-spin"></i><em>Progress</em></span>
+          <em class="text-danger"><i class="fa fa-refresh fa-spin"></i></em><em>Progress</em>
            </h1>
            <hr/>
   </div>
@@ -172,6 +173,7 @@ $progressBar  = 0;
         </table>
     </div>
 </div>
+</section>
 @endsection
 @section('script')
     <script>

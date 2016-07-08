@@ -20,11 +20,12 @@
 </style>
 @endsection
 @section('content')
+<section id="portfolio">
 <div class="container">
     <div class="text-center">
         <h1>
-            <span class="glyphicon glyphicon-list-alt" aria-hidden="true"></span>
-            <em>Expense and Income</em>
+            <em class="text-info"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i></em>
+            Expense and Income
         </h1>
     </div>
     <div class="container">
@@ -36,7 +37,7 @@
                     <em>Detail</em>
                     </h3>
                 </div>
-                <form action="expense/finance" method="post">
+                <form action="expense/finance" method="post" >
                     <div class="form-group">
                         <label for="fdate">
                             Date
@@ -210,6 +211,7 @@
         </div>
     </div>
 </div>
+</section>
 @endsection
 @section('script')
 <script>

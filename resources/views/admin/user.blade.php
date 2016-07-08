@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<section id="contact">
 <div class="container">
 		<div>
         	<div class="col-md-3">Username</div>
@@ -23,4 +24,5 @@
     @endforeach
 </div>
 {!! $users->links() !!}
+</section>
 @endsection

@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<section id="contact">
 <div class="container">
 		<div>
         	<div class="col-md-4">Username</div>
@@ -16,4 +17,5 @@
 </div>
 
 {!! $feedbacks->links() !!}
+</section>
 @endsection

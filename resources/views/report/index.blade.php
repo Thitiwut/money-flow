@@ -12,6 +12,7 @@ $totalIncome  = 0;
 $totalExpense = 0;
 $progressBar  = 0;
 ?> 
+<section id="portfolio">
 <div class="container">
     <div class="text-center">
         <h1>
@@ -160,4 +161,5 @@ $progressBar  = 0;
  
     </div>
 </div>
+</section>
 @endsection

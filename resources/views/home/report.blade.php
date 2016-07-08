@@ -2,6 +2,7 @@
 @section('style')
 @endsection
 @section('content')
+<section id="portfolio">
 <div class="container">
      <div class="text-center">
           <h3><em>Report</em></h3>
@@ -155,7 +156,7 @@
 <hr/>
 <div>
     <div style="overflow: hidden;">
-        <table id="myTable" class="table table-striped table-hover ">
+        <table id="myTable" class="table table-striped table-hover">
             <thead>
                 <tr >
                     <th>
@@ -200,7 +201,7 @@
                         </td>
                         <td>
                             <?php echo ($finance->
-        type == 0) ? "Expense" : "Income"; ?>
+        type == 0) ? "<p class='text-danger'>Expense</p>" : "<p class='text-success'>Income</p>"; ?>
                         </td>
                         @if($finance->type == 0)
                         <td class="text-danger">
@@ -232,6 +233,7 @@
         </div>
     </div>
 </div>
+</section>
 @endsection
 @section('script')
 <script src="https://cdn.datatables.net/1.10.11/js/jquery.dataTables.min.js">

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 @section('content')
+<section class="success" id="about">
+   <div class="container">
 <div class="row">
 	<div class="container">
 		<div class="text-center"><h1>Login</h1></div>
@@ -13,10 +15,15 @@
 				<input type="password" class="form-control" id="password" placeholder="Password" name="password" required>
 			</div>
 			<div class="col-md-12">
-				<button type="submit" class="btn btn-block btn-success">Login</button>
+				<button type="submit" class="btn btn-block btn-default">Login</button>
 			</div>
 			<input type="hidden" name="_token" value="<?php echo csrf_token(); ?>">
 		</form>
 	</div>
 </div>
+</div>
+</section>
+
+
+
 @endsection

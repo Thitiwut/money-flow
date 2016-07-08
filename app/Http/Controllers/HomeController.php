@@ -22,6 +22,7 @@ class HomeController extends Controller
     {
         return view('home.index');
     }
+     
     public function getLogin()
     {
         return view('home.login');
@@ -29,6 +30,10 @@ class HomeController extends Controller
     public function getRegister()
     {
         return view('home.register');
+    }
+    public function getList()
+    {
+        return view('home.list');
     }
     public function getCharts(Request $request)
     {

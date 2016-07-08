@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<section class="primary" id="about">
 <div class="container">
     <div class="row">
 
@@ -18,6 +19,7 @@
           </div>
       
         </div>
+
    </div>
    <div class="cold-md-8">
 <div class="tab-content">
@@ -72,7 +74,7 @@
 </div>
 
 </div>
-
+</section>
 @endsection
 @section('script')
 <script type="text/javascript">

@@ -1,5 +1,5 @@
 <div class="main_header">
-    <nav class="navbar navbar-default">
+    <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
         <div class="container-fluid">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse" aria-expanded="false">
@@ -18,23 +18,24 @@
                 </a>
             </div>
             <!-- Collect the nav links, forms, and other content for toggling -->
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse">
+           <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+
              @if(Session::has('Admin'))
                  <ul class="nav nav-pills navbar-nav navbar-left">
-                     <li>
+                     <li class="page-scroll">
                         <a href="users">
-                          <span class="glyphicon glyphicon-user" aria-hidden="true"> Users</span>
+                          <i class="glyphicon glyphicon-user" aria-hidden="true"> Users</i>
                         </a>
                     </li>
-                    <li>
+                   <li class="page-scroll">
                        
                         <a  href="feedbacks">
-                           <span class="glyphicon glyphicon-envelope" aria-hidden="true"> Feedbacks</span>
+                           <i class="glyphicon glyphicon-envelope" aria-hidden="true"> Feedbacks</i>
                         </a>
                     </li>
                 </ul>
                 <ul class="nav nav-pills navbar-nav navbar-right">
-                    <li>
+                    <li class="page-scroll">
                         <a href="logout">
                             Logout
                         </a>
@@ -42,13 +43,14 @@
                 </ul>
             @else
                 @if(Session::get('Auth'))
+
                 <ul class="nav nav-pills navbar-nav navbar-left">
-                    <li>
+                    <li class="page-scroll">
                         <a href="plan" >
-                            <span class="glyphicon glyphicon-flag" aria-hidden="true"><em class="text-success">Plan</em></span>
+                            <em class="text-danger"><i class="glyphicon glyphicon-flag" aria-hidden="true"></i></em>Plan
                         </a>
                     </li>
-                    <li>
+                    <li class="page-scroll">
                         <div class="form-group navbar-form">
                             <select id="planList" class="form-control">
                                 <option></option>
@@ -64,28 +66,28 @@
                             </select>
                         </div>
                     </li>
-                    <li>
+                    <li class="page-scroll">
                         
                         <a href="expense">
-                          <span class="glyphicon glyphicon-list-alt" aria-hidden="true"><em class="text-success">Expense&Income</em></span>
+                          <em class="text-info"><i class="glyphicon glyphicon-list-alt" aria-hidden="true"></i></em>Expense&Income
                         </a>
                     </li>
-                    <li>
+                    <li class="page-scroll">
                        
                         <a href="progress">
-                           <span class="glyphicon glyphicon-tasks" aria-hidden="true"><em class="text-success">Progress</em></span>
+                           <em class="text-warning"><i class="glyphicon glyphicon-tasks" aria-hidden="true"></em></i>Progress
                         </a>
                     </li>
-                    <li>
+                   <li class="page-scroll">
                         
                         <a href="charts">
-                          <span class="glyphicon glyphicon-stats" aria-hidden="true"><em class="text-success">Charts</em></span>
+                          <em class="text-info"><i class="glyphicon glyphicon-stats" aria-hidden="true"></i></em>Charts
                         </a>
                     </li>
-                    <li>
+                    <li class="page-scroll">
                        
                         <a href="report">
-                           <span class="glyphicon glyphicon-copy" aria-hidden="true"><em class="text-success">Report</em></span>
+                          <em class="text-info"> <i class="glyphicon glyphicon-copy" aria-hidden="true"></i></em>Report
 
                         </a>
                     </li>
@@ -99,30 +101,35 @@
                     </button>
                 </form>
                 <ul class="nav nav-pills navbar-nav navbar-right">
-                    <li>
+                    <li class="page-scroll">
                         <a href="feedback">
-                            <span class="glyphicon glyphicon-bullhorn" aria-hidden="true"><em class="text-success">Feedback</em></span>
+                            <em class="text-warning"><i class="glyphicon glyphicon-bullhorn" aria-hidden="true"></em></i>Feedback
                         </a>
                     </li>
-                    <li>
-                        <a href="setting">
-                             <span class="glyphicon glyphicon-cog" aria-hidden="true"><em class="text-success">Setting</em></span>
+                   <li class="dropdown">
+                            <a href="setting" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><em class="text-danger"><i class="glyphicon glyphicon-cog" aria-hidden="true"></i></em>options<i class="caret"></i></a>
+                             <!--<i class="glyphicon glyphicon-cog" aria-hidden="true"><em class="text-success">Setting</em></i>-->
+                             <ul class="dropdown-menu" role="menu">
+                                <li><a href="setting">Setting</a></li>
+                                <li><a href="list">Checklist</a></li>
+                         
+                              </ul>
                         </a>
                     </li>
-                    <li>
+                    <li class="page-scroll">
                         <a href="logout">
-                             <span class="glyphicon glyphicon-off" aria-hidden="true"></span>
+                             <i class="glyphicon glyphicon-off" aria-hidden="true"></i>
                         </a>
                     </li>
                 </ul>
                 @else
                 <ul class="nav nav-pills navbar-nav navbar-right">
-                    <li>
+                   <li class="page-scroll">
                         <a href="login">
                             Login
                         </a>
                     </li>
-                    <li>
+                   <li class="page-scroll">
                         <a href="register">
                             Register
                         </a>

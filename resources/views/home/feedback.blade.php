@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+<section class="default" id="about">
 <div class="row">
 	<div class="container">
 		<div class="text-center"><h1 class="text-warning"><em><i class="fa fa-rss fa-lg"></i>Feedback</em></h1></div>
@@ -17,4 +18,6 @@
 		</form>
 	</div>
 </div>
+</div>
+</section>
 @endsection

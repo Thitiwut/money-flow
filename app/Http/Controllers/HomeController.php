@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Category;
+use App\Models\Checklist;
 use App\Models\Feedback;
 use App\Models\Finance;
 use App\Models\Monthly;
@@ -22,7 +23,7 @@ class HomeController extends Controller
     {
         return view('home.index');
     }
-     
+
     public function getLogin()
     {
         return view('home.login');
@@ -33,7 +34,8 @@ class HomeController extends Controller
     }
     public function getList()
     {
-        return view('home.list');
+        $attach['user'] = $this->user;
+        return view('home.list', $attach);
     }
     public function getCharts(Request $request)
     {
@@ -332,5 +334,23 @@ class HomeController extends Controller
         $user->save();
         $request->session()->put('Auth', $user);
         return redirect('/setting');
+    }
+    public function postList(Request $request)
+    {
+        try {
+            $user = $request->session()->get('Auth');
+            if ($user != null) {
+                $checklist = Checklist::where("user_id", "=", $user->id)->first();
+                if ($checklist == null) {
+                    $checklist          = new Checklist();
+                    $checklist->user_id = $user->id;
+                }
+                $checklist->lists = $request->lists;
+                $checklist->save();
+            }
+            return json_encode(true);
+        }catch(Exception $e){
+            return json_encode(false);
+        }
     }
 }

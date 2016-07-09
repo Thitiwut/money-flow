@@ -1,17 +1,17 @@
-date/time         : 2016-06-07, 21:54:39, 152ms
+date/time         : 2016-06-07, 23:51:46, 179ms
 computer name     : MISTERWOR
 user name         : W.J
 registered owner  : mark2396@hotmail.com
 operating system  : Windows NT New Tablet PC x64 build 9200
 system language   : Thai
-system up time    : 3 hours 26 minutes
-program up time   : 11 minutes 1 second
+system up time    : 5 hours 23 minutes
+program up time   : 53 minutes 58 seconds
 processors        : 8x Intel(R) Core(TM) i7-4720HQ CPU @ 2.60GHz
-physical memory   : 2719/8104 MB (free/total)
-free disk space   : (C:) 344.20 GB
+physical memory   : 2104/8104 MB (free/total)
+free disk space   : (C:) 343.71 GB
 display mode      : 1920x1080, 32 bit
-process id        : $20c8
-allocated memory  : 26.67 MB
+process id        : $2670
+allocated memory  : 26.76 MB
 command line      : C:\xampp\sendmail\sendmail -bs
 executable        : sendmail.exe
 exec. date/time   : 2012-04-17 00:30
@@ -22,13 +22,13 @@ exception number  : 1
 exception class   : Exception
 exception message : Message is missing recipient's address.
 
-main thread ($eec):
+main thread ($3604):
 004b5a1a +b66 sendmail.exe sendmail 688 +206 initialization
 75487c02 +022 KERNEL32.DLL                   BaseThreadInitThunk
 
 stack dump:
 0018fdc4  1f 5a 4b 00 de fa ed 0e - 01 00 00 00 07 00 00 00  .ZK.............
-0018fdd4  d8 fd 18 00 1f 5a 4b 00 - 80 4f f4 01 bc c2 41 00  .....ZK..O....A.
+0018fdd4  d8 fd 18 00 1f 5a 4b 00 - 80 4f d9 01 bc c2 41 00  .....ZK..O....A.
 0018fde4  b4 4e 4b 00 b4 4e 4b 00 - 80 ff 18 00 f4 fd 18 00  .NK..NK.........
 0018fdf4  00 fe 18 00 c8 4b 40 00 - 80 ff 18 00 0c fe 18 00  .....K@.........
 0018fe04  5f 4d 40 00 80 ff 18 00 - 74 ff 18 00 c8 4b 40 00  _M@.....t....K@.

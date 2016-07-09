@@ -20,4 +20,8 @@ class User extends Model
     {
         return $this->hasMany('App\Models\Feedback', 'user_id');
     }
+    public function checklists()
+    {
+        return $this->hasMany('App\Models\Checklist', 'user_id');
+    }
 }

@@ -32,7 +32,7 @@
         </div>
         <div class="row">
           <div class="col-sm-4">
-            <a href="#" class="btn btn-default" onclick="mfCheckList.clear();">Back</a>
+            <!--<a href="#" class="btn btn-default" onclick="mfCheckList.clear();">ack</a>-->
           </div>
           <div class="col-sm-7">
           </div>
@@ -56,11 +56,11 @@
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Name</span>
-          <input type="text" class="form-control" id="listName" placeholder="List name" aria-describedby="basic-addon1">
+          <input type="text" class="form-control" id="listName" placeholder="List name" aria-describedby="basic-addon1" required>
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Description</span>
-          <input type="text" class="form-control" id="listDescription" placeholder="List description" aria-describedby="basic-addon1">
+          <input type="text" class="form-control" id="listDescription" placeholder="List description" aria-describedby="basic-addon1" required>
         </div>
         <div class="jumbotron">
           <div class="row">
@@ -106,7 +106,7 @@
       <div class="modal-body">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Name</span>
-          <input type="text" class="form-control" id="checkName" placeholder="Username" aria-describedby="basic-addon1">
+          <input type="text" class="form-control" id="checkName" placeholder="Username" aria-describedby="basic-addon1" required>
         </div>
       </div>
       <div class="modal-footer">

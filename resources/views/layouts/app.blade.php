@@ -4,14 +4,19 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/css/datepicker.css" />
     <link rel="stylesheet" href="https://cdn.datatables.net/1.10.11/css/jquery.dataTables.min.css" />
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-    <link href="http://blackrockdigital.github.io/startbootstrap-freelancer/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+   <link href="http://blackrockdigital.github.io/startbootstrap-freelancer/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">-->
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <link href="http://blackrockdigital.github.io/startbootstrap-freelancer/css/freelancer.min.css" rel="stylesheet">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
-
-
+    <style type="text/css">
+        #portfolio *{z-index: 0;}
+        #portfolio *.portfolio-modal{z-index: 1050;}
+        #portfolio *.portfolio-modal .modal-content{min-height: auto;}
+         #yolo *{z-index: 0;}
+        #yolo *.yolo-modal{z-index: 1050;}
+        #yolo *.yolo-modal .modal-content{min-height: auto;}
+    </style>
     @yield('style')
 </head>
 
@@ -39,12 +44,12 @@
             </div>
         </div>
         <div class="container">
-            <div class="modal fade" id="myModal" tabindex="-1" role="dialog">
+            <div class="portfolio-modal modal fade in" id="myModal" tabindex="-1" role="dialog">
               <div class="modal-dialog">
                 <div class="modal-content">
                   <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <h4 class="modal-title">Success</h4>
+                    <h4 class="modal-title">Notice</h4>
                 </div>
                 <div class="modal-body" style="overflow: hidden;">
                     <div class="">

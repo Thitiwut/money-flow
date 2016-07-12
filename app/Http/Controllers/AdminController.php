@@ -2,9 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Admin;
+use App\Models\Banner;
 use App\Models\Feedback;
 use App\Models\User;
-use App\Models\Plan;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -34,6 +34,16 @@ class AdminController extends Controller
         } else {
             return redirect("admin");
         }
+    }
+    public function getBanners(Request $request)
+    {
+        if (Session::has('Admin')) {
+            $banners = Banner::all();
+            return view('admin.banner', ['banners' => $banners]);
+        } else {
+            return redirect("admin");
+        }
+
     }
     /*Post*/
     public function postIndex(Request $request)
@@ -106,6 +116,16 @@ class AdminController extends Controller
         } else {
             return redirect("admin");
         }
+    }
+    public function postBanner(Request $request)
+    {
+        if($request->has('file') && $request->has('id')){
+            $banner = Banner::find($request->id);
+            $banner->file = $request->file;
+            $banner->description = $request->description;
+            $banner->save();
+        }
+        return json_encode(true);
     }
     public function getLogout()
     {

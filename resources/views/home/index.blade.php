@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-sm-4 portfolio-item">
+                <div class="col-sm-4 portfolio-item text-center">
                     
             		 <a href="http://google.com" class="portfolio-link" >
                         <div class="caption">
@@ -37,11 +37,11 @@
                             </div>
                         </div>
                         <img data-src="holder.js/140x140" class="img-rounded" alt="140x140" style="width: 250px; height: 250px;" 
-                    src="http://image.flaticon.com/icons/svg/138/138297.svg" data-holder-rendered="true">
+                    src="{{$banners[0]->file}}" data-holder-rendered="true">
                         <!--<img src="http://image.flaticon.com/icons/svg/138/138297.svg" class="img-responsive" alt="">-->
                      </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
+                <div class="col-sm-4 portfolio-item text-center">
                     <a href="http://google.com" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
@@ -50,10 +50,10 @@
                             </div>
                         </div>
                          <img data-src="holder.js/140x140" class="img-rounded" alt="140x140" style="width: 250px; height: 250px;" 
-                    src="http://image.flaticon.com/icons/svg/138/138283.svg" data-holder-rendered="true">
+                    src="{{$banners[1]->file}}" data-holder-rendered="true">
                     </a>
                 </div>
-               <div class="col-sm-4 portfolio-item">
+               <div class="col-sm-4 portfolio-item text-center">
                     <a href="http://google.com" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
@@ -62,10 +62,10 @@
                             </div>
                         </div>
                          <img data-src="holder.js/140x140" class="img-rounded" alt="140x140" style="width: 250px; height: 250px;" 
-                    src="http://image.flaticon.com/icons/svg/138/138295.svg" data-holder-rendered="true">
+                    src="{{$banners[2]->file}}" data-holder-rendered="true">
                     </a>
                 </div>
-                <div class="col-sm-4 portfolio-item">
+                <div class="col-sm-4 portfolio-item text-center">
                     <a href="http://google.com" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
@@ -74,10 +74,10 @@
                             </div>
                         </div>
                        <img data-src="holder.js/140x140" class="img-rounded" alt="140x140" style="width: 250px; height: 250px;" 
-                    src="http://image.flaticon.com/icons/svg/138/138361.svg" data-holder-rendered="true">
+                    src="{{$banners[3]->file}}" data-holder-rendered="true">
                     </a>
                 </div>
-             <div class="col-sm-4 portfolio-item">
+             <div class="col-sm-4 portfolio-item text-center">
                     <a href="http://google.com" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
@@ -86,10 +86,10 @@
                             </div>
                         </div>
                          <img data-src="holder.js/140x140" class="img-rounded" alt="140x140" style="width: 250px; height: 250px;" 
-                    src="http://image.flaticon.com/icons/svg/123/123402.svg" data-holder-rendered="true">
+                    src="{{$banners[4]->file}}" data-holder-rendered="true">
                     </a>
                 </div>
-              <div class="col-sm-4 portfolio-item">
+              <div class="col-sm-4 portfolio-item text-center">
                     <a href="http://google.com" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
@@ -98,7 +98,7 @@
                             </div>
                         </div>
                          <img data-src="holder.js/140x140" class="img-rounded" alt="140x140" style="width: 250px; height: 250px;" 
-                    src="http://image.flaticon.com/icons/svg/123/123389.svg" data-holder-rendered="true">
+                    src="{{$banners[5]->file}}" data-holder-rendered="true">
                     </a>
                 </div>
             </div>

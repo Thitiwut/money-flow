@@ -8,6 +8,7 @@ use App\Models\Finance;
 use App\Models\Monthly;
 use App\Models\Plan;
 use App\Models\User;
+use App\Models\Banner;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -21,7 +22,8 @@ class HomeController extends Controller
     /*Get Methods*/
     public function getIndex()
     {
-        return view('home.index');
+        $attach['banners'] = Banner::all();
+        return view('home.index', $attach);
     }
 
     public function getLogin()

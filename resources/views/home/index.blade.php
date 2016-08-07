@@ -29,7 +29,7 @@
             <div class="row">
                 <div class="col-sm-4 portfolio-item text-center">
                     
-            		 <a href="http://google.com" class="portfolio-link" >
+            		 <a href="{{$banners[0]->description}}" class="portfolio-link" >
                         <div class="caption">
                             <div class="caption-content">
                             	
@@ -42,7 +42,7 @@
                      </a>
                 </div>
                 <div class="col-sm-4 portfolio-item text-center">
-                    <a href="http://google.com" class="portfolio-link" target="_blank">
+                    <a href="{{$banners[1]->description}}" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
 
@@ -54,7 +54,7 @@
                     </a>
                 </div>
                <div class="col-sm-4 portfolio-item text-center">
-                    <a href="http://google.com" class="portfolio-link" target="_blank">
+                    <a href="{{$banners[2]->description}}" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
 
@@ -66,7 +66,7 @@
                     </a>
                 </div>
                 <div class="col-sm-4 portfolio-item text-center">
-                    <a href="http://google.com" class="portfolio-link" target="_blank">
+                    <a href="{{$banners[3]->description}}" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
 
@@ -78,7 +78,7 @@
                     </a>
                 </div>
              <div class="col-sm-4 portfolio-item text-center">
-                    <a href="http://google.com" class="portfolio-link" target="_blank">
+                    <a href="{{$banners[4]->description}}" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
 
@@ -90,7 +90,7 @@
                     </a>
                 </div>
               <div class="col-sm-4 portfolio-item text-center">
-                    <a href="http://google.com" class="portfolio-link" target="_blank">
+                    <a href="{{$banners[5]->description}}" class="portfolio-link" target="_blank">
                         <div class="caption">
                             <div class="caption-content">
 

@@ -95,11 +95,12 @@
                         </label>
                         <input type="text" class="form-control" id="fname" placeholder="Name" name="fname" value="{{old('fname')}}" />
                     </div>
-                    <div class="form-group">
+                    <div class="form-group control-group">
                         <label for="famount">
                             Amount
                         </label>
-                        <input type="text" class="form-control" id="famount" placeholder="Amount" name="famount" value="{{old('famount')}}" />
+                        <input type="text" class="form-control" id="famount" placeholder="Amount" name="famount" value="{{old('famount')}}" data-validation-regex-regex=".+(.00|.25|.50|.75)" data-validation-regex-message="Must fill in decimal(.00 or .25 or .50 or .75)" />
+                        <p class="help-block"></p>
                     </div>
                     <div class="form-group">
                         <label for="fdescription">
@@ -217,10 +218,11 @@
 <script>
 	$.fn.datepicker.defaults.format = "dd/mm/yyyy";
 	$('#fdate').datepicker();
+    $("input,select,textarea").not("[type=submit]").jqBootstrapValidation();
 </script>
 <script>
-var d = new Date();
-document.getElementById("demo").innerHTML = d.toDateString();
+    var d = new Date();
+    document.getElementById("demo").innerHTML = d.toDateString();
 </script>
 
 

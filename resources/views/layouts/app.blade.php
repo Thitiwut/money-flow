@@ -90,6 +90,14 @@
     </script>
     <script src="https://cdn.jsdelivr.net/bootstrap.datepicker/0.1/js/bootstrap-datepicker.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/notify/0.4.2/notify.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+
+    <!-- Contact Form JavaScript -->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
+    <script src="http://blackrockdigital.github.io/startbootstrap-freelancer/js/jqBootstrapValidation.js"></script>
+
+    <!-- Theme JavaScript -->
+    <script src="http://blackrockdigital.github.io/startbootstrap-freelancer/js/freelancer.min.js"></script>
     <script>
         var BASEURL = window.location.protocol + '//' + window.location.hostname + '' + window.location.pathname;
         $('#planList').on('change',function(){
@@ -105,22 +113,14 @@
    </script>
    <script>
     <?php if (Session::has('successes')) {
-        if (sizeOf(Session::get('successes')) > 0) {?>
+    if (sizeOf(Session::get('successes')) > 0) {?>
            $('#myModal').modal('toggle');
            <?php }
-       }?>
+}?>
    </script>
    @yield('script')
    <?php Session::forget("successes");?>
 
 </div>
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-
-<!-- Contact Form JavaScript -->
-<script src="http://cdnjs.cloudflare.com/ajax/libs/jquery-easing/1.3/jquery.easing.min.js"></script>
-<script src="http://blackrockdigital.github.io/startbootstrap-freelancer/js/jqBootstrapValidation.js"></script>
-
-<!-- Theme JavaScript -->
-<script src="http://blackrockdigital.github.io/startbootstrap-freelancer/js/freelancer.min.js"></script>
 </body>
 </html>

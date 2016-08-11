@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Banner;
 use App\Models\Category;
 use App\Models\Checklist;
 use App\Models\Feedback;
@@ -8,7 +9,6 @@ use App\Models\Finance;
 use App\Models\Monthly;
 use App\Models\Plan;
 use App\Models\User;
-use App\Models\Banner;
 use Illuminate\Http\Request;
 use Session;
 use Validator;
@@ -251,7 +251,12 @@ class HomeController extends Controller
                 ->withErrors($validator)
                 ->withInput();
         }
-
+        if ($request->password != $user->password) {
+            return redirect()
+                ->back()
+                ->withErrors(["Username or password are mismatch."])
+                ->withInput();
+        }
         if (empty($user)) {
             if ($validator->fails()) {
                 return redirect()
@@ -274,8 +279,8 @@ class HomeController extends Controller
         $validator = Validator::make($request->all(), [
             'username'   => 'required|unique:user,username',
             'email'      => 'required|unique:user,email',
-            'password'   => 'required|min:6',
-            'repassword' => 'required|min:6',
+            'password'   => 'required|min:6,max:10',
+            'repassword' => 'required|min:6,max:10',
         ], $message);
 
         if ($validator->fails()) {
@@ -351,7 +356,7 @@ class HomeController extends Controller
                 $checklist->save();
             }
             return json_encode(true);
-        }catch(Exception $e){
+        } catch (Exception $e) {
             return json_encode(false);
         }
     }

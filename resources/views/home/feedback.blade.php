@@ -9,7 +9,7 @@
 		<form class="col-md-offset-3 col-md-6" method="post" action="feedback">
 			<div class="form-group">
 				<label for="feedback">Message</label>
-				<textarea class="form-control" id="feedback"  name="feedback" required></textarea>
+				<textarea class="form-control" id="feedback"  name="feedback" minlength="1" maxlength="500" required></textarea>
 			</div>
 			<div class="col-md-12">
 				<button type="submit" onclick="return confirm('send feedback?')? true: false;"  class="btn btn-block btn-success">Send</button>

@@ -1,8 +1,5 @@
 <?php
 
-use Illuminate\Foundation\Testing\WithoutMiddleware;
-use Illuminate\Foundation\Testing\DatabaseMigrations;
-use Illuminate\Foundation\Testing\DatabaseTransactions;
 use App\Models\User;
 
 class HomeControllerTest extends TestCase
@@ -12,6 +9,16 @@ class HomeControllerTest extends TestCase
      *
      * @return void
      */
+    public function testIndex()
+    {
+        $this->visit('/')
+            ->see('STUDENT MONEY ASSISTANCE');
+    }
+    public function testLogin()
+    {
+        $this->visit('/login')
+            ->see('LOGIN');
+    }
     public function testRegister()
     {
         $this->visit('/register')
@@ -21,8 +28,13 @@ class HomeControllerTest extends TestCase
             ->type('123456', 'repassword')
             ->press('Submit')
             ->seePageIs('/progress');
-        $user = User::where("email","=","test@test.com")->first();
+        $user = User::where("email", "=", "test@test.com")->first();
         $this->assertNotNull($user);
         $user->delete();
+    }
+    public function test()
+    {
+        $this->visit('/register')
+            ->see('register');
     }
 }

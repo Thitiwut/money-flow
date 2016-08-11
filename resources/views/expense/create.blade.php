@@ -93,20 +93,20 @@
                         <label for="fname">
                             Name
                         </label>
-                        <input type="text" class="form-control" id="fname" placeholder="Name" name="fname" value="{{old('fname')}}" />
+                        <input type="text" class="form-control" id="fname" placeholder="Name" name="fname" value="{{old('fname')}}" minlength="4" maxlength="10" />
                     </div>
                     <div class="form-group control-group">
                         <label for="famount">
                             Amount
                         </label>
-                        <input type="text" class="form-control" id="famount" placeholder="Amount" name="famount" value="{{old('famount')}}" data-validation-regex-regex=".+(.00|.25|.50|.75)" data-validation-regex-message="Must fill in decimal(.00 or .25 or .50 or .75)" />
+                        <input type="text" class="form-control" id="famount" placeholder="Amount" name="famount" value="{{old('famount')}}" data-validation-regex-regex=".+(.00|.25|.50|.75)" min="1" max="1000000" data-validation-regex-message="Must fill in decimal(.00 or .25 or .50 or .75)" />
                         <p class="help-block"></p>
                     </div>
                     <div class="form-group">
                         <label for="fdescription">
                             Description
                         </label>
-                        <textarea class="form-control" id="fdescription" name="fdescription">{{old('fdescription')}}</textarea>
+                        <textarea class="form-control" id="fdescription" name="fdescription" minlength="1" maxlength="30">{{old('fdescription')}}</textarea>
                     </div>
                     <div class="text-center">
                         @if(isset($plan))

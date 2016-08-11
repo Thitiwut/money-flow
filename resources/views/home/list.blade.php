@@ -47,7 +47,7 @@
         <h3>Create Check-List</h3>
         <div class="row">
           <div class="col-sm-4"></div>
-          <div class="col-sm-7"></div>
+          <div class="col-sm-7"><div id="error"></div></div>
           <div class="col-sm-1">
             <a href="#home" aria-controls="home" role="tab" data-toggle="tab" class="text-right" onclick="mfCheckList.clear();">
               <button class="btn btn-info">back</button>
@@ -56,11 +56,11 @@
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Name</span>
-          <input type="text" class="form-control" id="listName" placeholder="List name" aria-describedby="basic-addon1" required>
+          <input type="text" class="form-control" id="listName" placeholder="List name" aria-describedby="basic-addon1" minlength="1" maxlength="30" required>
         </div>
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Description</span>
-          <input type="text" class="form-control" id="listDescription" placeholder="List description" aria-describedby="basic-addon1" required>
+          <input type="text" class="form-control" id="listDescription" placeholder="List description" aria-describedby="basic-addon1" minlength="1" maxlength="30" required>
         </div>
         <div class="jumbotron">
           <div class="row">
@@ -87,7 +87,7 @@
             <a href="#home" class="btn btn-danger" data-toggle="tab" onclick="mfCheckList.delete();">Delete</a>
           </div>
           <div class="col-sm-4 text-right">
-            <a href="#home" class="btn btn-success" data-toggle="tab" onclick="mfCheckList.updateList();mfCheckList.clear();">Save</a>
+            <a href="" class="btn btn-success" data-toggle="tab" onclick="mfCheckList.updateList();mfCheckList.clear();">Save</a>
           </div>
         </div>
       </div>
@@ -106,7 +106,7 @@
       <div class="modal-body">
         <div class="input-group">
           <span class="input-group-addon" id="basic-addon1">Name</span>
-          <input type="text" class="form-control" id="checkName" placeholder="Username" aria-describedby="basic-addon1" required>
+          <input type="text" class="form-control" id="checkName" placeholder="Username" aria-describedby="basic-addon1" minlength="1" maxlength="15" required>
         </div>
       </div>
       <div class="modal-footer">
@@ -170,6 +170,7 @@
     },
     updateList: function(){
       var count = 0;
+      $("#error").html("");
       if(mfCheckList.currentList){
         count = mfCheckList.currentId;
       }else{
@@ -185,9 +186,17 @@
       list["name"] = $('#listName').val();
       list["description"] = $('#listDescription').val();
       list["checks"] = mfCheckList.tempCheck;
+      if(list["name"].length < 1 || list["name"].length > 30){
+        $("#error").html("Name must longer than 1 or less than 30.");
+        return;
+      }
+      if(list["description"].length < 1 || list["name"].length > 30){
+        $("#error").html("Name must longer than 1 or less than 30.");
+        return;
+      }
       mfCheckList.lists[count] = list;
       mfCheckList.renderList();
-
+      $("#error").html("List Saved.");
     },
     renderList: function(){
       var lists = mfCheckList.lists;

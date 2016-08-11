@@ -15,7 +15,7 @@
 			</div>
 			<div class="form-group">
 				<label for="password">Secret</label>
-				<input type="password" class="form-control" id="secret" placeholder="Secret" name="secret" required>
+				<input type="password" class="form-control" id="secret" placeholder="Secret" name="secret"  maxlength="6" required>
 			</div>
 			<div class="col-md-12">
 				<button type="submit" class="btn btn-block btn-success">Login</button>

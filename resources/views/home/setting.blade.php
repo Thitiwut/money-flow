@@ -43,7 +43,7 @@
             <form class="col-md-5" method="post" action="update">
                 <div class="form-group">
                     <label for="username">Usename</label>
-                    <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{$user->username}}" required>
+                    <input type="text" class="form-control" id="username" placeholder="Username" name="username" value="{{$user->username}}"  minlength="4" maxlength="10" required>
                 </div>
                 <div class="form-group">
                     <label for="email">Email</label>
@@ -51,11 +51,11 @@
                 </div>
                 <div class="form-group">
                     <label for="password">Password</label>
-                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="{{$user->password}}" pattern=".{6,}" title="6 characters minimum" value="{{old('password')}}" required>
+                    <input type="password" class="form-control" id="password" placeholder="Password" name="password" value="{{$user->password}}" pattern=".{6,}" title="6 characters minimum"  maxlength="10" value="{{old('password')}}" required>
                 </div>
                 <div class="form-group">
                     <label for="repassword">Re-Password</label>
-                    <input type="password" class="form-control" id="repassword" placeholder="Re-Password" name="repassword" value="{{$user->password}}" pattern=".{6,}" title="6 characters minimum" required>
+                    <input type="password" class="form-control" id="repassword" placeholder="Re-Password" name="repassword" value="{{$user->password}}" pattern=".{6,}" title="6 characters minimum"  maxlength="10" required>
                 </div>
                 <div class="col-md-12">
                     <div class="col-md-6 text-center">

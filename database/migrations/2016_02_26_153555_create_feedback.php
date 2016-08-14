@@ -27,6 +27,6 @@ class CreateFeedback extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('feedback');
     }
 }

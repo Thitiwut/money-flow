@@ -32,6 +32,28 @@ class HomeControllerTest extends TestCase
         $this->assertNotNull($user);
         $user->delete();
     }
+    public function testList()
+    {
+        $this->withSession(['Auth' => new User()])
+            ->visit('/list')
+            ->see('CHECK-LIST');
+    }
+    public function testSetting()
+    {
+        $this->withSession(['Auth' => new User()])
+            ->visit('/setting')
+            ->see('SETTING');
+    }
+    public function testLogout()
+    {
+        $this->visit('/logout')
+            ->see('STUDENT MONEY ASSISTANCE');
+    }
+    public function testFeedback()
+    {
+        $this->visit('/feedback')
+            ->see('FEEDBACK');
+    }
     public function test()
     {
         $this->visit('/register')

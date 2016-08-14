@@ -84,6 +84,12 @@ class CreateDatabase extends Migration
      */
     public function down()
     {
-        //
+        Schema::drop('User');
+        Schema::drop('Plan');
+        Schema::drop('Monthly');
+        Schema::drop('Daily');
+        Schema::drop('Finance');
+        Schema::drop('Restrict');
+        Schema::drop('Category');
     }
 }

@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
 class UpdateUserNotification extends Migration
@@ -24,6 +23,8 @@ class UpdateUserNotification extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('User', function ($table) {
+            $table->dropColumn('notification');
+        });
     }
 }

@@ -23,6 +23,8 @@ class AddOriginalBudget extends Migration
      */
     public function down()
     {
-        //
+        Schema::table('Plan', function ($table) {
+            $table->dropColumn('original');
+        });
     }
 }
